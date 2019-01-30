@@ -1,0 +1,84 @@
+body {
+    background: #ECF0F1;
+    font-family: 'Nunito';
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(27,79,114)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: #1B4F72;
+}
+
+#headingGroup .text {
+    color: #1B4F72;
+}
+
+.img-fluid {
+    min-height: 400px;
+}
+
+.blurb h2 {
+    color: #1B4F72;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+}
+
+.blurb p {
+    color: #5D6D7E;
+    font-weight: 100;
+    font-size: 1.125rem;
+    line-height: 2;
+}
+
+.stars {
+    color: #1B4F72;
+}
+
+.content {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#mainNavbar {
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+
+#mainNavbar .navbar-brand {
+    color: #1B4F72;
+    font-size: 1.5rem;
+}
+
+#mainNavbar .nav-link {
+    color: #1B4F72;
+}
+
+#mainNavbar .nav-link:hover {
+    color: white;
+}
+
+#headingGroup span {
+    color: #1B4F72;
+}
+
+#headingGroup h1 {
+    font-weight: 100;
+    font-size: 4rem;
+    text-transform: uppercase;
+}
+
+.navbar.scrolled {
+    background: #979A9A;
+    transition: background 500ms;
+}
+
+@media (max-width: 1200px) {
+    #headingGroup h1 {
+        font-weight: 100;
+        font-size: 3rem;
+        text-transform: uppercase;
+    }
+}
