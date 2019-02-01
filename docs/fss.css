@@ -70,6 +70,10 @@ body {
     text-transform: uppercase;
 }
 
+#projectButtons .p-3 {
+  padding: $spacer !important;
+}
+
 .navbar.scrolled {
     background: #979A9A;
     transition: background 500ms;
