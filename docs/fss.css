@@ -74,6 +74,21 @@ body {
   padding: $spacer !important;
 }
 
+#projectButtons .px-2 {
+  padding-left: ($spacer * .5) !important;
+  padding-right: ($spacer * .5) !important;
+  padding-top: ($spacer * .5) !important;
+  padding-bottom: ($spacer * .5) !important;
+}
+
+#projectButtons .mt-0 {
+  margin-top: 0 !important;
+}
+
+#projectButtons.ml-1 {
+  margin-left: ($spacer * .25) !important;
+}
+
 .navbar.scrolled {
     background: #979A9A;
     transition: background 500ms;
