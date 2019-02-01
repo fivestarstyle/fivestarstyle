@@ -19,10 +19,6 @@ body {
     min-height: 400px;
 }
 
-img.img-fluid.img-headshot {
-    min-width: 280px;
-}
-
 img.img-fluid.img-caley {
     max-height: 500px;
 }
