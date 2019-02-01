@@ -19,7 +19,7 @@ body {
     min-height: 400px;
 }
 
-.img-caley {
+img.img-fluid.img-caley {
     max-height: 500px;
 }
 
