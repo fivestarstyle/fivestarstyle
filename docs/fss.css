@@ -27,6 +27,10 @@ img.img-fluid.img-caley {
     max-height: 500px;
 }
 
+img.img-fluid.img-megan {
+    max-height: 300px;
+}
+
 .blurb h2 {
     color: #1B4F72;
     font-weight: 100;
