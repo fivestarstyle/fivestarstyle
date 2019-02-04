@@ -79,23 +79,9 @@ img.img-fluid.img-caley {
     text-transform: uppercase;
 }
 
-#projectButtons .p-3 {
-  padding: $spacer !important;
-}
 
-#projectButtons .px-2 {
-  padding-left: ($spacer * .5) !important;
-  padding-right: ($spacer * .5) !important;
-  padding-top: ($spacer * .5) !important;
-  padding-bottom: ($spacer * .5) !important;
-}
-
-#projectButtons .mt-0 {
-  margin-top: 0 !important;
-}
-
-#projectButtons.ml-1 {
-  margin-left: ($spacer * .25) !important;
+#projectButtons {
+  margin: 7px;
 }
 
 .navbar.scrolled {
