@@ -70,7 +70,7 @@ img.img-fluid.img-caley {
     border-bottom: #ECF0F1 2px solid;
 }
 
-.vertical-menu a .menu-link:hover {
+.vertical-menu a:hover {
     color: #1B4F72;
     background-color: #979A9A;
 }
