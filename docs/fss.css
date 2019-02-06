@@ -62,15 +62,17 @@ img.img-fluid.img-caley {
 }
 
 .vertical-menu a {
-    background-color: #eee;
+    background-color: #1B4F72;
     display: block;
     padding: 5px 12px;
     text-decoration: none;
-    color: #1B4F72;
+    color: #ECF0F1;
+    border-bottom: #ECF0F1 2px solid;
 }
 
-.vertical-menu a:hover {
-    color: white;
+.vertical-menu a .menu-link:hover {
+    color: #1B4F72;
+    background-color: #979A9A;
 }
 
 .vertical-menu a:active {
