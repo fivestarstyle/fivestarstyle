@@ -51,6 +51,32 @@ img.img-fluid.img-caley {
     margin-bottom: 100px;
 }
 
+.vertical-menu {
+    color: #1B4F72;
+    width: 200px;
+    padding-top: 12px;
+    font-size: 1.15rem;
+    font-family: "Nunito";
+    font-weight: 100;
+    text-transform: uppercase; 
+}
+
+.vertical-menu a {
+    background-color: #eee;
+    display: block;
+    padding: 5px 12px;
+    text-decoration: none;
+    color: #1B4F72;
+}
+
+.vertical-menu a:hover {
+    color: white;
+}
+
+.vertical-menu a:active {
+    font-weight: bold;
+}
+
 #mainNavbar {
     font-size: 1.5rem;
     font-weight: 100;
