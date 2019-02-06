@@ -75,6 +75,11 @@ img.img-fluid.img-caley {
     background-color: #979A9A;
 }
 
+a.pl-3.selected {
+    color: #1B4F72;
+    background-color: #979A9A;
+}
+
 #mainNavbar {
     font-size: 1.5rem;
     font-weight: 100;
