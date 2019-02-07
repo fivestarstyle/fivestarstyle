@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "928675333563",
+    "firebase_url": "https://fivestarstylealpha.firebaseio.com",
+    "project_id": "fivestarstylealpha",
+    "storage_bucket": "fivestarstylealpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928675333563:android:73c8f6bd94540e34",
+        "android_client_info": {
+          "package_name": "com.example.fivestarstylealpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928675333563-4l2o440dgpa458qnp0j8iofmvk9669uu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fivestarstylealpha",
+            "certificate_hash": "724e1034851234298615b6a616ec02e4db30cb05"
+          }
+        },
+        {
+          "client_id": "928675333563-cam3q0m1e0s5nc5p1n339jc9ij2v05h0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE5Z0Yq_pfXCwpaKVDmZHoAb1gL08p06E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928675333563-cam3q0m1e0s5nc5p1n339jc9ij2v05h0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
