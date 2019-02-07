@@ -73,6 +73,7 @@ img.img-fluid.img-caley {
 .vertical-menu a:hover {
     color: #1B4F72;
     background-color: #979A9A;
+    font-weight: bold;
 }
 
 a.pl-3.selected {
