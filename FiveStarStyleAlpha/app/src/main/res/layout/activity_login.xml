@@ -32,23 +32,29 @@
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
+                style="@style/ThemeInputTextColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeInputTextColor">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
+                    style="@style/ThemeInputTextColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:theme="@style/ThemeInputTextColor" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                style="@style/ThemeInputTextColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeInputTextColor">
 
                 <EditText
                     android:id="@+id/password"
@@ -66,12 +72,13 @@
 
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="@style/Widget.MaterialComponents.Button"
+                style="@style/ThemeButtonColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                android:theme="@style/ThemeButtonColor" />
 
         </LinearLayout>
     </ScrollView>

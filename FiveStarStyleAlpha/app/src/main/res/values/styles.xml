@@ -6,6 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/activityBackground</item>
+
+    </style>
+
+    <!-- Button theme. -->
+    <style name="ThemeButtonColor" parent="AppTheme">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/activityBackground</item>
+    </style>
+
+    <!-- Input text theme. -->
+    <style name="ThemeInputTextColor" parent="AppTheme">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
 </resources>
