@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:theme="@style/ThemeProgressBarColor"
         android:visibility="gone" />
 
     <ScrollView
@@ -29,7 +30,8 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:theme="@style/ThemeInputTextColor">
 
             <android.support.design.widget.TextInputLayout
                 style="@style/ThemeInputTextColor"
@@ -58,6 +60,7 @@
 
                 <EditText
                     android:id="@+id/password"
+                    style="@style/ThemeInputTextColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -66,7 +69,10 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:soundEffectsEnabled="true"
+                    android:theme="@style/ThemeInputTextColor"
+                    android:autofillHints="" />
 
             </android.support.design.widget.TextInputLayout>
 
