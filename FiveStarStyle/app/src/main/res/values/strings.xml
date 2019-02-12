@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FiveStarStyle</string>
+    <string name="button_label_enabled">Login</string>
 </resources>
