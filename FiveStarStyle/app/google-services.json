@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "963431449239",
+    "firebase_url": "https://fivestarstyle-948d2.firebaseio.com",
+    "project_id": "fivestarstyle-948d2",
+    "storage_bucket": "fivestarstyle-948d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963431449239:android:bd60aa1247eb63db",
+        "android_client_info": {
+          "package_name": "com.example.fivestarstyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963431449239-pse3fngio7ikhp7tpkqv7lcof554l2lc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCQZdOUakOG-7cYE6gtvCwUgHSLgj3tT8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
