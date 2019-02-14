@@ -11,8 +11,6 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="failed">Login Failed</string>
-    <string name="btn_signInScreen">Go To Sign In</string>
-    <string name="btn_registerScreen">Go To Register</string>
     <string name="forgotPass">Forgot Password?</string>
 
 </resources>

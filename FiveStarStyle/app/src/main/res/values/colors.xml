@@ -5,18 +5,18 @@
     <color name="colorPrimaryLight">#99b5c3</color>
     <color name="colorPrimaryLightMedium">#567d9c</color>
     <color name="colorPrimaryMediumDark">#0d3653</color>
-    <color name="colorPrimaryDark">#001e3b</color>
+    <color name="colorPrimaryDark">#001E3B</color>
     <color name="colorAccent">#979A9A</color>
     <color name="colorBackground">#ECF0F1</color>
     <color name="colorWhite">#FFFFFF</color>
 
-    <color name="primaryColor">#1b4f72</color>
-    <color name="primaryLightColor">#4e7ba1</color>
-    <color name="primaryDarkColor">#002746</color>
-    <color name="secondaryColor">#979a9a</color>
-    <color name="secondaryLightColor">#c8cbcb</color>
-    <color name="secondaryDarkColor">#696c6c</color>
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#000000</color>
+    <!--<color name="primaryColor">#1b4f72</color>-->
+    <!--<color name="primaryLightColor">#4e7ba1</color>-->
+    <!--<color name="primaryDarkColor">#002746</color>-->
+    <!--<color name="secondaryColor">#979a9a</color>-->
+    <!--<color name="secondaryLightColor">#c8cbcb</color>-->
+    <!--<color name="secondaryDarkColor">#696c6c</color>-->
+    <!--<color name="primaryTextColor">#ffffff</color>-->
+    <!--<color name="secondaryTextColor">#000000</color>-->
 
 </resources>
