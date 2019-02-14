@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity<pieChartData> extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         MaterialButton signInScreen = (MaterialButton) findViewById(R.id.btnSignInScreen);
 
         signInScreen.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
+
 
     }
 }

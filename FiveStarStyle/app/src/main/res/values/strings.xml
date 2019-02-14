@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">FiveStarStyle</string>
+
+    <string name="btnText">Least Recently Worn</string>
+    <string name="btnText2">Least Frequently Worn</string>
+    <string name="titleText">FiveStarStats</string>
+
     <string name="get_started">Get Started</string>
     <string name="email_id">Enter Email</string>
     <string name="password">Enter Password</string>
@@ -9,5 +14,5 @@
     <string name="btn_signInScreen">Go To Sign In</string>
     <string name="btn_registerScreen">Go To Register</string>
     <string name="forgotPass">Forgot Password?</string>
-    <string name="Login">Login</string>
+
 </resources>
