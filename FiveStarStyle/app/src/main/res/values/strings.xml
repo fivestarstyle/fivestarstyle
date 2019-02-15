@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FiveStarStyle</string>
+
+    <string name="btnText">Least Recently Worn</string>
+    <string name="btnText2">Least Frequently Worn</string>
+    <string name="titleText">FiveStarStats</string>
+
+    <string name="get_started">Get Started</string>
+    <string name="email_id">Enter Email</string>
+    <string name="password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="failed">Login Failed</string>
+    <string name="forgotPass">Forgot Password?</string>
+
 </resources>
