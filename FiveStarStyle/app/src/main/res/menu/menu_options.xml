@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home__menu_option"
+        android:icon="@drawable/home_menu_icon"
+        android:title="@string/home"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/closet_menu_option"
+        android:icon="@drawable/closet_menu_icon"
+        android:title="@string/view_my_closet"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/overview_menu_option"
+        android:title="@string/overview"
+        android:icon="@drawable/overview_menu_icon"
+        app:showAsAction="never"/>
+</menu>

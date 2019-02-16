@@ -14,8 +14,9 @@
     <string name="forgotPass">Forgot Password?</string>
     <string name="top_star">top_star</string>
     <string name="home_header">home_header</string>
-    <string name="choose_my_outfit">choose_my_outfit</string>
-    <string name="view_my_closet" />
-    <string name="overview">overview</string>
+    <string name="choose_my_outfit">Choose My Outfit</string>
+    <string name="view_my_closet">View My Closet</string>
+    <string name="overview">Overview</string>
+    <string name="home">Home</string>
 
 </resources>
