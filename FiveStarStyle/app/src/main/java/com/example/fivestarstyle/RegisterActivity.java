@@ -1,5 +1,8 @@
 package com.example.fivestarstyle;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,10 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "Register";
     private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
+    private View mProgressView;
+    private View mLoginFormView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,23 +38,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         mEmailField = findViewById(R.id.txtEmail);
         mPasswordField = findViewById(R.id.txtPassword);
+        mProgressView = findViewById(R.id.login_progress);
 
         MaterialButton btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(mEmailField.toString(), mPasswordField.toString());
+                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
             }
         });
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
     private void createAccount(String email, String password) {
@@ -58,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (!validateForm()) {
             return;
         }
-
-        showProgressDialog();
+//
+//        showProgress(true);
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -80,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                         // [START_EXCLUDE]
-                        hideProgressDialog();
+//                        showProgress(false);
                         // [END_EXCLUDE]
                     }
                 });
@@ -90,20 +87,16 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
+//        showProgress(false);
         if (user != null) {
             Intent newIntent = new Intent(RegisterActivity.this, LoginActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
             RegisterActivity.this.startActivity(newIntent);
         } else {
-//            mStatusTextView.setText(R.string.signed_out);
-//            mDetailTextView.setText(null);
 
-//            findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
-//            findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
-//            findViewById(R.id.signedInButtons).setVisibility(View.GONE);
         }
     }
+
 
     private boolean validateForm() {
         boolean valid = true;
@@ -127,7 +120,32 @@ public class RegisterActivity extends AppCompatActivity {
         return valid;
     }
 
+    private void showProgress(final boolean show) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
 }
->>>>>>> develop-curtis
