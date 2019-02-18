@@ -72,7 +72,9 @@
                 android:id="@+id/imageView_header"
                 android:layout_width="match_parent"
                 android:layout_height="161dp"
+                android:adjustViewBounds="false"
                 android:contentDescription="@string/home_header"
+                android:cropToPadding="false"
                 app:srcCompat="@drawable/five_star_header" />
 
             <ImageButton

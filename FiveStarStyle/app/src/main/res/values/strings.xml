@@ -18,5 +18,14 @@
     <string name="view_my_closet">View My Closet</string>
     <string name="overview">Overview</string>
     <string name="home">Home</string>
+    <string name="txtGreeting">Good Afternoon</string>
+    <string name="txtOutfitSelector">What type of outfit are you looking for today?</string>
+    <string name="checkboxWork">Work</string>
+    <string name="checkboxCasual">Casual</string>
+    <string name="checkboxCocktail">Cocktail</string>
+    <string name="checkboxGym">Gym</string>
+    <string name="checkboxBar">Bar</string>
+    <string name="checkboxFormal">Formal</string>
+    <string name="btnChooseOutfit">Choose My Outfit</string>
 
 </resources>

@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ThirdFragment extends Fragment {
-    public ThirdFragment() {
+public class ColorTab extends Fragment {
+    public ColorTab() {
         // Required empty public constructor
     }
 
@@ -19,6 +19,6 @@ public class ThirdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false);
+        return inflater.inflate(R.layout.color_tab, container, false);
     }
 }

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageButton overviewScreen = (ImageButton) findViewById(R.id.overview);
+        ImageButton chooseOutfitScreen = (ImageButton) findViewById(R.id.choose_my_outfit);
 
         overviewScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent overviewIntent = new Intent(MainActivity.this, ClosetStatistics.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(overviewIntent);
+            }
+        });
+
+        chooseOutfitScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chooseOutfitIntent = new Intent(MainActivity.this, ChooseOutfit.class);
+//                myIntent.putExtra("key", value); //Optional parameters
+                MainActivity.this.startActivity(chooseOutfitIntent);
             }
         });
 
