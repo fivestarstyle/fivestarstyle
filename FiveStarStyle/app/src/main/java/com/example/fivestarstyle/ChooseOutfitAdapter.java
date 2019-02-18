@@ -1,6 +1,7 @@
 package com.example.fivestarstyle;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,17 +58,19 @@ public class ChooseOutfitAdapter extends ArrayAdapter {
             TextView categoryName = (TextView) view.findViewById(R.id.cat_name);
             CheckBox selection = (CheckBox) view.findViewById(R.id.cat_select);
 
+
             //checkbox event handling
             selection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView,
                                              boolean isChecked) {
-//                    if (isChecked) {
+                    if (isChecked) {
 //                        Toast.makeText(ChooseOutfitAdapter.this.mContext,
-//                                "selected item "+itemPosition, Toast.LENGTH_LONG).show();
-//                    } else {
-//
-//                    }
+//                                "selected item "+itemPosition, Toast.LENGTH_LONG).show()
+
+                    } else {
+
+                    }
                 }
             });
 
