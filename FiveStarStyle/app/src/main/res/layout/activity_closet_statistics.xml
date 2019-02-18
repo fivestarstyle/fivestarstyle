@@ -76,7 +76,8 @@ tools:context=".ClosetStatistics">
         android:id="@+id/simpleFrameLayout"
         android:layout_width="411dp"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="0dp" />
 
 
