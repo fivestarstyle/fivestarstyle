@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/trelativeLayout"
+        tools:context=".ClosetActivity">
+
+        <Button
+            android:id="@+id/AddButton"
+            android:layout_width="59dp"
+            android:layout_height="70dp"
+            android:layout_alignParentEnd="true"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/AllButton"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/AddButton"
+            android:background="@drawable/closet"
+            />
+
+        <LinearLayout
+            android:id="@+id/row3"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/AllButton"
+            android:weightSum="2.0"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/ShirtButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shirts"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/PantsButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottoms" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/row3"
+            android:weightSum="2.0"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/DressButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dresses" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/RJButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rj"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row5"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/row4"
+            android:weightSum="2.0"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/AccButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/accessories" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:id="@+id/ShoesButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shoes" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
