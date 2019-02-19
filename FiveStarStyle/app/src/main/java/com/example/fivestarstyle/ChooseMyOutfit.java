@@ -13,15 +13,14 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 
-public class ChooseOutfit2 extends AppCompatActivity {
+public class ChooseMyOutfit extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_outfit2);
+        setContentView(R.layout.activity_choose_my_outfit);
         createTabs();
     }
 
