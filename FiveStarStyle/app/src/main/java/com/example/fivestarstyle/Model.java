@@ -13,7 +13,7 @@ public class Model {
         return category;
     }
 
-    public void setCategory(String animal) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
