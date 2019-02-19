@@ -13,12 +13,20 @@
         android:id="@+id/relativeLayout"
         tools:context=".ClosetActivity">
 
-        <Button
+        <ImageButton
             android:id="@+id/AddButton"
-            android:layout_width="59dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="59dp"
             android:layout_alignParentEnd="true"
-            android:text="+" />
+            android:background="@drawable/ic_outline_add_24px"
+            android:backgroundTint="@color/colorPrimary"
+            />
+        <!--<Button-->
+            <!--android:id="@+id/AddButton"-->
+            <!--android:layout_width="59dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:text="+" />-->
 
         <ImageButton
             android:id="@+id/AllButton"
