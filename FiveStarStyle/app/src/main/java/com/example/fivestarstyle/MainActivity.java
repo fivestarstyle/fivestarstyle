@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         chooseOutfitScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chooseOutfitIntent = new Intent(MainActivity.this, ChooseOutfit.class);
+                Intent chooseOutfitIntent = new Intent(MainActivity.this, ChooseOutfit2.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(chooseOutfitIntent);
             }
