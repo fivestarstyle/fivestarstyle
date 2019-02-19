@@ -27,5 +27,20 @@
     <string name="checkboxBar">Bar</string>
     <string name="checkboxFormal">Formal</string>
     <string name="btnChooseOutfit">Choose My Outfit</string>
+    <string name="tabLocation">Location</string>
+    <string name="tabStyle">Style</string>
+    <string name="txtTabInstructions">Choose up to one from each section.</string>
+
+    <string name="locationTabCheckOne">Work</string>
+    <string name="locationTabCheckTwo">Bar</string>
+    <string name="locationTabCheckThree">Gym</string>
+
+    <string name="formalityTabCheckOne">Casual</string>
+    <string name="formalityTabCheckTwo">Cocktail</string>
+    <string name="formalityTabCheckThree">Formal</string>
+
+    <string name="styleTabCheckOne">Dresses</string>
+    <string name="styleTabCheckTwo">Tops/Bottoms</string>
+    <string name="styleTabCheckThree">Rompers</string>
 
 </resources>
