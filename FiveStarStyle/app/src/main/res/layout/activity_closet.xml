@@ -10,7 +10,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/trelativeLayout"
+        android:id="@+id/relativeLayout"
         tools:context=".ClosetActivity">
 
         <Button
@@ -20,7 +20,7 @@
             android:layout_alignParentEnd="true"
             android:text="+" />
 
-        <Button
+        <ImageButton
             android:id="@+id/AllButton"
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -37,7 +37,7 @@
             android:weightSum="2.0"
             android:gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/ShirtButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/PantsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -65,7 +65,7 @@
             android:weightSum="2.0"
             android:gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/DressButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/RJButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -92,7 +92,7 @@
             android:weightSum="2.0"
             android:gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/AccButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -102,7 +102,7 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/ShoesButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
