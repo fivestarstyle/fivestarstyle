@@ -9,6 +9,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/choosemyoutfit_menu_option"
+        android:title="@string/choose_my_outfit"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/closet_menu_option"
         android:icon="@drawable/closet_menu_icon"
         android:title="@string/view_my_closet"
