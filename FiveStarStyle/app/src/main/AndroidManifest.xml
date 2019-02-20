@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddClothingActivity"></activity>
-        <activity android:name=".ClosetActivity"></activity>
+        <activity android:name=".AddClothingActivity" />
+        <activity android:name=".ClosetActivity" />
         <activity android:name=".ChooseOutfit" />
         <activity android:name=".ClosetStatistics" />
         <activity android:name=".RegisterActivity" />
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
