@@ -21,22 +21,22 @@ public class ClosetActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Toast.makeText(this,"you pressed home!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,"you pressed home!", Toast.LENGTH_LONG).show();
             Intent homeIntent = new Intent(this,MainActivity.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Toast.makeText(this,"you pressed closet!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,"you pressed closet!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetActivity.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Toast.makeText(this,"you pressed overview!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,"you pressed overview!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetStatistics.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Toast.makeText(this,"you pressed choose my outfit!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,"you pressed choose my outfit!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ChooseOutfit.class);
             this.startActivity(overviewIntent);
         }
