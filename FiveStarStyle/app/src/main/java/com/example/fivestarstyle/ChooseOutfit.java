@@ -22,8 +22,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,7 +144,7 @@ public class ChooseOutfit extends AppCompatActivity {
 //                        String iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
 //                        Picasso.get().load(iconUrl).into(weatherIcon);
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
-                        humidity.setText(String.format("%.0f",main.getDouble("temp_min")) + "%");
+                        humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
                         weatherIcon.setText(Html.fromHtml(setWeatherIcon(weather.getInt("id"),data.getJSONObject("sys").getLong("sunrise") * 1000,
                                 data.getJSONObject("sys").getLong("sunset") * 1000)));
 
