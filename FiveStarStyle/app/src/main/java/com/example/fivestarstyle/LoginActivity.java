@@ -28,12 +28,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            Log.d(TAG, "user:" + user.getEmail().toString());
+            // User is signed in
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra("user", user); //Optional parameters
+            startActivity(i);
+        } else {
+            // User is signed out
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+        }
+
         mEmailField = findViewById(R.id.txtEmail);
         mPasswordField = findViewById(R.id.txtPassword);
         mAuth = FirebaseAuth.getInstance();
 
-        MaterialButton registerScreen = (MaterialButton) findViewById(R.id.btnRegister);
+        MaterialButton btnRegister = (MaterialButton) findViewById(R.id.btnRegister);
         MaterialButton btnLogin = (MaterialButton) findViewById(R.id.btnLogin);
+        MaterialButton btnForgotPass = (MaterialButton) findViewById(R.id.btnForgotPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,12 +57,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerScreen.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 LoginActivity.this.startActivity(myIntent);
+            }
+        });
+
+        btnForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(mEmailField.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this,"Reset Email Sent", Toast.LENGTH_LONG).show();
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
             }
         });
     }

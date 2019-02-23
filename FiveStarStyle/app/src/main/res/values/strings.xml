@@ -10,6 +10,7 @@
     <string name="password">Enter Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="logout">Logout</string>
     <string name="failed">Login Failed</string>
     <string name="forgotPass">Forgot Password?</string>
     <string name="top_star">top_star</string>
