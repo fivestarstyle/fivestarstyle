@@ -36,6 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ChooseOutfit extends AppCompatActivity {
@@ -160,12 +161,16 @@ public class ChooseOutfit extends AppCompatActivity {
 //                        String icon = weather.getString("icon");
 //                        String iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
 //                        Picasso.get().load(iconUrl).into(weatherIcon);
-                        int time = (int) cal.HOUR_OF_DAY;
-                        if(time < 12) {
+
+                        String times = String.valueOf(cal.getTime());
+                        String hour = times.substring(11,13);
+                        int time = Integer.valueOf(hour);
+
+                        if(time >= 4 && time < 12) {
                             txtGreeting.setText("Good Morning");
                             Log.d(TAG, String.valueOf(time));
                         }
-                        else if(time >= 12 && time <= 4) {
+                        else if(time >= 12 && time <= 16) {
                             txtGreeting.setText("Good Afternoon");
                             Log.d(TAG, String.valueOf(time));
                         }
