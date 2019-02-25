@@ -95,6 +95,7 @@ public class ChooseOutfit extends AppCompatActivity {
     public void getJSON(final String longitude, final String latitude, final String api_key) {
 
         if(longitude == "181" || latitude == "91") {
+//            MainActivity.requestLocationPermission();
             return;
         }
 

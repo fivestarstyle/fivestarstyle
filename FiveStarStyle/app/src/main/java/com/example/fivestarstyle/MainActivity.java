@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         checkLocation();
 
 
-//        requestLocationPermission();
+        requestLocationPermission();
 
         ImageButton overviewScreen = (ImageButton) findViewById(R.id.overview);
         ImageButton chooseOutfitScreen = (ImageButton) findViewById(R.id.choose_my_outfit);
@@ -196,9 +196,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLocation != null) {
 
             // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
-//            longitude = String.valueOf(mLocation.getLatitude());
+            longitude = String.valueOf(mLocation.getLatitude());
             //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
-//            latitude = String.valueOf(mLocation.getLongitude());
+            latitude = String.valueOf(mLocation.getLongitude());
+            Log.d(TAG2,latitude + longitude);
         } else {
 //            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
