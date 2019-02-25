@@ -12,15 +12,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class ClosetActivity extends AppCompatActivity {
-    private DatabaseReference mDatabase;
+
     private Uri mImageUri = null;
     private static final  int GALLERY_REQUEST =1;
     private static final int CAMERA_REQUEST_CODE=1;

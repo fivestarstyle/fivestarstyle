@@ -2,21 +2,36 @@ package com.example.fivestarstyle;
 
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddClothingActivity extends AppCompatActivity {
+    private static final String TAG = "AddClothing";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_clothing);
         Button btnTakePicture = (Button) findViewById(R.id.btnCamera);
@@ -26,7 +41,30 @@ public class AddClothingActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
+        Map<String, Object> test = new HashMap<>();
+        test.put("first", "Ada");
+        test.put("last", "Lovelace");
+        test.put("born", 1815);
+
+        // Add a new document with a generated ID
+        db.collection("userClosets" )
+                .add(test)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
+
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private void dispatchTakePictureIntent() {

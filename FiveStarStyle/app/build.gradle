@@ -29,7 +29,7 @@ dependencies {
     //for authentication, database, and storage
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
-    implementation 'com.google.firebase:firebase-database:16.0.6'
+    implementation 'com.google.firebase:firebase-firestore:18.0.1'
 
     // added for pie graph
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
