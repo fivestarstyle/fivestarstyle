@@ -41,7 +41,7 @@ public class ChooseOutfit extends AppCompatActivity {
     Dialog myDialog;
     JSONObject data = null;
 
-    TextView currentTemp, humidity;
+    TextView currentTemp, humidity, humidityText, temperatureText;
     TextView weatherIcon;
     Typeface weatherFont;
 
@@ -84,13 +84,20 @@ public class ChooseOutfit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_outfit);
-        getJSON("Tuscaloosa");
+        getJSON(MyApplication.longitude, MyApplication.latitude, "bba8e629ce93f0a063c0a46c47dc5960");
         currentTemp = (TextView) findViewById(R.id.currentTemp);
         humidity = (TextView) findViewById(R.id.humidity);
         weatherIcon = (TextView) findViewById(R.id.weatherIcon);
+        temperatureText = (TextView) findViewById(R.id.currentTemp_text);
+        humidityText = (TextView) findViewById(R.id.humidity_text);
     }
 
-    public void getJSON(final String city) {
+    public void getJSON(final String longitude, final String latitude, final String api_key) {
+
+        if(longitude == "181" || latitude == "91") {
+//            MainActivity.requestLocationPermission();
+            return;
+        }
 
         new AsyncTask<Void, Void, Void>() {
 
@@ -104,7 +111,7 @@ public class ChooseOutfit extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid=bba8e629ce93f0a063c0a46c47dc5960");
+                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
 
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -147,7 +154,9 @@ public class ChooseOutfit extends AppCompatActivity {
 //                        String iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
 //                        Picasso.get().load(iconUrl).into(weatherIcon);
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
+                        temperatureText.setText("Temperature");
                         humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
+                        humidityText.setText("Humidity");
                         weatherIcon.setText(Html.fromHtml(setWeatherIcon(weather.getInt("id"),data.getJSONObject("sys").getLong("sunrise") * 1000,
                                 data.getJSONObject("sys").getLong("sunset") * 1000)));
 

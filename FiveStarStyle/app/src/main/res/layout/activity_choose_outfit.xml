@@ -76,9 +76,10 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"/>
             <TextView
+                android:id="@+id/currentTemp_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Temperature"
+                android:text=""
                 android:textSize="14sp"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
@@ -115,9 +116,10 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"/>
             <TextView
+                android:id="@+id/humidity_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Humidity"
+                android:text=""
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
