@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,9 +43,12 @@ public class ChooseOutfit extends AppCompatActivity {
     Dialog myDialog;
     JSONObject data = null;
 
-    TextView currentTemp, humidity, humidityText, temperatureText;
+    private final static String TAG = "Time";
+
+    TextView currentTemp, humidity, humidityText, temperatureText, txtGreeting;
     TextView weatherIcon;
     Typeface weatherFont;
+    Calendar cal;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,6 +95,8 @@ public class ChooseOutfit extends AppCompatActivity {
         weatherIcon = (TextView) findViewById(R.id.weatherIcon);
         temperatureText = (TextView) findViewById(R.id.currentTemp_text);
         humidityText = (TextView) findViewById(R.id.humidity_text);
+        txtGreeting = (TextView) findViewById(R.id.txtGreeting);
+        cal = Calendar.getInstance();
     }
 
     public void getJSON(final String longitude, final String latitude, final String api_key) {
@@ -153,6 +160,19 @@ public class ChooseOutfit extends AppCompatActivity {
 //                        String icon = weather.getString("icon");
 //                        String iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
 //                        Picasso.get().load(iconUrl).into(weatherIcon);
+                        int time = (int) cal.HOUR_OF_DAY;
+                        if(time < 12) {
+                            txtGreeting.setText("Good Morning");
+                            Log.d(TAG, String.valueOf(time));
+                        }
+                        else if(time >= 12 && time <= 4) {
+                            txtGreeting.setText("Good Afternoon");
+                            Log.d(TAG, String.valueOf(time));
+                        }
+                        else {
+                            txtGreeting.setText("Good Night");
+                            Log.d(TAG, String.valueOf(time));
+                        }
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
                         temperatureText.setText("Temperature");
                         humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
