@@ -90,7 +90,7 @@ public class ChooseOutfit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_outfit);
-        getJSON(MyApplication.longitude, MyApplication.latitude, "bba8e629ce93f0a063c0a46c47dc5960");
+        getJSON(MyApplication.longitude, MyApplication.latitude, MyApplication.zipCode, MyApplication.city, MyApplication.state, "bba8e629ce93f0a063c0a46c47dc5960");
         currentTemp = (TextView) findViewById(R.id.currentTemp);
         humidity = (TextView) findViewById(R.id.humidity);
         weatherIcon = (TextView) findViewById(R.id.weatherIcon);
@@ -100,12 +100,17 @@ public class ChooseOutfit extends AppCompatActivity {
         cal = Calendar.getInstance();
     }
 
-    public void getJSON(final String longitude, final String latitude, final String api_key) {
+    public void getJSON(final String longitude, final String latitude, final String zipCode, final String city, final String state, final String api_key) {
 
-        if(longitude == "181" || latitude == "91") {
-//            MainActivity.requestLocationPermission();
-            return;
+        // error handling
+        if(longitude.length() == 0 && latitude.length() == 0) {
+            if(city.length() == 0 && state.length() == 0) {
+                if(zipCode.length() == 0) {
+                    return;
+                }
+            }
         }
+
 
         new AsyncTask<Void, Void, Void>() {
 
@@ -119,7 +124,18 @@ public class ChooseOutfit extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
+                    URL url;
+                    if(longitude.length() != 0 && latitude.length() != 0) {
+                        url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
+                    }
+                    else if(city.length() != 0 && state.length() != 0) {
+                        url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + "&units=imperial&appid=" + api_key);
+                    }
+                    else {
+                        url = new URL("https://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",us&units=imperial&appid=" + api_key);
+                    }
+
+//                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
 
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
