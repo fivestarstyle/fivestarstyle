@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ChooseOutfit extends AppCompatActivity {
@@ -41,9 +44,12 @@ public class ChooseOutfit extends AppCompatActivity {
     Dialog myDialog;
     JSONObject data = null;
 
-    TextView currentTemp, humidity;
+    private final static String TAG = "Time";
+
+    TextView currentTemp, humidity, humidityText, temperatureText, txtGreeting;
     TextView weatherIcon;
     Typeface weatherFont;
+    Calendar cal;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,23 +60,24 @@ public class ChooseOutfit extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Toast.makeText(this,"you pressed home!", Toast.LENGTH_LONG).show();
             Intent homeIntent = new Intent(this,MainActivity.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Toast.makeText(this,"you pressed closet!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetActivity.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Toast.makeText(this,"you pressed overview!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetStatistics.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Toast.makeText(this,"you pressed choose my outfit!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.logout_menu_option) {
+            FirebaseAuth.getInstance().signOut();
+            Intent overviewIntent = new Intent(this,LoginActivity.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -83,13 +90,22 @@ public class ChooseOutfit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_outfit);
-        getJSON("Tuscaloosa");
+        getJSON(MyApplication.longitude, MyApplication.latitude, "bba8e629ce93f0a063c0a46c47dc5960");
         currentTemp = (TextView) findViewById(R.id.currentTemp);
         humidity = (TextView) findViewById(R.id.humidity);
         weatherIcon = (TextView) findViewById(R.id.weatherIcon);
+        temperatureText = (TextView) findViewById(R.id.currentTemp_text);
+        humidityText = (TextView) findViewById(R.id.humidity_text);
+        txtGreeting = (TextView) findViewById(R.id.txtGreeting);
+        cal = Calendar.getInstance();
     }
 
-    public void getJSON(final String city) {
+    public void getJSON(final String longitude, final String latitude, final String api_key) {
+
+        if(longitude == "181" || latitude == "91") {
+//            MainActivity.requestLocationPermission();
+            return;
+        }
 
         new AsyncTask<Void, Void, Void>() {
 
@@ -103,7 +119,7 @@ public class ChooseOutfit extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid=bba8e629ce93f0a063c0a46c47dc5960");
+                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
 
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -145,8 +161,27 @@ public class ChooseOutfit extends AppCompatActivity {
 //                        String icon = weather.getString("icon");
 //                        String iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
 //                        Picasso.get().load(iconUrl).into(weatherIcon);
+
+                        String times = String.valueOf(cal.getTime());
+                        String hour = times.substring(11,13);
+                        int time = Integer.valueOf(hour);
+
+                        if(time >= 4 && time < 12) {
+                            txtGreeting.setText("Good Morning");
+                            Log.d(TAG, String.valueOf(time));
+                        }
+                        else if(time >= 12 && time <= 16) {
+                            txtGreeting.setText("Good Afternoon");
+                            Log.d(TAG, String.valueOf(time));
+                        }
+                        else {
+                            txtGreeting.setText("Good Night");
+                            Log.d(TAG, String.valueOf(time));
+                        }
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
-                        humidity.setText(String.format("%.0f",main.getDouble("temp_min")) + "%");
+                        temperatureText.setText("Temperature");
+                        humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
+                        humidityText.setText("Humidity");
                         weatherIcon.setText(Html.fromHtml(setWeatherIcon(weather.getInt("id"),data.getJSONObject("sys").getLong("sunrise") * 1000,
                                 data.getJSONObject("sys").getLong("sunset") * 1000)));
 

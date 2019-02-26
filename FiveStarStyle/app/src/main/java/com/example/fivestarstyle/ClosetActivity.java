@@ -1,6 +1,7 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,20 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 public class ClosetActivity extends AppCompatActivity {
+    private DatabaseReference mDatabase;
+    private Uri mImageUri = null;
+    private static final  int GALLERY_REQUEST =1;
+    private static final int CAMERA_REQUEST_CODE=1;
+    private StorageReference mStorage;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -21,23 +35,24 @@ public class ClosetActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Toast.makeText(this,"you pressed home!", Toast.LENGTH_LONG).show();
             Intent homeIntent = new Intent(this,MainActivity.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Toast.makeText(this,"you pressed closet!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetActivity.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Toast.makeText(this,"you pressed overview!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ClosetStatistics.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Toast.makeText(this,"you pressed choose my outfit!", Toast.LENGTH_LONG).show();
             Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.logout_menu_option) {
+            FirebaseAuth.getInstance().signOut();
+            Intent overviewIntent = new Intent(this,LoginActivity.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -69,4 +84,20 @@ public class ClosetActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
+        if(requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
+            mImageUri = data.getData();
+
+//            CropImage.activity(mImageUri)
+//                    .setGuidelines(CropImageView.Guidelines.ON)
+//                    .setAspectRatio(1,1)
+//                    .start(this);
+        }
+    }
+
+
 }

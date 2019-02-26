@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "963431449239",
-    "firebase_url": "https://fivestarstyle-948d2.firebaseio.com",
-    "project_id": "fivestarstyle-948d2",
-    "storage_bucket": "fivestarstyle-948d2.appspot.com"
+    "project_number": "638838359574",
+    "firebase_url": "https://fivestarstyle-cs495.firebaseio.com",
+    "project_id": "fivestarstyle-cs495",
+    "storage_bucket": "fivestarstyle-cs495.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:963431449239:android:bd60aa1247eb63db",
+        "mobilesdk_app_id": "1:638838359574:android:bd60aa1247eb63db",
         "android_client_info": {
           "package_name": "com.example.fivestarstyle"
         }
       },
       "oauth_client": [
         {
-          "client_id": "963431449239-pse3fngio7ikhp7tpkqv7lcof554l2lc.apps.googleusercontent.com",
+          "client_id": "638838359574-o3mt5jr58tjmql16uds04abdje2t6bop.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBCQZdOUakOG-7cYE6gtvCwUgHSLgj3tT8"
+          "current_key": "AIzaSyBW02XrhL2uA6W6iCLm0cA9Keo9Sv_O0SQ"
         }
       ],
       "services": {
