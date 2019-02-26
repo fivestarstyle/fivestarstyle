@@ -31,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
-            Log.d(TAG, "user:" + user.getEmail().toString());
+            Log.d(TAG, "user:" + user.getEmail());
             // User is signed in
-            Intent i = new Intent(LoginActivity.this, AddClothingActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             i.putExtra("user", user); //Optional parameters
             startActivity(i);
