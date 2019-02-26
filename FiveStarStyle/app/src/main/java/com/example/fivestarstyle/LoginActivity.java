@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Log.d(TAG, "user:" + user.getEmail().toString());
             // User is signed in
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            Intent i = new Intent(LoginActivity.this, AddClothingActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             i.putExtra("user", user); //Optional parameters
             startActivity(i);
