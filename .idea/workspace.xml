@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="90f56a1d-ebc0-49b0-83a1-0629cc9b381a" name="Default Changelist" comment="" />
+=======
     <list default="true" id="047415ce-3f3f-4a19-a534-99d1ca187cca" name="Default Changelist" comment="" />
+>>>>>>> refs/remotes/origin/master
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,11 +13,19 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
+<<<<<<< HEAD
+    <session id="-788167268">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.5" value="1" />
+=======
     <session id="1464782417">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="1" />
           <entry key="project.open.time.4" value="1" />
+>>>>>>> refs/remotes/origin/master
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
@@ -22,6 +34,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
+  <component name="ProjectFrameBounds">
+    <option name="x" value="208" />
+    <option name="y" value="24" />
+    <option name="width" value="1166" />
+    <option name="height" value="978" />
+=======
   <component name="GradleLocalSettings">
     <option name="projectSyncType">
       <map>
@@ -34,6 +53,7 @@
     <option name="y" value="23" />
     <option name="width" value="1494" />
     <option name="height" value="987" />
+>>>>>>> refs/remotes/origin/master
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -41,6 +61,10 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+<<<<<<< HEAD
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+=======
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -53,12 +77,16 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+>>>>>>> refs/remotes/origin/master
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
+=======
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+>>>>>>> refs/remotes/origin/master
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -77,18 +105,32 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
+      <changelist id="90f56a1d-ebc0-49b0-83a1-0629cc9b381a" name="Default Changelist" comment="" />
+      <created>1550682786711</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1550682786711</updated>
+=======
       <changelist id="047415ce-3f3f-4a19-a534-99d1ca187cca" name="Default Changelist" comment="" />
       <created>1551046581649</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1551046581649</updated>
+>>>>>>> refs/remotes/origin/master
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+    <frame x="208" y="24" width="1166" height="978" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.32925764" />
+=======
     <frame x="162" y="23" width="1494" height="987" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.3299389" />
+>>>>>>> refs/remotes/origin/master
       <window_info id="Structure" side_tool="true" />
       <window_info id="Image Layers" />
       <window_info id="Designer" />

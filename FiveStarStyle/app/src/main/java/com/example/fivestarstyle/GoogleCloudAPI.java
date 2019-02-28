@@ -51,7 +51,7 @@ public class GoogleCloudAPI extends AppCompatActivity {
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
     private TextView resultTextView;
-    Account mAccount;
+    Account mAccount = new Account("aoswald2@crimson.ua.edu", "com.google");
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
