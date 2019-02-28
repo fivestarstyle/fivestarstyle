@@ -4,7 +4,9 @@
     <string name="btnText">Least Recently Worn</string>
     <string name="btnText2">Least Frequently Worn</string>
     <string name="titleText">FiveStarStats</string>
+    <string name="take_pic">Take Picture + Upload to Closet</string>
 
+    <string name="camera_preview_image">CameraPreviewImage</string>
     <string name="get_started">Get Started</string>
     <string name="email_id">Enter Email</string>
     <string name="password">Enter Password</string>
