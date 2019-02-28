@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity"
+    android:id="@+id/top"
     >
 
     <TextView
@@ -44,18 +50,17 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User Email"
+            android:text="Email"
             android:layout_marginLeft="20dp"/>
         <TextView
             android:id="@+id/emailFilled"
-            android:textSize="60px"
+            android:autoSizeTextType="uniform"
             android:textStyle="italic"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="right"
-            android:text="test@test.com"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,7 +87,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="Suzy Submitter"
             android:layout_marginRight="20dp"/>
     </LinearLayout>
 
@@ -110,7 +114,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="Female"
             android:layout_marginRight="20dp"/>
     </LinearLayout>
 
@@ -138,7 +141,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="Tuscaloosa, AL"
             android:layout_marginRight="20dp"/>
     </LinearLayout>
 
@@ -182,6 +184,66 @@
         android:text="Use Custom Location"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/customView"
+        android:layout_below="@id/customLocationSwitch"
+        android:visibility="gone">
 
+        <TextView
+            android:id="@+id/customLocationText"
+            android:textSize="60px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Input Custom Location"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"/>
 
+        <EditText
+            android:id="@+id/txtCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <EditText
+            android:id="@+id/txtState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="State"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/txtCity"/>
+
+        <TextView
+            android:id="@+id/Or"
+            android:textSize="40px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OR"
+            android:layout_below="@id/txtState"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:id="@+id/txtZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Zip Code"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/txtState"/>
+
+        <Button
+            android:id="@+id/SubmitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtZip"
+            android:text="SUBMIT"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+    </LinearLayout>
 </RelativeLayout>
+</ScrollView>
