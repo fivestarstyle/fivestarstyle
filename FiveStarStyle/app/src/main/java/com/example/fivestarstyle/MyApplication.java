@@ -8,6 +8,9 @@ public class MyApplication extends Application {
     public static String city = "";
     public static String state = "";
     public static String zipCode = "";
+    public static String customCity = "";
+    public static String customState = "";
+    public static String customZipCode = "";
     public static String gender = "";
     public static String firstName = "";
     public static String lastName = "";
