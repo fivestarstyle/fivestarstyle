@@ -125,14 +125,14 @@ public class ChooseOutfit extends AppCompatActivity {
             protected Void doInBackground(Void... params) {
                 try {
                     URL url;
-                    if(longitude.length() != 0 && latitude.length() != 0) {
-                        url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
-                    }
-                    else if(city.length() != 0 && state.length() != 0) {
+                    if(city.length() != 0 && state.length() != 0) {
                         url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + "&units=imperial&appid=" + api_key);
                     }
-                    else {
+                    else if(zipCode.length() != 0) {
                         url = new URL("https://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",us&units=imperial&appid=" + api_key);
+                    }
+                    else {
+                        url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
                     }
 
 //                    URL url = new URL("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + api_key);
