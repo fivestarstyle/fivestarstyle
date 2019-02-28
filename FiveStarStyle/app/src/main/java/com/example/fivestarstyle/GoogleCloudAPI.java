@@ -51,7 +51,7 @@ public class GoogleCloudAPI extends AppCompatActivity {
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
     private TextView resultTextView;
-    Account mAccount;
+    Account mAccount = new Account("aoswald2@crimson.ua.edu", "com.google");
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -62,6 +62,7 @@ public class GoogleCloudAPI extends AppCompatActivity {
                 .select_image_button);
         selectedImage = (ImageView) findViewById(R.id.selected_image);
         resultTextView = (TextView) findViewById(R.id.result);
+
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +299,9 @@ public class GoogleCloudAPI extends AppCompatActivity {
         String SCOPE = "oauth2:https://www.googleapis.com/auth/cloud-platform";
         if (mAccount == null) {
             pickUserAccount();
+            Log.d("User Account", String.valueOf(mAccount));
         } else {
+            Log.d("User Account", String.valueOf(mAccount));
             new GetTokenTask(GoogleCloudAPI.this, mAccount, SCOPE, REQUEST_ACCOUNT_AUTHORIZATION)
                     .execute();
         }
