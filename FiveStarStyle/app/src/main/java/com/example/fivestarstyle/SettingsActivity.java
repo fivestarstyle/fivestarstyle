@@ -60,8 +60,8 @@ public class SettingsActivity extends AppCompatActivity {
         if (user != null) {
             String email = user.getEmail();
             emailTextView.setText(email);
-            /*nameTextView.setText(name);*/
-            /*genderTextView.setText(gender);*/
+            nameTextView.setText(MyApplication.firstName + MyApplication.lastName);
+            genderTextView.setText(MyApplication.gender);
             locationTextView.setText(MyApplication.city);
         }
 
