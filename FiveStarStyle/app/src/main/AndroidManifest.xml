@@ -22,7 +22,6 @@
         </activity>
         <activity android:name=".AddClothingActivity" />
         <activity android:name=".GoogleCloudAPI"></activity>
-        <activity android:name=".AddClothingActivity"></activity>
         <activity android:name=".ClosetActivity" />
         <activity android:name=".ChooseOutfit" />
         <activity android:name=".ClosetStatistics" />
