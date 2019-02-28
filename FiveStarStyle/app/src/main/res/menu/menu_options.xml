@@ -24,6 +24,10 @@
         android:icon="@drawable/overview_menu_icon"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/settings_menu_option"
+        android:title="@string/settings"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/logout_menu_option"
         android:title="@string/logout"
         android:icon="@drawable/overview_menu_icon"

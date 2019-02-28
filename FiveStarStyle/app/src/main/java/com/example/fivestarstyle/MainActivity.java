@@ -156,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Intent overviewIntent = new Intent(this,ChooseOutfit.class);
             this.startActivity(overviewIntent);
         }
+        else if(item.getItemId() == R.id.settings_menu_option) {
+            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            this.startActivity(overviewIntent);
+        }
         else if(item.getItemId() == R.id.logout_menu_option) {
             try {
                 FirebaseAuth.getInstance().signOut();
