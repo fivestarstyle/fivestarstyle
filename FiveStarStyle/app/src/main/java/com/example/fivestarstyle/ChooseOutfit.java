@@ -94,7 +94,7 @@ public class ChooseOutfit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_outfit);
         getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
-        getJSON(MyApplication.longitude, MyApplication.latitude, MyApplication.zipCode, MyApplication.city, MyApplication.state, "bba8e629ce93f0a063c0a46c47dc5960");
+        getJSON(MyApplication.longitude, MyApplication.latitude, MyApplication.customZipCode, MyApplication.customCity, MyApplication.customState, "bba8e629ce93f0a063c0a46c47dc5960");
         currentTemp = (TextView) findViewById(R.id.currentTemp);
         humidity = (TextView) findViewById(R.id.humidity);
         weatherIcon = (TextView) findViewById(R.id.weatherIcon);
