@@ -1,8 +1,5 @@
 package com.example.fivestarstyle;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,8 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mLastNameField;
     private Spinner mGenderField;
 
-//    private View mProgressView;
-//    private View mLoginFormView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,10 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
+            Toast.makeText(RegisterActivity.this, "Registration Failed: Please Fill Required Fields.",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
-//
-//        showProgress(true);
+
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -113,6 +109,10 @@ public class RegisterActivity extends AppCompatActivity {
             test.put("last", mLastNameField.getText().toString());
             test.put("gender", mGenderField.getSelectedItem().toString());
 
+            MyApplication.firstName = mFirstNameField.getText().toString();
+            MyApplication.lastName = mLastNameField.getText().toString();
+            MyApplication.gender = mGenderField.getSelectedItem().toString();
+
             // Add a new document with a generated ID
             db.collection("userClosets" ).document(user.getUid())
                     .set(test)
@@ -132,10 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-//        showProgress(false);
         if (user != null) {
             Intent newIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-//                myIntent.putExtra("key", value); //Optional parameters
             RegisterActivity.this.startActivity(newIntent);
         } else {
             Log.w(TAG, "Error changing screen");
@@ -160,6 +158,22 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         } else {
             mPasswordField.setError(null);
+        }
+
+        String firstName = mFirstNameField.getText().toString();
+        if (TextUtils.isEmpty(firstName)) {
+            mFirstNameField.setError("Required.");
+            valid = false;
+        } else {
+            mFirstNameField.setError(null);
+        }
+
+        String lastName = mLastNameField.getText().toString();
+        if (TextUtils.isEmpty(lastName)) {
+            mLastNameField.setError("Required.");
+            valid = false;
+        } else {
+            mLastNameField.setError(null);
         }
 
         return valid;
