@@ -110,7 +110,8 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
                             confirmLabels.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    DataTransferService.addItem(image, labels);
+                                    DataTransferService.addItem(mBitmap, labels);
+//                                    Toast.makeText(MLKit.this, "Item added to closet!", Toast.LENGTH_LONG);
                                 }
                             });
                         }
