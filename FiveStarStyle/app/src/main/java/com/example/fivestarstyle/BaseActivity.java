@@ -38,23 +38,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-//If “gallery_action” is selected, then...//
-
-            case R.id.action_gallery:
-
-//...check we have the WRITE_STORAGE permission//
-
-                checkStoragePermission(RC_STORAGE_PERMS1);
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {

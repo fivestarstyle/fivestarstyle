@@ -72,19 +72,20 @@ public class ClosetActivity extends AppCompatActivity {
         addClothing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                Intent mlkitIntent = new Intent(ClosetActivity.this, MLKit.class);
+                startActivity(mlkitIntent);
             }
         });
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
+//    static final int REQUEST_IMAGE_CAPTURE = 1;
+//
+//    private void dispatchTakePictureIntent() {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -99,6 +100,5 @@ public class ClosetActivity extends AppCompatActivity {
 //                    .start(this);
         }
     }
-
 
 }

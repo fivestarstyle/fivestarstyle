@@ -1,14 +1,18 @@
 package com.example.fivestarstyle;
 
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +25,7 @@ import com.google.firebase.ml.vision.label.FirebaseVisionLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetector;
 import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetectorOptions;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
 import java.util.List;
 
 
@@ -30,8 +33,12 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
     private Bitmap mBitmap;
     private ImageView mImageView;
     private TextView mTextView;
+    private Button takePicture;
+    private Button choosePicture;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private File output;
+    private static final int CONTENT_REQUEST=1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
 
         mTextView = findViewById(R.id.textView);
         mImageView = findViewById(R.id.imageView);
+        takePicture = findViewById(R.id.btn_take_picture);
+        choosePicture = findViewById(R.id.btn_choose_picture);
         findViewById(R.id.btn_choose_picture).setOnClickListener(this);
         findViewById(R.id.btn_take_picture).setOnClickListener(this);
     }
@@ -48,12 +57,11 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_take_picture:
-                dispatchTakePictureIntent();
+//                dispatchTakePictureIntent();
+                takePictureIntent();
                 break;
             case R.id.btn_choose_picture:
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, 0);
+                checkStoragePermission(RC_STORAGE_PERMS1);
         }
     }
 
@@ -130,35 +138,26 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
                         mImageView.setImageBitmap(mBitmap);
                         analyzePicture();
                     }
+                    choosePicture.setText("Choose Another Picture");
+                    takePicture.setText("Take Picture");
                     break;
                 case REQUEST_IMAGE_CAPTURE:
-                    Uri targetUri = data.getData();
-                    mBitmap = MyHelper.resizeImage(imageFile, this, targetUri, mImageView);
-//                    mBitmap = (Bitmap) data.getExtras().get("data");
+                    mBitmap = (Bitmap) data.getExtras().get("data");
                     mImageView.setImageBitmap(mBitmap);
+                    mTextView.setText(null);
                     analyzePicture();
-                    break;
-                case 0:
-                    try {
-                        final Uri imageUri = data.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        mBitmap = BitmapFactory.decodeStream(imageStream);
-                        mImageView.setImageBitmap(mBitmap);
-                        mTextView.setText(null);
-                        analyzePicture();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-                    }
-                    break;
+                    takePicture.setText("Retake Picture");
+                    choosePicture.setText("Choose From Library");
             }
         }
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+    private void takePictureIntent() {
+        Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(pictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(pictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+
     }
 }
