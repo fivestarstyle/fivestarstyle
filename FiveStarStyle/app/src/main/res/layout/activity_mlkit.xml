@@ -25,10 +25,18 @@
                 android:src="@drawable/ic_placeholder" />
 
             <Button
-                android:id="@+id/btn_device"
+                android:id="@+id/btn_take_picture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Device" />
+                android:text="Take Picture"
+                android:theme="@style/ButtonTheme" />
+
+            <Button
+                android:id="@+id/btn_choose_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose From Library"
+                android:theme="@style/ButtonTheme" />
 
             <TextView
                 android:id="@+id/textView"
