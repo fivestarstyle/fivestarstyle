@@ -34,46 +34,6 @@ public class DataTransferService {
     public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels){
         if (user != null) {
             //upload picture to storage
-            String image = uploadImage(bitmap);
-
-            if (image.length() != 0) {
-                Map<String, Object> newItem = new HashMap<>();
-                newItem.put("image", image);
-
-                newItem.put("labels", extractTags(labels));
-                // Add a new document with a generated ID
-                db.collection("userClosets/" + user.getUid() + "/Items")
-                        .add(newItem)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-            }
-        }
-
-    }
-
-    private static List<String> extractTags(List<FirebaseVisionLabel> labels){
-        List<String> tags = new ArrayList<>();
-        for (FirebaseVisionLabel label : labels) {
-            tags.add(label.getLabel());
-        }
-        return tags;
-    }
-
-    private static String uploadImage(Bitmap bitmap) {
-        String imageUrl = "";
-
-        if (user != null) {
-            //upload picture to storage
             final StorageReference userStorage = storageRef.child(user.getUid() + "/closet");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -89,13 +49,43 @@ public class DataTransferService {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl());
-//                    userStorage.getDownloadUrl().toString();
+                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl().toString());
+                    uploadImage(userStorage.getDownloadUrl().toString(), labels);
                 }
             });
-            imageUrl = userStorage.getDownloadUrl().toString();
         }
-        return imageUrl;
+    }
+
+
+
+    private static List<String> extractTags(List<FirebaseVisionLabel> labels){
+        List<String> tags = new ArrayList<>();
+        for (FirebaseVisionLabel label : labels) {
+            tags.add(label.getLabel());
+        }
+        return tags;
+    }
+
+    private static void uploadImage(String image, List<FirebaseVisionLabel> labels) {
+        Map<String, Object> newItem = new HashMap<>();
+        newItem.put("image", image);
+
+        newItem.put("labels", extractTags(labels));
+        // Add a new document with a generated ID
+        db.collection("userClosets/" + user.getUid() + "/Items")
+                .add(newItem)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
 }
