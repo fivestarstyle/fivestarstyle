@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -99,7 +100,6 @@ public class MyHelper {
             decodeStream(context.getContentResolver().openInputStream(uri), null, options);
             int photoW = options.outWidth;
             int photoH = options.outHeight;
-
             options.inSampleSize = Math.min(photoW / view.getWidth(), photoH / view.getHeight());
             return compressImage(imageFile, BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options));
         } catch (FileNotFoundException e) {
@@ -116,8 +116,12 @@ public class MyHelper {
         int photoW = options.outWidth;
         int photoH = options.outHeight;
 
+        Log.d("width", String.valueOf(view.getWidth()));
+        Log.d("height", String.valueOf(view.getHeight()));
+
         options.inJustDecodeBounds = false;
-        options.inSampleSize = Math.min(photoW / view.getWidth(), photoH / view.getHeight());
+        options.inSampleSize = photoW / view.getWidth();
+//        options.inSampleSize = Math.min(photoW / view.getWidth(), photoH / view.getHeight());
         return compressImage(imageFile, BitmapFactory.decodeFile(path, options));
     }
 
