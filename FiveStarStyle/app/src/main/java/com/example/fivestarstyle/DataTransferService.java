@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class DataTransferService {
     private static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -34,7 +35,8 @@ public class DataTransferService {
     public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels){
         if (user != null) {
             //upload picture to storage
-            final StorageReference userStorage = storageRef.child(user.getUid() + "/closet");
+            String id = UUID.randomUUID().toString();
+            final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
