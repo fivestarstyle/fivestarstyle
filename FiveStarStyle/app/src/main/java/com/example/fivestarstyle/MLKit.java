@@ -1,12 +1,10 @@
 package com.example.fivestarstyle;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +20,7 @@ import com.google.firebase.ml.vision.label.FirebaseVisionLabelDetectorOptions;
 import java.util.List;
 
 
-public class MLKitTester extends BaseActivity implements View.OnClickListener {
+public class MLKit extends BaseActivity implements View.OnClickListener {
     private Bitmap mBitmap;
     private ImageView mImageView;
     private TextView mTextView;
@@ -30,7 +28,7 @@ public class MLKitTester extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mlkit_tester);
+        setContentView(R.layout.activity_mlkit);
 
         mTextView = findViewById(R.id.textView);
         mImageView = findViewById(R.id.imageView);
