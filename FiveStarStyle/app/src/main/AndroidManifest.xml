@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -18,12 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddClothesForReal"></activity>
-        <activity android:name=".GoogleCloudAPI" />
-        <activity android:name=".SettingsActivity">
+        <activity android:name=".MLKitTester">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".AddClothesForReal" />
+        <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".AddClothingActivity" />
-        <activity android:name=".GoogleCloudAPI"></activity>
+        <activity android:name=".GoogleCloudAPI" />
         <activity android:name=".ClosetActivity" />
         <activity android:name=".ChooseOutfit" />
         <activity android:name=".ClosetStatistics" />
@@ -36,6 +42,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="label" />
     </application>
 
 </manifest>
