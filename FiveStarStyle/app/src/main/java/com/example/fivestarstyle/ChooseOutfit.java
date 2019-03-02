@@ -134,7 +134,7 @@ public class ChooseOutfit extends AppCompatActivity {
                 try {
                     URL url;
                     if(city.length() != 0 && state.length() != 0) {
-                        url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + "&units=imperial&appid=" + api_key);
+                        url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + ",us&units=imperial&appid=" + api_key);
                     }
                     else if(zipCode.length() != 0) {
                         url = new URL("https://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",us&units=imperial&appid=" + api_key);

@@ -78,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
         final LinearLayout viewCustom = (LinearLayout) findViewById(R.id.customView);
 
         final Switch current = (Switch) findViewById(R.id.currentLocationSwitch);
+        current.setChecked(true);
         final Switch custom = (Switch) findViewById(R.id.customLocationSwitch);
 
         current.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
