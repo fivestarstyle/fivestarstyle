@@ -35,6 +35,7 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
     private TextView mTextView;
     private Button takePicture;
     private Button choosePicture;
+    private Button confirmLabels;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private File output;
@@ -49,6 +50,9 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
         mImageView = findViewById(R.id.imageView);
         takePicture = findViewById(R.id.btn_take_picture);
         choosePicture = findViewById(R.id.btn_choose_picture);
+        confirmLabels = findViewById(R.id.btn_confirm_label);
+        confirmLabels.setVisibility(View.GONE);
+
         findViewById(R.id.btn_choose_picture).setOnClickListener(this);
         findViewById(R.id.btn_take_picture).setOnClickListener(this);
     }
@@ -80,7 +84,7 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
 
 //Create a FirebaseVisionImage object//
 
-            FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(mBitmap);
+            final FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(mBitmap);
 
 //Create an instance of FirebaseVisionLabelDetector//
 
@@ -94,7 +98,7 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
 
 //Implement the onSuccess callback//
 
-                        public void onSuccess(List<FirebaseVisionLabel> labels) {
+                        public void onSuccess(final List<FirebaseVisionLabel> labels) {
                             for (FirebaseVisionLabel label : labels) {
 
 //Display the label and confidence score in our TextView//
@@ -102,6 +106,13 @@ public class MLKit extends BaseActivity implements View.OnClickListener {
                                 mTextView.append(label.getLabel() + "\n");
                                 mTextView.append(label.getConfidence() + "\n\n");
                             }
+                            confirmLabels.setVisibility(View.VISIBLE);
+                            confirmLabels.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    DataTransferService.addItem(image, labels);
+                                }
+                            });
                         }
 
 //Register an OnFailureListener//
