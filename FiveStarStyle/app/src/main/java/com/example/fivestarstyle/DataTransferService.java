@@ -1,12 +1,14 @@
 package com.example.fivestarstyle;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +37,7 @@ public class DataTransferService {
     public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels){
         if (user != null) {
             //upload picture to storage
-            String id = UUID.randomUUID().toString();
+            final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -51,8 +53,12 @@ public class DataTransferService {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl().toString());
-                    uploadImage(userStorage.getDownloadUrl().toString(), labels);
+//                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl().toString());
+                    Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                    while (!urlTask.isSuccessful());
+                    Uri downloadUrl = urlTask.getResult();
+                    Log.d(TAG, "imageURL : " + downloadUrl.toString());
+                    uploadImage(downloadUrl.toString(), labels);
                 }
             });
         }
@@ -71,8 +77,9 @@ public class DataTransferService {
     private static void uploadImage(String image, List<FirebaseVisionLabel> labels) {
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-
         newItem.put("labels", extractTags(labels));
+
+
         // Add a new document with a generated ID
         db.collection("userClosets/" + user.getUid() + "/Items")
                 .add(newItem)

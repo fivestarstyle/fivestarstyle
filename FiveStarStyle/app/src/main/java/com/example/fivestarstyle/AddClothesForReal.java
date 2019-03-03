@@ -40,7 +40,7 @@ public class AddClothesForReal extends AppCompatActivity {
         mUploadBtn = (Button) findViewById(R.id.takepic);
         mImageView = (ImageView) findViewById(R.id.imageView6);
 
-        mProgress = new ProgressDialog(this);
+//        mProgress = new ProgressDialog(this);
 
         mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +60,8 @@ public class AddClothesForReal extends AppCompatActivity {
 
         if(requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            mProgress.setMessage("Uploading Image ...");
-            mProgress.show();
+//            mProgress.setMessage("Uploading Image ...");
+//            mProgress.show();
 
             Uri uri = data.getData();
 
@@ -71,7 +71,7 @@ public class AddClothesForReal extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    mProgress.dismiss();
+//                    mProgress.dismiss();
 
                     Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                     while (!urlTask.isSuccessful());
