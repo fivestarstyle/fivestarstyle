@@ -32,4 +32,8 @@
         android:title="@string/logout"
         android:icon="@drawable/overview_menu_icon"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/test_add_menu_option"
+        android:title="@string/test_add"
+        app:showAsAction="never"/>
 </menu>
