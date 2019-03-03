@@ -23,7 +23,6 @@
         <activity android:name=".MLKit"></activity>
         <activity android:name=".AddClothesForReal" />
         <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".AddClothingActivity" />
         <activity android:name=".GoogleCloudAPI" />
         <activity android:name=".ClosetActivity" />
         <activity android:name=".ChooseOutfit" />
