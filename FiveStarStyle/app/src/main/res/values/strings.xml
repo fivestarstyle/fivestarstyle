@@ -6,7 +6,7 @@
     <string name="titleText">FiveStarStats</string>
     <string name="take_pic">Take Picture + Upload to Closet</string>
     <string name="settings">Settings</string>
-
+    <string name="test_add">Test Add</string>
     <string name="camera_preview_image">CameraPreviewImage</string>
     <string name="get_started">Get Started</string>
     <string name="email_id">Enter Email</string>
@@ -56,5 +56,6 @@
     <!--MLKit-->
     <string name="action_gallery">Gallery</string>
     <string name="permission_request">This app needs to access files on your device</string>
+    <string name="preview_image">preview_image</string>
 
 </resources>
