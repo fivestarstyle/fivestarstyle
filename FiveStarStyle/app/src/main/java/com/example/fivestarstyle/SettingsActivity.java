@@ -109,29 +109,21 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         Button btnSubmit = (Button) findViewById(R.id.SubmitButton);
-        final EditText mCityField = findViewById(R.id.txtCity);
-        final EditText mStateField = findViewById(R.id.txtState);
         final EditText mZipField = findViewById(R.id.txtZip);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                custom(mCityField.getText().toString(), mStateField.getText().toString(), mZipField.getText().toString());
+                custom(mZipField.getText().toString());
             }
         });
 
     }
 
-    private void custom(String city, String state, String zip) {
+    private void custom(String zip) {
         if (zip.length() != 0) {
             MyApplication.customZipCode = zip;
             Toast.makeText(SettingsActivity.this, "Zip Code Set",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else if (city.length() != 0 && state.length() != 0) {
-            MyApplication.customCity = city;
-            MyApplication.customState = state;
-            Toast.makeText(SettingsActivity.this, "City and State Set",
                     Toast.LENGTH_SHORT).show();
         }
         else {
