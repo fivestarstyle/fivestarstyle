@@ -34,7 +34,8 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels){
+    public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels) {
+        //final string type, final string season){
         if (user != null) {
             //upload picture to storage
             final String id = UUID.randomUUID().toString();
@@ -75,6 +76,7 @@ public class DataTransferService {
     }
 
     private static void uploadImage(String image, List<FirebaseVisionLabel> labels) {
+        //String type, String season) {
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
         newItem.put("labels", extractTags(labels));
