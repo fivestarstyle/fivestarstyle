@@ -3,17 +3,23 @@ package com.example.fivestarstyle;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,26 +29,31 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.vision.v1.Vision;
+import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class GoogleCloudAPI extends AppCompatActivity {
+public class GoogleCloudAPI extends BaseActivity {
     private static String accessToken;
     static final int REQUEST_GALLERY_IMAGE = 10;
     static final int REQUEST_CODE_PICK_ACCOUNT = 11;
@@ -51,27 +62,105 @@ public class GoogleCloudAPI extends AppCompatActivity {
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
     private TextView resultTextView;
-    Account mAccount = new Account("aoswald2@crimson.ua.edu", "com.google");
+//    Account mAccount = new Account("aoswald2@crimson.ua.edu", "com.google");
+    private Account mAccount;
+    private ProgressDialog mProgressDialog;
+    private Button selectImage;
+    private Button takePhoto;
+    private Integer chooseImageFlag = 0;
+    private Integer takePictureFlag = 0;
+    private Uri uri;
+    private Integer counter = 0;
+
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
+//    private static final String CLOUD_VISION_API_KEY = "AIzaSyAA6QbnFWb2SzgXyrqdEgH9HZUOXw6liKw";
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_options,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.home__menu_option) {
+            Intent homeIntent = new Intent(this,MainActivity.class);
+            this.startActivity(homeIntent);
+        }
+        else if(item.getItemId() == R.id.closet_menu_option) {
+            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.overview_menu_option) {
+            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
+            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.settings_menu_option) {
+            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            this.startActivity(overviewIntent);
+        }
+        else if(item.getItemId() == R.id.logout_menu_option) {
+            FirebaseAuth.getInstance().signOut();
+            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            this.startActivity(overviewIntent);
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_cloud_api);
-        Button selectImageButton = (Button) findViewById(R.id
-                .select_image_button);
+        mProgressDialog = new ProgressDialog(this);
         selectedImage = (ImageView) findViewById(R.id.selected_image);
         resultTextView = (TextView) findViewById(R.id.result);
+        selectImage = (Button) findViewById(R.id.btn_choose_picture);
+        takePhoto = (Button) findViewById(R.id.btn_take_picture);
 
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityCompat.requestPermissions(GoogleCloudAPI.this,
                         new String[]{Manifest.permission.GET_ACCOUNTS},
                         REQUEST_PERMISSIONS);
+                chooseImageFlag = 1;
             }
         });
+
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
+                        new String[]{Manifest.permission.GET_ACCOUNTS},
+                        REQUEST_PERMISSIONS);
+                takePictureFlag = 1;
+            }
+        });
+//        checkStoragePermission(RC_STORAGE_PERMS1);
+//        findViewById(R.id.select_image_button).setOnClickListener(this);
     }
+
+//    @Override
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.select_image_button:
+////                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
+////                        new String[]{Manifest.permission.GET_ACCOUNTS},
+////                        REQUEST_PERMISSIONS);
+//                checkStoragePermission(RC_STORAGE_PERMS1);
+//        }
+//    }
 
     private void launchImagePicker() {
         Intent intent = new Intent();
@@ -81,11 +170,24 @@ public class GoogleCloudAPI extends AppCompatActivity {
                 REQUEST_GALLERY_IMAGE);
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+    private void dispatchTakePictureIntent() throws IOException {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
+        counter++; //this is an int
+        String imageFileName = "JPEG_" + counter; //make a better file name
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        uri = Uri.fromFile(image);
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
     }
 
     @Override
@@ -107,7 +209,8 @@ public class GoogleCloudAPI extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_GALLERY_IMAGE && resultCode == RESULT_OK && data != null) {
             uploadImage(data.getData());
-        } else if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
+        }
+        else if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == RESULT_OK) {
                 String email = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                 AccountManager am = AccountManager.get(this);
@@ -119,6 +222,7 @@ public class GoogleCloudAPI extends AppCompatActivity {
                     }
                 }
                 getAuthToken();
+//                checkStoragePermission(RC_STORAGE_PERMS1);
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT)
                         .show();
@@ -130,6 +234,22 @@ public class GoogleCloudAPI extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Authorization Failed", Toast.LENGTH_SHORT)
                         .show();
+            }
+        }
+        if(resultCode == RESULT_OK) {
+            switch(requestCode) {
+                case RC_STORAGE_PERMS1:
+                    checkStoragePermission(requestCode);
+                    break;
+                case RC_SELECT_PICTURE:
+//                    resultTextView.setText("Woohoo!");
+                    Uri dataUri = data.getData();
+                    uploadImage(dataUri);
+                    break;
+                case REQUEST_IMAGE_CAPTURE:
+//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                    Uri u = data.getData();
+                    uploadImage(uri);
             }
         }
     }
@@ -209,6 +329,7 @@ public class GoogleCloudAPI extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
+                Log.d(LOG_TAG, "post");
                 resultTextView.setText(result);
             }
         }.execute();
@@ -298,15 +419,31 @@ public class GoogleCloudAPI extends AppCompatActivity {
         String SCOPE = "oauth2:https://www.googleapis.com/auth/cloud-platform";
         if (mAccount == null) {
             pickUserAccount();
+//            checkStoragePermission(RC_STORAGE_PERMS1);
+            Log.d(LOG_TAG, "pick account");
         } else {
+//            Log.d(LOG_TAG, "getTokenTask");
             new GetTokenTask(GoogleCloudAPI.this, mAccount, SCOPE, REQUEST_ACCOUNT_AUTHORIZATION)
                     .execute();
+//            checkStoragePermission(RC_STORAGE_PERMS1);
+            Log.d(LOG_TAG, "getTokenTask");
         }
     }
 
     public void onTokenReceived(String token){
         accessToken = token;
 //        dispatchTakePictureIntent();
-        launchImagePicker();
+//        launchImagePicker();
+        if(chooseImageFlag == 1) {
+            checkStoragePermission(RC_STORAGE_PERMS1);
+        }
+        else if(takePictureFlag == 1) {
+            try {
+                dispatchTakePictureIntent();
+            } catch (IOException e) {
+                Log.d(LOG_TAG, "error taking photo");
+            }
+
+        }
     }
 }

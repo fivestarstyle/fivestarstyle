@@ -109,7 +109,7 @@
                 android:contentDescription="@string/view_my_closet"
                 android:padding="00dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/view_my_closet" />
+                app:srcCompat="@drawable/dresses" />
 
             <Space
                 android:layout_width="match_parent"
