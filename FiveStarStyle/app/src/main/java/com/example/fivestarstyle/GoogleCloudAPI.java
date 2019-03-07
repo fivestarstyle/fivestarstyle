@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -69,6 +70,7 @@ public class GoogleCloudAPI extends BaseActivity {
     private ProgressDialog mProgressDialog;
     private Button selectImage;
     private Button takePhoto;
+    private Button confirmLabels;
     private Integer chooseImageFlag = 0;
     private Integer takePictureFlag = 0;
     private Uri uri;
@@ -126,6 +128,7 @@ public class GoogleCloudAPI extends BaseActivity {
         resultTextView = (TextView) findViewById(R.id.result);
         selectImage = (Button) findViewById(R.id.btn_choose_picture);
         takePhoto = (Button) findViewById(R.id.btn_take_picture);
+        confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -147,6 +150,14 @@ public class GoogleCloudAPI extends BaseActivity {
                         new String[]{Manifest.permission.GET_ACCOUNTS},
                         REQUEST_PERMISSIONS);
                 takePictureFlag = 1;
+            }
+        });
+
+        confirmLabels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                startActivity(confirmLabelIntent);
             }
         });
 //        checkStoragePermission(RC_STORAGE_PERMS1);
