@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,7 +35,7 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final List<FirebaseVisionLabel> labels) {
+    public static void addItem(Bitmap bitmap, final List<String> labels, final BatchAnnotateImagesResponse response) {
         //final string type, final string season){
         if (user != null) {
             //upload picture to storage
@@ -59,27 +60,18 @@ public class DataTransferService {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     Log.d(TAG, "imageURL : " + downloadUrl.toString());
-                    uploadImage(downloadUrl.toString(), labels);
+                    uploadImage(downloadUrl.toString(), labels, response);
                 }
             });
         }
     }
 
 
-
-    private static List<String> extractTags(List<FirebaseVisionLabel> labels){
-        List<String> tags = new ArrayList<>();
-        for (FirebaseVisionLabel label : labels) {
-            tags.add(label.getLabel());
-        }
-        return tags;
-    }
-
-    private static void uploadImage(String image, List<FirebaseVisionLabel> labels) {
+    private static void uploadImage(String image, List<String> labels, BatchAnnotateImagesResponse response) {
         //String type, String season) {
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-        newItem.put("labels", extractTags(labels));
+//        newItem.put("labels", extractTags(labels));
 
 
         // Add a new document with a generated ID

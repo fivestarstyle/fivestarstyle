@@ -18,10 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
+import com.google.api.services.vision.v1.model.EntityAnnotation;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import static android.graphics.BitmapFactory.decodeFile;
 import static android.graphics.BitmapFactory.decodeStream;
@@ -135,4 +141,16 @@ public class MyHelper {
         }
         return bmp;
     }
+
+    public static List<String> extractLabels(BatchAnnotateImagesResponse response) {
+        List<String> tags = new ArrayList<>();
+        List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
+        if (labels != null) {
+            for (EntityAnnotation label : labels) {
+                tags.add(label.getDescription());
+            }
+        }
+        return tags;
+    }
+
 }
