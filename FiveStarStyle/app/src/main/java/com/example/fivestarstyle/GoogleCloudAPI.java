@@ -436,6 +436,7 @@ public class GoogleCloudAPI extends BaseActivity {
 //        launchImagePicker();
         if(chooseImageFlag == 1) {
             checkStoragePermission(RC_STORAGE_PERMS1);
+            chooseImageFlag = 0;
         }
         else if(takePictureFlag == 1) {
             try {
@@ -443,6 +444,7 @@ public class GoogleCloudAPI extends BaseActivity {
             } catch (IOException e) {
                 Log.d(LOG_TAG, "error taking photo");
             }
+            takePictureFlag = 0;
 
         }
     }

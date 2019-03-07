@@ -3,6 +3,7 @@ package com.example.fivestarstyle;
 import android.accounts.Account;
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -27,7 +28,9 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         try {
+            Log.d("tokenBackground", "before");
             String token = fetchToken();
+            Log.d("tokenBackground", "made it");
             if (token != null) {
                 ((GoogleCloudAPI)mActivity).onTokenReceived(token);
             }
@@ -44,7 +47,9 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     protected String fetchToken() throws IOException {
         String accessToken;
         try {
+            Log.d("token", "token1");
             accessToken = GoogleAuthUtil.getToken(mActivity, mAccount, mScope);
+            Log.d("token", "token2");
             GoogleAuthUtil.clearToken (mActivity, accessToken); // used to remove stale tokens.
             accessToken = GoogleAuthUtil.getToken(mActivity, mAccount, mScope);
             return accessToken;
