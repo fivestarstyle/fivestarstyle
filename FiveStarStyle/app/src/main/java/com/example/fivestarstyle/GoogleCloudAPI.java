@@ -15,6 +15,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,7 @@ public class GoogleCloudAPI extends BaseActivity {
     static final int REQUEST_CODE_PICK_ACCOUNT = 11;
     static final int REQUEST_ACCOUNT_AUTHORIZATION = 12;
     static final int REQUEST_PERMISSIONS = 13;
+    static final int REQUEST_CODE_CAMERA = 14;
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
     private TextView resultTextView;
@@ -199,6 +201,23 @@ public class GoogleCloudAPI extends BaseActivity {
                 } else {
                     Toast.makeText(GoogleCloudAPI.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case REQUEST_CODE_CAMERA:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+//                    Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                    try {
+                        Log.d(LOG_TAG, "Camera Permission Granted!");
+                        dispatchTakePictureIntent();
+                    } catch (IOException e) {
+                        Log.d(LOG_TAG, "error taking photo");
+                    }
+
+                } else {
+
+                    Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_LONG).show();
+
+                }
         }
     }
 
@@ -306,6 +325,7 @@ public class GoogleCloudAPI extends BaseActivity {
                     Log.d(LOG_TAG, "sending request");
 
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
+                    Log.d("Response", String.valueOf(response));
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {
@@ -401,8 +421,17 @@ public class GoogleCloudAPI extends BaseActivity {
             chooseImageFlag = 0;
         }
         else if(takePictureFlag == 1) {
+            Log.d(LOG_TAG, "Camera Permission Granted!");
             try {
-                dispatchTakePictureIntent();
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+                    Log.d(LOG_TAG, "Camera Permission Granted!");
+                }
+                else {
+                    Log.d(LOG_TAG, "Camera Permission Granted!");
+                    dispatchTakePictureIntent();
+                }
             } catch (IOException e) {
                 Log.d(LOG_TAG, "error taking photo");
             }
