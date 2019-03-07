@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GoogleCloudAPI">
+    android:padding="20dp"
+    tools:context=".MLKit">
 
-    <TextView
-        android:id="@+id/selected_image_txt"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:text="Selected Image: "/>
+        android:layout_centerHorizontal="true">
 
-    <ImageView
-        android:id="@+id/selected_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_image_txt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_image"
-        android:layout_marginTop="10dp"/>
+            <ImageView
+                android:id="@+id/selected_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingBottom="40dp"
+                android:src="@drawable/your_clothing_will_appear_here"/>
 
-    <Button
-        android:id="@+id/select_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Select Image"/>
+            <Button
+                android:id="@+id/btn_take_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Take Picture"
+                android:theme="@style/ButtonTheme" />
+
+            <Button
+                android:id="@+id/btn_choose_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose From Library"
+                android:theme="@style/ButtonTheme" />
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <Button
+                android:id="@+id/btn_confirm_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm Labels"
+                android:theme="@style/ButtonTheme" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

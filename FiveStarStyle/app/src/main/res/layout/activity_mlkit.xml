@@ -21,7 +21,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true" />
+                android:adjustViewBounds="true"
+                android:paddingBottom="40dp"
+                android:src="@drawable/your_clothing_will_appear_here"/>
 
             <Button
                 android:id="@+id/btn_take_picture"

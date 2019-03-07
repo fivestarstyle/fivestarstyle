@@ -74,21 +74,21 @@
             android:gravity="center_horizontal">
 
             <ImageButton
-                android:id="@+id/DressButton"
+                android:id="@+id/OuterwearButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/dresses" />
+                android:background="@drawable/outerwear" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
             <ImageButton
-                android:id="@+id/RJButton"
+                android:id="@+id/DressesSuitsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/rj"/>
+                android:background="@drawable/suits_dresses"/>
         </LinearLayout>
 
         <LinearLayout

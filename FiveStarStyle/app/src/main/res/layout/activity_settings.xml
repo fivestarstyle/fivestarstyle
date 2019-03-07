@@ -202,39 +202,13 @@
             android:layout_marginLeft="20dp"/>
 
         <EditText
-            android:id="@+id/txtCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="City"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-
-        <EditText
-            android:id="@+id/txtState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="State"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_below="@id/txtCity"/>
-
-        <TextView
-            android:id="@+id/Or"
-            android:textSize="40px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OR"
-            android:layout_below="@id/txtState"
-            android:layout_marginLeft="20dp"/>
-
-        <EditText
             android:id="@+id/txtZip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Zip Code"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_below="@id/txtState"/>
+            android:layout_below="@id/customLocationText"/>
 
         <Button
             android:id="@+id/SubmitButton"
