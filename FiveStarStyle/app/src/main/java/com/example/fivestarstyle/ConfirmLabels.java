@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -25,13 +26,16 @@ import lecho.lib.hellocharts.view.PieChartView;
 
 public class ConfirmLabels extends AppCompatActivity {
 
-    private Button next;
+    private Button right;
+    private Button left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_labels);
-        next = (Button) findViewById(R.id.button);
+        right = (Button) findViewById(R.id.right_btn);
+        left = (Button) findViewById(R.id.left_btn);
+        left.setVisibility(View.GONE);
         createTabs();
 
     }
@@ -145,14 +149,17 @@ public class ConfirmLabels extends AppCompatActivity {
     }
 
     public void categoryTab() {
-        next.setText("Next");
+        right.setText("Next");
+        left.setVisibility(View.GONE);
     }
 
     public void seasonTab() {
-        next.setText("Next");
+        right.setText("Next");
+        left.setVisibility(View.VISIBLE);
     }
 
     public void eventTab() {
-        next.setText("Add Item");
+        right.setText("Add Item");
+        left.setVisibility(View.VISIBLE);
     }
 }
