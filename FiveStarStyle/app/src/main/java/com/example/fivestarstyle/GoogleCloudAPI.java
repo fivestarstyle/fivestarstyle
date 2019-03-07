@@ -62,7 +62,6 @@ public class GoogleCloudAPI extends BaseActivity {
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
     private TextView resultTextView;
-//    Account mAccount = new Account("aoswald2@crimson.ua.edu", "com.google");
     private Account mAccount;
     private ProgressDialog mProgressDialog;
     private Button selectImage;
@@ -74,7 +73,6 @@ public class GoogleCloudAPI extends BaseActivity {
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-//    private static final String CLOUD_VISION_API_KEY = "AIzaSyAA6QbnFWb2SzgXyrqdEgH9HZUOXw6liKw";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -290,16 +288,6 @@ public class GoogleCloudAPI extends BaseActivity {
                     labelDetection.setMaxResults(10);
                     featureList.add(labelDetection);
 
-//                    Feature textDetection = new Feature();
-//                    textDetection.setType("TEXT_DETECTION");
-//                    textDetection.setMaxResults(10);
-//                    featureList.add(textDetection);
-
-//                    Feature landmarkDetection = new Feature();
-//                    landmarkDetection.setType("LANDMARK_DETECTION");
-//                    landmarkDetection.setMaxResults(10);
-//                    featureList.add(landmarkDetection);
-
                     List<AnnotateImageRequest> imageList = new ArrayList<>();
                     AnnotateImageRequest annotateImageRequest = new AnnotateImageRequest();
                     Image base64EncodedImage = getBase64EncodedJpeg(bitmap);
@@ -348,32 +336,6 @@ public class GoogleCloudAPI extends BaseActivity {
         } else {
             message.append("nothing\n");
         }
-
-//        message.append("Texts:\n");
-//        List<EntityAnnotation> texts = response.getResponses().get(0)
-//                .getTextAnnotations();
-//        if (texts != null) {
-//            for (EntityAnnotation text : texts) {
-//                message.append(String.format(Locale.getDefault(), "%s: %s",
-//                        text.getLocale(), text.getDescription()));
-//                message.append("\n");
-//            }
-//        } else {
-//            message.append("nothing\n");
-//        }
-
-//        message.append("Landmarks:\n");
-//        List<EntityAnnotation> landmarks = response.getResponses().get(0)
-//                .getLandmarkAnnotations();
-//        if (landmarks != null) {
-//            for (EntityAnnotation landmark : landmarks) {
-//                message.append(String.format(Locale.getDefault(), "%.3f: %s",
-//                        landmark.getScore(), landmark.getDescription()));
-//                message.append("\n");
-//            }
-//        } else {
-//            message.append("nothing\n");
-//        }
 
         return message.toString();
     }
