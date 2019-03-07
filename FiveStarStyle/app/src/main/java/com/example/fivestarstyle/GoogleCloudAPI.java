@@ -337,6 +337,7 @@ public class GoogleCloudAPI extends BaseActivity {
                     Log.d(LOG_TAG, "sending request");
 
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
+                    Log.d("Response", String.valueOf(response));
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {
