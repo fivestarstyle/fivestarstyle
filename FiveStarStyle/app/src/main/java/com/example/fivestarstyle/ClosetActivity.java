@@ -72,8 +72,8 @@ public class ClosetActivity extends AppCompatActivity {
         addClothing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mlkitIntent = new Intent(ClosetActivity.this, GoogleCloudAPI.class);
-                startActivity(mlkitIntent);
+                Intent gcapiIntent = new Intent(ClosetActivity.this, GoogleCloudAPI.class);
+                startActivity(gcapiIntent);
             }
         });
     }
