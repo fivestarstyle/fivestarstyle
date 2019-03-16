@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
-        android:text="@string/choose_category"
+        android:text="@string/choose_all_that_apply"
         android:id="@+id/choose_category"
         android:textColor="@color/colorPrimary"
         android:textSize="31sp" />
@@ -70,71 +70,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/choose_category"
-        android:id="@+id/category_top"
+        android:id="@+id/category_work"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="75dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_top"
+        android:text="@string/locationTabCheckOne"
         android:textSize="25sp"
         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_top"
-        android:id="@+id/category_bottom"
+        android:layout_below="@id/category_work"
+        android:id="@+id/category_bar"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_bottom"
+        android:text="@string/locationTabCheckTwo"
         android:textSize="25sp"
         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_bottom"
-        android:id="@+id/category_dress"
+        android:layout_below="@id/category_bar"
+        android:id="@+id/category_gym"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_dress"
+        android:text="@string/locationTabCheckThree"
         android:textSize="25sp"
         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_dress"
-        android:id="@+id/category_outerwear"
+        android:layout_below="@id/category_gym"
+        android:id="@+id/category_casual"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_outerwear"
+        android:text="@string/formalityTabCheckOne"
         android:textSize="25sp"
         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_outerwear"
-        android:id="@+id/category_shoe"
+        android:layout_below="@id/category_casual"
+        android:id="@+id/category_cocktail"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_shoe"
+        android:text="@string/formalityTabCheckTwo"
         android:textSize="25sp"
         />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_shoe"
-        android:id="@+id/category_accessories"
+        android:layout_below="@id/category_cocktail"
+        android:id="@+id/category_formal"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/category_accessories"
+        android:text="@string/formalityTabCheckThree"
         android:textSize="25sp"
         />
 
