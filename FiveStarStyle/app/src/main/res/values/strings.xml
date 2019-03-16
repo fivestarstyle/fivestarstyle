@@ -53,8 +53,10 @@
         <item>Other</item>
     </string-array>
 
-    <string name="choose_season">Choose One or More Seasons</string>
-    <string name="choose_category">Choose One Category</string>
+    <string name="choose_seasons">CHOOSE SEASONS</string>
+    <string name="choose_all_that_apply">CHOOSE ALL THAT APPLY</string>
+    <string name="confirm_colors">CONFIRM COLORS</string>
+    <string name="confirm_labels">CONFIRM LABELS</string>
 
     <string name="season_Spring">Spring</string>
     <string name="season_Summer">Summer</string>
