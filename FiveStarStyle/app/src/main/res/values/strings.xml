@@ -53,6 +53,22 @@
         <item>Other</item>
     </string-array>
 
+    <string name="choose_season">Choose One or More Seasons</string>
+    <string name="choose_category">Choose One Category</string>
+
+    <string name="season_Spring">Spring</string>
+    <string name="season_Summer">Summer</string>
+    <string name="season_Fall">Fall</string>
+    <string name="season_Winter">Winter</string>
+
+    <string name="category_top">Tops</string>
+    <string name="category_bottom">Bottoms</string>
+    <string name="category_dress">Dresses / Suits</string>
+    <string name="category_outerwear">Outerwear</string>
+    <string name="category_shoe">Shoes</string>
+    <string name="category_accessories">Accessories</string>
+
+
     <string name="action_gallery">Gallery</string>
     <string name="permission_request">This app needs to access files on your device</string>
     <string name="preview_image">preview_image</string>
