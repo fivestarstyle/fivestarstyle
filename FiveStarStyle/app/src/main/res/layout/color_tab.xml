@@ -10,6 +10,7 @@
 
     <LinearLayout
         android:id="@+id/stars_linearlayout"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
@@ -59,11 +60,87 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/stars_linearlayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:text="@string/confirm_colors"
+        android:text="@string/choose_all_that_apply"
+        android:id="@+id/choose_category"
         android:textColor="@color/colorPrimary"
-        android:id="@+id/confirm_colors"
         android:textSize="31sp" />
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_category"
+        android:id="@+id/category_work"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="40dp"
+        android:text="@string/locationTabCheckOne"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_category"
+        android:layout_toRightOf="@id/category_work"
+        android:id="@+id/category_bar"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="90dp"
+        android:text="@string/locationTabCheckTwo"
+        android:textSize="25sp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_work"
+        android:layout_alignLeft="@id/category_bar"
+        android:id="@+id/category_gym"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:text="@string/locationTabCheckThree"
+        android:textSize="25sp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_work"
+        android:id="@+id/category_casual"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="40dp"
+        android:text="@string/formalityTabCheckOne"
+        android:textSize="25sp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_casual"
+        android:id="@+id/category_cocktail"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="40dp"
+        android:text="@string/formalityTabCheckTwo"
+        android:textSize="25sp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_gym"
+        android:layout_toRightOf="@id/category_cocktail"
+        android:layout_alignLeft="@id/category_bar"
+        android:id="@+id/category_formal"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="35dp"
+        android:text="@string/formalityTabCheckThree"
+        android:textSize="25sp"
+        />
 
 </RelativeLayout>
