@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -201,5 +203,69 @@ public class ClosetStatistics<pieChartData> extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.category_work:
+                if (checked) {
+                    // add to work stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Work",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_bar:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Bar",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            case R.id.category_gym:
+                if (checked) {
+                    // add to gym stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Gym",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_casual:
+                if (checked) {
+                    // add to casual stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Casual",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+            case R.id.category_cocktail:
+                if (checked) {
+                    // add to cocktail stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Cocktail",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_formal:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Formal",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            default:
+                // add to casual?
+                break;
+        }
     }
 }

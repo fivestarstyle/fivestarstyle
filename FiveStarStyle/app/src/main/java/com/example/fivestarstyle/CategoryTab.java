@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 public class CategoryTab extends Fragment {
     public CategoryTab() {
@@ -21,6 +22,7 @@ public class CategoryTab extends Fragment {
         // inflate the layout for this fragment
         return inflater.inflate(R.layout.category_tab, container, false);
     }
+
 
 
 }
