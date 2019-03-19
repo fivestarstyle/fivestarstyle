@@ -82,7 +82,25 @@ public class ClosetActivity extends AppCompatActivity {
         getCloset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataTransferService.retrieveImages("all");
+                DataTransferService.retrieveImagesForCloset("all");
+            }
+        });
+
+        ImageButton getTops = (ImageButton) findViewById(R.id.ShirtButton);
+
+        getTops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImagesForCloset("Top");
+            }
+        });
+
+        ImageButton getDressesSuits = (ImageButton) findViewById(R.id.DressesSuitsButton);
+
+        getTops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImagesForCloset("Dresses_Suits");
             }
         });
     }

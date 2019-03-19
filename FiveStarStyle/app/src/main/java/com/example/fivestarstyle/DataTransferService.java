@@ -38,8 +38,8 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final List<String> labels, final BatchAnnotateImagesResponse response) {
-        //final string type, final string season){
+    public static void addItem(Bitmap bitmap, final String category, final List<String> seasons,
+                               final List<String> events, final BatchAnnotateImagesResponse response) {
         if (user != null) {
             //upload picture to storage
             final String id = UUID.randomUUID().toString();
@@ -58,27 +58,29 @@ public class DataTransferService {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl().toString());
                     Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     Log.d(TAG, "imageURL : " + downloadUrl.toString());
-                    uploadImage(downloadUrl.toString(), labels, response);
+                    //add image and tags to database
+                    uploadItem(downloadUrl.toString(), category, seasons, events, response);
                 }
             });
         }
     }
 
 
-    private static void uploadImage(String image, List<String> labels, BatchAnnotateImagesResponse response) {
-        //String type, String season) {
+    private static void uploadItem(String image, String category, List<String> seasons, List<String> events, BatchAnnotateImagesResponse response) {
+
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-//        newItem.put("labels", extractTags(labels));
+        newItem.put("seasons", seasons);
+        newItem.put("events", events);
+        newItem.put("labels", MyHelper.extractLabels(response));
 
 
         // Add a new document with a generated ID
-        db.collection("userClosets/" + user.getUid() + "/Items")
+        db.collection("userClosets/" + user.getUid() + "/" + category)
                 .add(newItem)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -94,7 +96,7 @@ public class DataTransferService {
                 });
     }
 
-    public static void retrieveImages(String category){
+    public static void retrieveImagesForCloset(String category){
         if (category == "all") {
             db.collection("userClosets/" + user.getUid() + "/Items")
                 .get()
@@ -111,21 +113,22 @@ public class DataTransferService {
                         }
                     });
         }
-//        db.collection("userClosets/" + user.getUid() + "/Items")
-//                whereEqualTo(category, true).
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
+        else {
+        db.collection("userClosets/" + user.getUid() + category)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        }
     }
 
 }
