@@ -74,5 +74,6 @@
     <string name="action_gallery">Gallery</string>
     <string name="permission_request">This app needs to access files on your device</string>
     <string name="preview_image">preview_image</string>
+    <string name="title_activity_pull_images">PullImages</string>
 
 </resources>
