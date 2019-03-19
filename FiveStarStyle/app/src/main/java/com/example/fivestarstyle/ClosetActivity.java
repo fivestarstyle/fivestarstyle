@@ -76,6 +76,15 @@ public class ClosetActivity extends AppCompatActivity {
                 startActivity(gcapiIntent);
             }
         });
+
+        ImageButton getCloset = (ImageButton) findViewById(R.id.AllButton);
+
+        getCloset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImages("all");
+            }
+        });
     }
 
 //    static final int REQUEST_IMAGE_CAPTURE = 1;
