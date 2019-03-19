@@ -24,11 +24,6 @@
         <activity
             android:name=".PullImages"
             android:label="@string/title_activity_pull_images">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ConfirmLabels"></activity>
         <activity android:name=".AddClothesForReal" />
@@ -39,11 +34,11 @@
         <activity android:name=".ClosetStatistics" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
 
