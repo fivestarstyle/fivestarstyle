@@ -66,7 +66,7 @@ public class GoogleCloudAPI extends BaseActivity {
     static final int REQUEST_CODE_CAMERA = 14;
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
-    private TextView resultTextView;
+//    private TextView resultTextView;
     private Account mAccount;
     private ProgressDialog mProgressDialog;
     private Button selectImage;
@@ -125,10 +125,11 @@ public class GoogleCloudAPI extends BaseActivity {
         setContentView(R.layout.activity_google_cloud_api);
         mProgressDialog = new ProgressDialog(this);
         selectedImage = (ImageView) findViewById(R.id.selected_image);
-        resultTextView = (TextView) findViewById(R.id.result);
+//        resultTextView = (TextView) findViewById(R.id.result);
         selectImage = (Button) findViewById(R.id.btn_choose_picture);
         takePhoto = (Button) findViewById(R.id.btn_take_picture);
         confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
+        confirmLabels.setVisibility(View.GONE);
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -300,7 +301,7 @@ public class GoogleCloudAPI extends BaseActivity {
     }
 
     private void callCloudVision(final Bitmap bitmap) throws IOException {
-        resultTextView.setText("Retrieving results from cloud");
+//        resultTextView.setText("Retrieving results from cloud");
 
         new AsyncTask<Object, Void, String>() {
             @Override
@@ -357,7 +358,17 @@ public class GoogleCloudAPI extends BaseActivity {
 
             protected void onPostExecute(String result) {
                 Log.d(LOG_TAG, "post");
-                resultTextView.setText(result);
+//                resultTextView.setText(result);
+                takePhoto.setText(R.string.try_again);
+                takePhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent startOver = new Intent(GoogleCloudAPI.this, GoogleCloudAPI.class);
+                        GoogleCloudAPI.this.startActivity(startOver);
+                    }
+                });
+                selectImage.setVisibility(View.GONE);
+                confirmLabels.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -393,7 +404,6 @@ public class GoogleCloudAPI extends BaseActivity {
         int i = 0;
         newList.add("category");
         for(i = 0; i < labels.size(); i++) {
-            Log.d("LIST", String.valueOf(labels.get(i)));
             // check for category
             switch (String.valueOf(labels.get(i)).toLowerCase()) {
                 // tops
