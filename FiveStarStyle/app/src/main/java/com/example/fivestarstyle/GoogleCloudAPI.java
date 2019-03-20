@@ -438,6 +438,15 @@ public class GoogleCloudAPI extends BaseActivity {
                 case "headband":
                     newList.add("accessories");
                     break;
+                //shoes
+                case "shoes":
+                case "sneakers":
+                case "wedges":
+                case "heels":
+                case "loafers":
+                case "sandals":
+                    newList.add("shoes");
+                    break;
             }
             if (newList.size() == 1) {
                 newList.add("none");
