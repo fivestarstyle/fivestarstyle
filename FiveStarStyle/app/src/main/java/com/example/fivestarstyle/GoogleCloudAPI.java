@@ -46,11 +46,13 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
+import com.google.api.services.vision.v1.model.ImageProperties;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -318,6 +320,12 @@ public class GoogleCloudAPI extends BaseActivity {
                     labelDetection.setMaxResults(10);
                     featureList.add(labelDetection);
 
+//                    Feature imageProperties = new Feature();
+//                    imageProperties.setType("IMAGE_PROPERTIES");
+//                    imageProperties.setMaxResults(5);
+//                    Log.d("IMAGE", String.valueOf(imageProperties));
+//                    featureList.add(imageProperties);
+
                     List<AnnotateImageRequest> imageList = new ArrayList<>();
                     AnnotateImageRequest annotateImageRequest = new AnnotateImageRequest();
                     Image base64EncodedImage = getBase64EncodedJpeg(bitmap);
@@ -355,20 +363,165 @@ public class GoogleCloudAPI extends BaseActivity {
     }
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
+        Log.d("RESPONSE-LABELS", String.valueOf(response));
         StringBuilder message = new StringBuilder("Results:\n\n");
+        List<String> filteredMessage = new ArrayList<>();
         message.append("Labels:\n");
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
+//        ImageProperties colors = response.getResponses().get(0).getImagePropertiesAnnotation();
+//        labels.add(response.getResponses().get(0).getImagePropertiesAnnotation());
+        Log.d("LABELS", String.valueOf(labels));
+//        Log.d("COLORS", String.valueOf(colors));
         if (labels != null) {
             for (EntityAnnotation label : labels) {
-                message.append(String.format(Locale.getDefault(), "%.3f: %s",
-                        label.getScore(), label.getDescription()));
+                filteredMessage.add(String.format(Locale.getDefault(), "%s", label.getDescription()));
+                message.append(String.format(Locale.getDefault(), "%s", label.getDescription()));
                 message.append("\n");
             }
+//            message.append(String.format(Locale.getDefault(), "%s", colors.getDominantColors().getColors().get(0).getColor()));
+
         } else {
             message.append("nothing\n");
         }
+        Log.d("LIST", String.valueOf(filterLabels(filteredMessage)));
+//        return message.toString();
+        return String.valueOf(filterLabels(filteredMessage));
+    }
 
-        return message.toString();
+    private List<String> filterLabels(List labels) {
+        List<String> newList = new ArrayList<>();
+        int i = 0;
+        newList.add("category");
+        for(i = 0; i < labels.size(); i++) {
+            Log.d("LIST", String.valueOf(labels.get(i)));
+            // check for category
+            switch (String.valueOf(labels.get(i)).toLowerCase()) {
+                // tops
+                case "top":
+                case "shirt":
+                case "blouse":
+                case "sleeve":
+                case "sleeveless":
+                    newList.add("top");
+                    break;
+                // bottoms
+                case "bottom":
+                case "pant":
+                case "pants":
+                case "shorts":
+                case "slacks":
+                    newList.add("bottom");
+                    break;
+                case "dress":
+                case "jumper":
+                    newList.add("dress");
+                    break;
+                // outerwear
+                case "jacket":
+                case "sweatshirt":
+                case "blazer":
+                case "coat":
+                    newList.add("outerwear");
+                    break;
+                // accessories
+                case "jewelry":
+                case "earrings":
+                case "necklace":
+                case "bracelet":
+                case "ring":
+                case "scarf":
+                case "sunglasses":
+                case "glasses":
+                case "swim":
+                case "swimsuit":
+                case "bikini":
+                case "headband":
+                    newList.add("accessories");
+                    break;
+            }
+            if (newList.size() == 1) {
+                newList.add("none");
+            }
+        }
+        newList.add("color");
+        for(i = 0; i < labels.size(); i++) {
+            // check for color
+            switch(String.valueOf(labels.get(i)).toLowerCase()) {
+                // red
+                case "red":
+                case "crimson":
+                case "scarlet":
+                case "wine":
+                case "rust":
+                    newList.add("red");
+                    break;
+                // orange
+                case "orange":
+                case "pumpkin":
+                case "peach":
+                case "melon":
+                case "amber":
+                case "carrot":
+                    newList.add("orange");
+                    break;
+                // yellow
+                case "yellow":
+                case "gold":
+                case "mustard":
+                case "lemon":
+                    newList.add("yellow");
+                    break;
+                // green
+                case "green":
+                case "emerald":
+                case "olive":
+                case "seafoam":
+                    newList.add("green");
+                    break;
+                // blue
+                case "blue":
+                case "teal":
+                case "navy":
+                case "royal":
+                case "turquoise":
+                case "denim":
+                    newList.add("blue");
+                    break;
+                // purple
+                case "purple":
+                case "violet":
+                case "lilac":
+                    newList.add("purple");
+                    break;
+                // black
+                case "black":
+                case "charcoal":
+                case "ebony":
+                    newList.add("black");
+                    break;
+                // white
+                case "white":
+                case "ivory":
+                case "cream":
+                    newList.add("white");
+                    break;
+                // brown
+                case "brown":
+                case "mocha":
+                case "tan":
+                case "khaki":
+                    newList.add("brown");
+                    break;
+                // gray
+                case "gray":
+                    newList.add("gray");
+                    break;
+            }
+            if(newList.size() == 3) {
+                newList.add("none");
+            }
+        }
+        return newList;
     }
 
     public Bitmap resizeBitmap(Bitmap bitmap) {
