@@ -76,4 +76,6 @@
     <string name="preview_image">preview_image</string>
     <string name="title_activity_pull_images">PullImages</string>
 
+    <string name="try_again">Try Again</string>
+
 </resources>

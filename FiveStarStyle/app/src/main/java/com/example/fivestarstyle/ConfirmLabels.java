@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class ConfirmLabels extends AppCompatActivity {
         createTabs();
 
     }
+
+
 
     public void createTabs() {
         FrameLayout simpleFrameLayout;
@@ -78,6 +81,7 @@ public class ConfirmLabels extends AppCompatActivity {
                     case 0:
                         fragment = new CategoryTab();
                         categoryTab();
+
                         break;
                     case 1:
                         fragment = new SeasonTab();
@@ -108,6 +112,178 @@ public class ConfirmLabels extends AppCompatActivity {
     }
 
 
+
+
+    public void categoryTab() {
+        right.setText("Next");
+        left.setVisibility(View.GONE);
+    }
+
+    public void seasonTab() {
+        right.setText("Next");
+        left.setVisibility(View.VISIBLE);
+    }
+
+    public void eventTab() {
+        right.setText("Add Item");
+        left.setVisibility(View.VISIBLE);
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.category_work:
+                if (checked) {
+                    // add to work stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Work",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_bar:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Bar",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                break;
+            case R.id.category_gym:
+                if (checked) {
+                    // add to gym stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Gym",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_casual:
+                if (checked) {
+                    // add to casual stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Casual",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_cocktail:
+                if (checked) {
+                    // add to cocktail stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Cocktail",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_formal:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Formal",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_top:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Top",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_bottom:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Bottom",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_dress:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Dresses/Suits",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_outerwear:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Outerwear",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_shoe:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Shoes",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.category_accessories:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Accessories",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.season_spring:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Spring",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.season_summer:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Summer",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.season_fall:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Fall",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            case R.id.season_winter:
+                if (checked) {
+                    // add to bar stuff
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "You Chose Winter",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                };
+                break;
+            default:
+                // add to casual?
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,18 +324,4 @@ public class ConfirmLabels extends AppCompatActivity {
         return true;
     }
 
-    public void categoryTab() {
-        right.setText("Next");
-        left.setVisibility(View.GONE);
-    }
-
-    public void seasonTab() {
-        right.setText("Next");
-        left.setVisibility(View.VISIBLE);
-    }
-
-    public void eventTab() {
-        right.setText("Add Item");
-        left.setVisibility(View.VISIBLE);
-    }
 }
