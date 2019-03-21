@@ -98,6 +98,7 @@ public class DataTransferService {
 
     public static void retrieveImagesForCloset(String category){
         if (category == "all") {
+
             db.collection("userClosets/" + user.getUid() + "/Items")
                 .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

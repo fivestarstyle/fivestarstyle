@@ -86,7 +86,7 @@ public class ClosetActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton getTops = (ImageButton) findViewById(R.id.ShirtButton);
+        ImageButton getTops = (ImageButton) findViewById(R.id.TopButton);
 
         getTops.setOnClickListener(new View.OnClickListener() {
             @Override
