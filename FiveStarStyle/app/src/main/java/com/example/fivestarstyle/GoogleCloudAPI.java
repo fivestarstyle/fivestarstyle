@@ -477,7 +477,6 @@ public class GoogleCloudAPI extends BaseActivity {
                 // orange
                 case "orange":
                 case "pumpkin":
-                case "peach":
                 case "melon":
                 case "amber":
                 case "carrot":
@@ -535,6 +534,10 @@ public class GoogleCloudAPI extends BaseActivity {
                 case "gray":
                     newList.add("gray");
                     break;
+                case "pink":
+                case "peach":
+                case "salmon":
+                    newList.add("pink");
             }
         }
         if (newList.size() == 1) {
