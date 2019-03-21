@@ -97,7 +97,7 @@ public class ClosetActivity extends AppCompatActivity {
 
         ImageButton getDressesSuits = (ImageButton) findViewById(R.id.DressesSuitsButton);
 
-        getTops.setOnClickListener(new View.OnClickListener() {
+        getDressesSuits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DataTransferService.retrieveImagesForCloset("Dresses_Suits");

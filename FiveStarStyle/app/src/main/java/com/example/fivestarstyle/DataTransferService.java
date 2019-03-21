@@ -96,33 +96,38 @@ public class DataTransferService {
                 });
     }
 
-    public static void retrieveImagesForCloset(String category){
+    public static List<String> retrieveImagesForCloset(String category){
+        final List<String> imageUrls = new ArrayList<>();
         if (category == "all") {
-
-            db.collection("userClosets/" + user.getUid() + "/Items")
-                .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
+            // loop to iterate through all categories
+            for (String cat : MyApplication.categories){
+                db.collection("userClosets/" + user.getUid() + "/" + cat)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+                                        imageUrls.add(document.get("image").toString());
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-                        }
-                    });
+                        });
+                }
         }
         else {
-        db.collection("userClosets/" + user.getUid() + category)
+        db.collection("userClosets/" + user.getUid() + "/" + category)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+                                imageUrls.add(document.get("image").toString());
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -130,6 +135,7 @@ public class DataTransferService {
                     }
                 });
         }
+        return imageUrls;
     }
 
 }
