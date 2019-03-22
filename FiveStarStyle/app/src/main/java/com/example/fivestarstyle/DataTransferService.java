@@ -38,8 +38,8 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final String category, final List<String> seasons,
-                               final List<String> events, final BatchAnnotateImagesResponse response) {
+    public static void addItem(Bitmap bitmap, final Object item) {
+//        final String category, final List<String> seasons, final List<String> events, final BatchAnnotateImagesResponse response) {
         if (user != null) {
             //upload picture to storage
             final String id = UUID.randomUUID().toString();
@@ -63,22 +63,23 @@ public class DataTransferService {
                     Uri downloadUrl = urlTask.getResult();
                     Log.d(TAG, "imageURL : " + downloadUrl.toString());
                     //add image and tags to database
-                    uploadItem(downloadUrl.toString(), category, seasons, events, response);
+                    uploadItem(downloadUrl.toString(), item);
                 }
             });
         }
     }
 
 
-    private static void uploadItem(String image, String category, List<String> seasons, List<String> events, BatchAnnotateImagesResponse response) {
+    private static void uploadItem(String image, Object item){
+//                                   String category, String color, List<String> seasons, List<String> events, BatchAnnotateImagesResponse response) {
 
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-        newItem.put("seasons", seasons);
-        newItem.put("events", events);
-        newItem.put("labels", MyHelper.extractLabels(response));
+//        newItem.put("seasons", seasons);
+//        newItem.put("events", events);
+//        newItem.put("color", color);
 
-
+        String category = item.toString();
         // Add a new document with a generated ID
         db.collection("userClosets/" + user.getUid() + "/" + category)
                 .add(newItem)
@@ -86,6 +87,7 @@ public class DataTransferService {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

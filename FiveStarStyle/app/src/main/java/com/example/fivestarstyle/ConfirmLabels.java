@@ -1,6 +1,7 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +28,7 @@ import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
 
 public class ConfirmLabels extends AppCompatActivity {
-
+    private final static String TAG = "ConfirmLabels";
     private Button right;
     private Button left;
 
@@ -81,7 +83,6 @@ public class ConfirmLabels extends AppCompatActivity {
                     case 0:
                         fragment = new CategoryTab();
                         categoryTab();
-
                         break;
                     case 1:
                         fragment = new SeasonTab();
@@ -126,6 +127,19 @@ public class ConfirmLabels extends AppCompatActivity {
 
     public void eventTab() {
         right.setText("Add Item");
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //temporary to test before passing data between fragments
+//                Bitmap image = ;
+                Object item = new Object();
+                Log.d(TAG, "Add item =>" + item);
+//              Boolean success = DataTransferService.addItem(image, item);
+                //add method to
+                // if (success) new Intent with prompt to add more or return to closet
+                // else "error try again" redirect to add page
+            }
+        });
         left.setVisibility(View.VISIBLE);
     }
 
