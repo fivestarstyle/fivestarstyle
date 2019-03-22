@@ -404,9 +404,6 @@ public class GoogleCloudAPI extends BaseActivity {
         int i = 0;
         newList.add("category");
         for(i = 0; i < labels.size(); i++) {
-            if(newList.size() == 2) {
-                break;
-            }
             // check for category
             switch (String.valueOf(labels.get(i)).toLowerCase()) {
                 // tops
@@ -467,9 +464,6 @@ public class GoogleCloudAPI extends BaseActivity {
         }
         newList.add("color");
         for(i = 0; i < labels.size(); i++) {
-            if(newList.size() == 4) {
-                break;
-            }
             // check for color
             switch(String.valueOf(labels.get(i)).toLowerCase()) {
                 // red
@@ -544,7 +538,6 @@ public class GoogleCloudAPI extends BaseActivity {
                 case "peach":
                 case "salmon":
                     newList.add("pink");
-                    break;
             }
         }
         if (newList.size() == 1) {
