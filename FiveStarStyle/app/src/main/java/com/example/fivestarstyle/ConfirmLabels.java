@@ -46,7 +46,6 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new SeasonTab();
-                replaceFragment(fragment);
                 selectTab(1);
             }
         });
@@ -91,7 +90,6 @@ public class ConfirmLabels extends AppCompatActivity {
                     case 0:
                         fragment = new CategoryTab();
                         categoryTab();
-
                         break;
                     case 1:
                         fragment = new SeasonTab();
@@ -128,7 +126,6 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new SeasonTab();
-                replaceFragment(fragment);
                 selectTab(1);
             }
         });
@@ -142,7 +139,6 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new ColorTab();
-                replaceFragment(fragment);
                 selectTab(2);
             }
         });
@@ -152,7 +148,6 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new CategoryTab();
-                replaceFragment(fragment);
                 selectTab(0);
             }
         });
@@ -173,7 +168,6 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new SeasonTab();
-                replaceFragment(fragment);
                 selectTab(1);
             }
         });
@@ -372,14 +366,6 @@ public class ConfirmLabels extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.simpleFrameLayout, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     public void selectTab(Integer index) {
