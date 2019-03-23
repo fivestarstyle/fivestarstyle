@@ -91,6 +91,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isValidEmailAddress(email)) {
+            return;
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -123,7 +127,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateForm() {
+    public boolean isValidEmailAddress(String email) {
+        boolean hasAtSign = email.contains("@");
+        boolean hasDot = email.contains(".");
+        boolean returnValue = (hasAtSign && hasDot);
+        return returnValue;
+    }
+
+    public boolean validateForm() {
         boolean valid = true;
 
         String email = mEmailField.getText().toString();

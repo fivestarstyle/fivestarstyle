@@ -70,6 +70,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.1.0'
     testImplementation "com.google.truth:truth:0.43"
     testImplementation  "com.google.truth.extensions:truth-java8-extension:0.43"
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
 }
 
