@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,9 +42,15 @@ public class ConfirmLabels extends AppCompatActivity {
         left = (Button) findViewById(R.id.left_btn);
         left.setVisibility(View.GONE);
         createTabs();
-
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new SeasonTab();
+                selectTab(1);
+            }
+        });
     }
-
 
 
     public void createTabs() {
@@ -112,22 +120,44 @@ public class ConfirmLabels extends AppCompatActivity {
         });
     }
 
-
-
-
     public void categoryTab() {
         right.setText("Next");
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new SeasonTab();
+                selectTab(1);
+            }
+        });
         left.setVisibility(View.GONE);
     }
 
     public void seasonTab() {
         right.setText("Next");
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new ColorTab();
+                selectTab(2);
+            }
+        });
         left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new CategoryTab();
+                selectTab(0);
+            }
+        });
     }
 
     public void eventTab() {
         right.setText("Add Item");
         right.setOnClickListener(new View.OnClickListener() {
+//            Fragment fragment = null;
             @Override
             public void onClick(View v) {
                 //temporary to test before passing data between fragments
@@ -141,6 +171,14 @@ public class ConfirmLabels extends AppCompatActivity {
             }
         });
         left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new SeasonTab();
+                selectTab(1);
+            }
+        });
     }
 
     public void onCheckboxClicked(View view) {
@@ -336,6 +374,12 @@ public class ConfirmLabels extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public void selectTab(Integer index) {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(index);
+        tab.select();
     }
 
 }
