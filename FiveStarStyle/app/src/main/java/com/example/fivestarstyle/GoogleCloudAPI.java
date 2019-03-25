@@ -4,12 +4,18 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -20,11 +26,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +88,8 @@ public class GoogleCloudAPI extends BaseActivity {
     private Integer takePictureFlag = 0;
     private Uri uri;
     private Integer counter = 0;
+    Dialog myDialog;
+    LabelsObject newLabelsObject;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -154,27 +168,127 @@ public class GoogleCloudAPI extends BaseActivity {
             }
         });
 
-        confirmLabels.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
-                startActivity(confirmLabelIntent);
-            }
-        });
+        myDialog = new Dialog(this);
+                //
 //        checkStoragePermission(RC_STORAGE_PERMS1);
 //        findViewById(R.id.select_image_button).setOnClickListener(this);
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.select_image_button:
-////                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
-////                        new String[]{Manifest.permission.GET_ACCOUNTS},
-////                        REQUEST_PERMISSIONS);
-//                checkStoragePermission(RC_STORAGE_PERMS1);
-//        }
-//    }
+    public void ShowPopup(View v) {
+        TextView txtclose;
+        Button btnFollow;
+        final CheckBox chkCategory;
+        final CheckBox chkColor;
+
+        View view = findViewById(R.id.linearLayout1);
+        myDialog.setContentView(R.layout.labels_popup);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        chkCategory = (CheckBox) myDialog.findViewById(R.id.chkCategory);
+        chkColor = (CheckBox) myDialog.findViewById(R.id.chkColor);
+
+//        newLabelsObject.labelSetCategory("Top");
+//        newLabelsObject.labelSetColor("Red");
+
+        // check if category/color labels were found/updated
+        String category = newLabelsObject.labelGetCategory();
+        String color = newLabelsObject.labelGetColor();
+
+        if(category.equals("none") || category.length() == 0) {
+            if(color.equals("none") || color.length() == 0) {
+                // no labels found
+                Log.d("LABELS", "dismissed");
+                chkCategory.setChecked(false);
+                chkCategory.setChecked(false);
+                newLabelsObject.labelSetCategory("none");
+                newLabelsObject.labelSetColor("none");
+                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                startActivity(confirmLabelIntent);
+            }
+            // just color label found
+            else {
+                Log.d("LABELS", "Just Color");
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                btnFollow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!chkColor.isChecked()) {
+                            newLabelsObject.labelSetColor("none");
+                        }
+                        newLabelsObject.labelSetCategory("none");
+                        Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                        confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                        startActivity(confirmLabelIntent);
+                    }
+                });
+                chkColor.setText("Color: " + color);
+                chkCategory.setChecked(false);
+                chkCategory.setVisibility(View.GONE);
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+            }
+        }
+        // just category label found
+        else if(color.equals("none") || color.length() == 0) {
+            Log.d("LABELS", "Just Category");
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!chkCategory.isChecked()) {
+                        newLabelsObject.labelSetCategory("none");
+                    }
+                    newLabelsObject.labelSetColor("none");
+                    Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                    confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                    startActivity(confirmLabelIntent);
+                }
+            });
+            chkCategory.setText("Category: " + category);
+            chkColor.setChecked(false);
+            chkColor.setVisibility(View.GONE);
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+        }
+        // both labels found
+        else {
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!chkCategory.isChecked()) {
+                        newLabelsObject.labelSetCategory("none");
+                    }
+                    if(!chkColor.isChecked()) {
+                        newLabelsObject.labelSetColor("none");
+                    }
+                    Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                    confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                    startActivity(confirmLabelIntent);
+                }
+            });
+            chkCategory.setText("Category: " + category);
+            chkColor.setText("Color: " + color);
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+        }
+    }
 
     private void launchImagePicker() {
         Intent intent = new Intent();
@@ -396,7 +510,9 @@ public class GoogleCloudAPI extends BaseActivity {
         }
         Log.d("LIST", String.valueOf(filterLabels(filteredMessage)));
 //        return message.toString();
-        return String.valueOf(filterLabels(filteredMessage));
+        List<String> filtered = filterLabels(filteredMessage);
+        updateLabels(filtered);
+        return String.valueOf(filtered);
     }
 
     private List<String> filterLabels(List labels) {
@@ -540,10 +656,18 @@ public class GoogleCloudAPI extends BaseActivity {
                     newList.add("pink");
             }
         }
-        if (newList.size() == 1) {
+        if (newList.size() == 3) {
             newList.add("none");
         }
         return newList;
+    }
+
+    public void updateLabels(List labels) {
+        newLabelsObject = new LabelsObject();
+        newLabelsObject.labelSetCategory(String.valueOf(labels.get(1)));
+        newLabelsObject.labelSetColor(String.valueOf(labels.get(3)));
+        Log.d("LABELS-CATEGORY", newLabelsObject.labelGetCategory());
+        Log.d("LABELS-COLOR", newLabelsObject.labelGetColor());
     }
 
     public Bitmap resizeBitmap(Bitmap bitmap) {

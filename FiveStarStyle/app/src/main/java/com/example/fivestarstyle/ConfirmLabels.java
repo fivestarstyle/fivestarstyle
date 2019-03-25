@@ -1,8 +1,11 @@
 package com.example.fivestarstyle;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +14,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -33,25 +44,57 @@ public class ConfirmLabels extends AppCompatActivity {
     private final static String TAG = "ConfirmLabels";
     private Button right;
     private Button left;
+    String category;
+    String color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_labels);
+        Intent i = getIntent();
+        LabelsObject labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
+        category = labelsObj.labelGetCategory();
+        color = labelsObj.labelGetColor();
+        Log.d("LABELS-CATEGORY", category);
+        Log.d("LABELS-COLOR", color);
+
         right = (Button) findViewById(R.id.right_btn);
         left = (Button) findViewById(R.id.left_btn);
-        left.setVisibility(View.GONE);
-        createTabs();
-        right.setOnClickListener(new View.OnClickListener() {
-            Fragment fragment = null;
-            @Override
-            public void onClick(View v) {
-                fragment = new SeasonTab();
-                selectTab(1);
-            }
-        });
-    }
 
+        if( (!category.equals("none") && category.length() != 0) ||
+                (!color.equals("none") && color.length() != 0) ) {
+            right.setOnClickListener(new View.OnClickListener() {
+                Fragment fragment = null;
+                @Override
+                public void onClick(View v) {
+                    fragment = new ColorTab();
+                    selectTab(2);
+                }
+            });
+            left.setVisibility(View.VISIBLE);
+            left.setOnClickListener(new View.OnClickListener() {
+                Fragment fragment = null;
+                @Override
+                public void onClick(View v) {
+                    fragment = new CategoryTab();
+                    selectTab(0);
+                }
+            });
+        }
+        else {
+
+            left.setVisibility(View.GONE);
+            right.setOnClickListener(new View.OnClickListener() {
+                Fragment fragment = null;
+                @Override
+                public void onClick(View v) {
+                    fragment = new SeasonTab();
+                    selectTab(1);
+                }
+            });
+        }
+        createTabs();
+    }
 
     public void createTabs() {
         FrameLayout simpleFrameLayout;
@@ -63,7 +106,7 @@ public class ConfirmLabels extends AppCompatActivity {
         // create first tab
         TabLayout.Tab firstTab = tabLayout.newTab();
         firstTab.setText("Category");
-        tabLayout.addTab(firstTab,true);
+        tabLayout.addTab(firstTab);
         // create second tab
         TabLayout.Tab secondTab = tabLayout.newTab();
         secondTab.setText("Season");
@@ -72,21 +115,36 @@ public class ConfirmLabels extends AppCompatActivity {
         TabLayout.Tab thirdTab = tabLayout.newTab();
         thirdTab.setText("Event");
         tabLayout.addTab(thirdTab);
-        // set first tab to be selected
-        Fragment fragment = new CategoryTab();
+        // choose tab that is selected
+        Fragment fragment = null;
+        if( (!category.equals("none") && category.length() != 0) ||
+                (!color.equals("none") && color.length() != 0) ) {
+            fragment = new SeasonTab();
+            secondTab.select();
+        }
+        else {
+            fragment = new CategoryTab();
+            firstTab.select();
+        }
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if(fragment != null) ft.replace(R.id.simpleFrameLayout, fragment);
+        ft.replace(R.id.simpleFrameLayout, fragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-//        createCategoryPieGraph();
 
         // perform setOnTabSelectedListener event on TabLayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment;
                 // get the current selected tab's position and replace the fragment accordingly
-                Fragment fragment = new CategoryTab();
+                if( (!category.equals("none") && category.length() != 0) ||
+                        (!color.equals("none") && color.length() != 0) ) {
+                            fragment = new SeasonTab();
+                }
+                else {
+                    fragment = new CategoryTab();
+                }
                 switch (tab.getPosition()) {
                     case 0:
                         fragment = new CategoryTab();
@@ -103,7 +161,7 @@ public class ConfirmLabels extends AppCompatActivity {
                 }
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                if(fragment != null) ft.replace(R.id.simpleFrameLayout, fragment);
+                ft.replace(R.id.simpleFrameLayout, fragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.commit();
             }
