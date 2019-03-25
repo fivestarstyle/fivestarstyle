@@ -25,13 +25,7 @@
             android:name=".PullImages"
             android:label="@string/title_activity_pull_images">
         </activity>
-        <activity android:name=".ConfirmLabels">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ConfirmLabels"></activity>
         <activity android:name=".AddClothesForReal" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".GoogleCloudAPI" />
