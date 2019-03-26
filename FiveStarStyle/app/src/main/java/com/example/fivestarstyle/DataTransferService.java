@@ -38,13 +38,15 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final Object item) {
+    //method to upload image to storage then add image and data to the database
+    public static void addItem(final LabelsObject item) {
 //        final String category, final List<String> seasons, final List<String> events, final BatchAnnotateImagesResponse response) {
         if (user != null) {
             //upload picture to storage
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Bitmap bitmap = item.labelGetImage();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
 
@@ -69,17 +71,16 @@ public class DataTransferService {
         }
     }
 
-
-    private static void uploadItem(String image, Object item){
-//                                   String category, String color, List<String> seasons, List<String> events, BatchAnnotateImagesResponse response) {
-
+    //method to upload item to database by category
+    private static void uploadItem(String image, LabelsObject item){
+        //de
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
 //        newItem.put("seasons", seasons);
 //        newItem.put("events", events);
-//        newItem.put("color", color);
+        newItem.put("color", item.labelGetColor());
 
-        String category = item.toString();
+        String category = item.labelGetCategory();
         // Add a new document with a generated ID
         db.collection("userClosets/" + user.getUid() + "/" + category)
                 .add(newItem)
@@ -98,6 +99,7 @@ public class DataTransferService {
                 });
     }
 
+    //method to retrieve imageUrls from database
     public static List<String> retrieveImagesForCloset(String category){
         final List<String> imageUrls = new ArrayList<>();
         if (category == "all") {

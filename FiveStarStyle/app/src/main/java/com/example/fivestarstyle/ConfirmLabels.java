@@ -46,13 +46,14 @@ public class ConfirmLabels extends AppCompatActivity {
     private Button left;
     String category;
     String color;
+    LabelsObject labelsObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_labels);
         Intent i = getIntent();
-        LabelsObject labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
+        labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
         category = labelsObj.labelGetCategory();
         color = labelsObj.labelGetColor();
         Log.d("LABELS-CATEGORY", category);
@@ -218,11 +219,8 @@ public class ConfirmLabels extends AppCompatActivity {
 //            Fragment fragment = null;
             @Override
             public void onClick(View v) {
-                //temporary to test before passing data between fragments
-//                Bitmap image = ;
-                Object item = new Object();
-                Log.d(TAG, "Add item =>" + item);
-//              Boolean success = DataTransferService.addItem(image, item);
+                DataTransferService.addItem(labelsObj);
+                Log.d(TAG, "Add item =>" + labelsObj);
                 //add method to
                 // if (success) new Intent with prompt to add more or return to closet
                 // else "error try again" redirect to add page

@@ -460,6 +460,7 @@ public class GoogleCloudAPI extends BaseActivity {
 
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
                     Log.d("Response", String.valueOf(response));
+                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {
