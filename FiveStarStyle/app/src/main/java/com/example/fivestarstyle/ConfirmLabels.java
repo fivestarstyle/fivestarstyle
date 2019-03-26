@@ -30,6 +30,7 @@ public class ConfirmLabels extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_labels);
+
         Intent i = getIntent();
         labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
         category = labelsObj.labelGetCategory();
@@ -209,6 +210,12 @@ public class ConfirmLabels extends AppCompatActivity {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
+        View checkboxTops = (CheckBox) findViewById(R.id.category_top);
+        View checkboxBottoms = (CheckBox) findViewById(R.id.category_bottom);
+        View checkboxDress = (CheckBox) findViewById(R.id.category_dress);
+        View checkboxOuterwear = (CheckBox) findViewById(R.id.category_outerwear);
+        View checkboxShoes = (CheckBox) findViewById(R.id.category_shoe);
+        View checkboxAccessories = (CheckBox) findViewById(R.id.category_accessories);
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.category_work:
@@ -267,7 +274,13 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_top:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxBottoms).setChecked(false);
+                    ((CheckBox) checkboxDress).setChecked(false);
+                    ((CheckBox) checkboxOuterwear).setChecked(false);
+                    ((CheckBox) checkboxShoes).setChecked(false);
+                    ((CheckBox) checkboxAccessories).setChecked(false);
+
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Top",
                             Toast.LENGTH_SHORT);
@@ -276,7 +289,13 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_bottom:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxTops).setChecked(false);
+                    ((CheckBox) checkboxDress).setChecked(false);
+                    ((CheckBox) checkboxOuterwear).setChecked(false);
+                    ((CheckBox) checkboxShoes).setChecked(false);
+                    ((CheckBox) checkboxAccessories).setChecked(false);
+
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Bottom",
                             Toast.LENGTH_SHORT);
@@ -285,7 +304,12 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_dress:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxBottoms).setChecked(false);
+                    ((CheckBox) checkboxTops).setChecked(false);
+                    ((CheckBox) checkboxOuterwear).setChecked(false);
+                    ((CheckBox) checkboxShoes).setChecked(false);
+                    ((CheckBox) checkboxAccessories).setChecked(false);
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Dresses/Suits",
                             Toast.LENGTH_SHORT);
@@ -294,7 +318,12 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_outerwear:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxBottoms).setChecked(false);
+                    ((CheckBox) checkboxDress).setChecked(false);
+                    ((CheckBox) checkboxTops).setChecked(false);
+                    ((CheckBox) checkboxShoes).setChecked(false);
+                    ((CheckBox) checkboxAccessories).setChecked(false);
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Outerwear",
                             Toast.LENGTH_SHORT);
@@ -303,7 +332,12 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_shoe:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxBottoms).setChecked(false);
+                    ((CheckBox) checkboxDress).setChecked(false);
+                    ((CheckBox) checkboxOuterwear).setChecked(false);
+                    ((CheckBox) checkboxTops).setChecked(false);
+                    ((CheckBox) checkboxAccessories).setChecked(false);
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Shoes",
                             Toast.LENGTH_SHORT);
@@ -312,7 +346,12 @@ public class ConfirmLabels extends AppCompatActivity {
                 break;
             case R.id.category_accessories:
                 if (checked) {
-                    // add to bar stuff
+                    //make sure other checkboxes aren't checked
+                    ((CheckBox) checkboxBottoms).setChecked(false);
+                    ((CheckBox) checkboxDress).setChecked(false);
+                    ((CheckBox) checkboxOuterwear).setChecked(false);
+                    ((CheckBox) checkboxShoes).setChecked(false);
+                    ((CheckBox) checkboxTops).setChecked(false);
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "You Chose Accessories",
                             Toast.LENGTH_SHORT);
