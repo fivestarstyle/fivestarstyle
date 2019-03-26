@@ -1,0 +1,169 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmLabels">
+
+
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/choose_one_event"
+        android:background="@drawable/choose_all"
+        />
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_one_event"
+        android:id="@+id/color_red"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginLeft="40dp"
+        android:text="Red"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/choose_one_event"
+        android:layout_toRightOf="@id/color_red"
+        android:id="@+id/color_pink"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="90dp"
+        android:text="Pink"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_red"
+        android:id="@+id/color_orange"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="40dp"
+        android:text="Orange"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_pink"
+        android:layout_toRightOf="@id/color_orange"
+        android:layout_alignLeft="@id/color_pink"
+        android:id="@+id/color_yellow"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Yellow"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_yellow"
+        android:id="@+id/color_green"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="40dp"
+        android:text="Green"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_yellow"
+        android:layout_alignLeft="@id/color_pink"
+        android:layout_toRightOf="@id/color_green"
+        android:id="@+id/color_blue"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Blue"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_green"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/color_purple"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Purple"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_blue"
+        android:layout_toRightOf="@id/color_purple"
+        android:layout_alignLeft="@id/color_pink"
+        android:id="@+id/color_black"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Black"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_purple"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/color_brown"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Brown"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_black"
+        android:layout_alignLeft="@id/color_pink"
+        android:id="@+id/color_white"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="White"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/color_brown"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/gray"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="15dp"
+        android:text="Gray"
+        android:textSize="25sp"
+        android:onClick="onCheckboxClicked"
+        />
+
+</RelativeLayout>

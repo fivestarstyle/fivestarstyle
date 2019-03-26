@@ -5,11 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
-public class CategoryTab extends Fragment {
-    public CategoryTab() {
-        // required empty public constructor
+public class LabelsTabsEvent extends Fragment {
+    public LabelsTabsEvent() {
+        // Required empty public constructor
     }
 
     @Override
@@ -19,10 +18,7 @@ public class CategoryTab extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // inflate the layout for this fragment
-        return inflater.inflate(R.layout.category_tab, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.labels_tabs_event, container, false);
     }
-
-
-
 }
