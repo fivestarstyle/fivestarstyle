@@ -1,6 +1,8 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,8 @@ public class ConfirmLabelsAll extends AppCompatActivity {
     String category;
     String color;
     LabelsObject labelsObj;
+//    Bitmap image;
+//    byte[] byteArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class ConfirmLabelsAll extends AppCompatActivity {
 
         Intent i = getIntent();
         labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
+//        byteArray = i.getByteArrayExtra("image");
+//        image = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         category = labelsObj.labelGetCategory();
         color = labelsObj.labelGetColor();
         Log.d("LABELS-CATEGORY", category);

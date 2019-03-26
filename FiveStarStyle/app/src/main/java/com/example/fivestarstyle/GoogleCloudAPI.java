@@ -75,6 +75,8 @@ public class GoogleCloudAPI extends BaseActivity {
     Dialog myDialog;
     LabelsObject newLabelsObject;
     Bitmap image;
+//    ByteArrayOutputStream bStream;
+//    byte[] byteArray;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -191,6 +193,7 @@ public class GoogleCloudAPI extends BaseActivity {
                 newLabelsObject.labelSetColor("none");
                 Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
                 confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+//                confirmLabelIntent.putExtra("image", byteArray);
                 startActivity(confirmLabelIntent);
             }
             // just color label found
@@ -473,6 +476,11 @@ public class GoogleCloudAPI extends BaseActivity {
                     Log.d("Response", String.valueOf(response));
                     //add image to object being passed
                     image = bitmap;
+                    MyApplication.setBitmap(bitmap);
+                    Log.d("DATA", String.valueOf(bitmap));
+//                    bStream = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.PNG, 50, bStream);
+//                    byteArray = bStream.toByteArray();
 //                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
