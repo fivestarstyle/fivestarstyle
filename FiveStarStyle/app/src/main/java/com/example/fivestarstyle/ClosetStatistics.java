@@ -51,7 +51,7 @@ public class ClosetStatistics<pieChartData> extends AppCompatActivity {
         thirdTab.setText("Color");
         tabLayout.addTab(thirdTab);
         // set first tab to be selected
-        Fragment fragment = new LabelsTabsCategory();
+        Fragment fragment = new OverviewTabsCategory();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(fragment != null) ft.replace(R.id.simpleFrameLayout, fragment);
@@ -64,18 +64,18 @@ public class ClosetStatistics<pieChartData> extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position and replace the fragment accordingly
-                Fragment fragment = new LabelsTabsCategory();
+                Fragment fragment = new OverviewTabsCategory();
                 switch (tab.getPosition()) {
                     case 0:
-                        fragment = new LabelsTabsCategory();
+                        fragment = new OverviewTabsCategory();
                         createCategoryPieGraph();
                         break;
                     case 1:
-                        fragment = new LabelsTabsSeason();
+                        fragment = new OverviewTabsSeason();
                         createSeasonPieGraph();
                         break;
                     case 2:
-                        fragment = new LabelsTabsColor();
+                        fragment = new OverviewTabsColor();
                         createColorPieGraph();
                         break;
                 }
