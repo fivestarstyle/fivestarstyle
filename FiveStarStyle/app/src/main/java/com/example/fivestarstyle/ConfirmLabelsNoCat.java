@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ConfirmLabels extends AppCompatActivity {
-    private final static String TAG = "ConfirmLabels";
+public class ConfirmLabelsNoCat extends AppCompatActivity {
+    private final static String TAG = "ConfirmLabelsAll";
     private Button right;
     private Button left;
     String category;
@@ -29,7 +29,7 @@ public class ConfirmLabels extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_labels);
+        setContentView(R.layout.activity_confirm_labels_all);
 
         Intent i = getIntent();
         labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
@@ -61,22 +61,18 @@ public class ConfirmLabels extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
         // create first tab
         TabLayout.Tab firstTab = tabLayout.newTab();
-        firstTab.setText("Category");
+        firstTab.setText("Color");
         tabLayout.addTab(firstTab);
         // create second tab
         TabLayout.Tab secondTab = tabLayout.newTab();
-        secondTab.setText("Color");
+        secondTab.setText("Season");
         tabLayout.addTab(secondTab);
         // create third tab
         TabLayout.Tab thirdTab = tabLayout.newTab();
-        thirdTab.setText("Season");
+        thirdTab.setText("Event");
         tabLayout.addTab(thirdTab);
-        // create fourth tab
-        TabLayout.Tab fourthTab = tabLayout.newTab();
-        fourthTab.setText("Event");
-        tabLayout.addTab(fourthTab);
         // choose tab that is selected
-        Fragment fragment = new LabelsTabsCategory();
+        Fragment fragment = new LabelsTabsColor();
         firstTab.select();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -88,25 +84,20 @@ public class ConfirmLabels extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment = new LabelsTabsCategory();
+                Fragment fragment = new LabelsTabsColor();
                 switch (tab.getPosition()) {
                     case 0:
-                        fragment = new LabelsTabsCategory();
-                        categoryTab();
-                        break;
-                    case 1:
                         fragment = new LabelsTabsColor();
                         colorTab();
                         break;
-                    case 2:
+                    case 1:
                         fragment = new LabelsTabsSeason();
                         seasonTab();
                         break;
-                    case 3:
+                    case 2:
                         fragment = new LabelsTabsEvent();
                         eventTab();
                         break;
-
                 }
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -127,7 +118,7 @@ public class ConfirmLabels extends AppCompatActivity {
         });
     }
 
-    public void categoryTab() {
+    public void colorTab() {
         right.setText("Next");
         right.setOnClickListener(new View.OnClickListener() {
             Fragment fragment = null;
@@ -140,13 +131,13 @@ public class ConfirmLabels extends AppCompatActivity {
         left.setVisibility(View.GONE);
     }
 
-    public void colorTab() {
+    public void seasonTab() {
         right.setText("Next");
         right.setOnClickListener(new View.OnClickListener() {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
-                fragment = new LabelsTabsSeason();
+                fragment = new LabelsTabsEvent();
                 selectTab(2);
             }
         });
@@ -155,29 +146,8 @@ public class ConfirmLabels extends AppCompatActivity {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
-                fragment = new LabelsTabsCategory();
+                fragment = new LabelsTabsColor();
                 selectTab(0);
-            }
-        });
-    }
-
-    public void seasonTab() {
-        right.setText("Next");
-        right.setOnClickListener(new View.OnClickListener() {
-            Fragment fragment = null;
-            @Override
-            public void onClick(View v) {
-                fragment = new LabelsTabsColor();
-                selectTab(3);
-            }
-        });
-        left.setVisibility(View.VISIBLE);
-        left.setOnClickListener(new View.OnClickListener() {
-            Fragment fragment = null;
-            @Override
-            public void onClick(View v) {
-                fragment = new LabelsTabsColor();
-                selectTab(1);
             }
         });
     }
@@ -185,7 +155,7 @@ public class ConfirmLabels extends AppCompatActivity {
     public void eventTab() {
         right.setText("Add Item");
         right.setOnClickListener(new View.OnClickListener() {
-//            Fragment fragment = null;
+            //            Fragment fragment = null;
             @Override
             public void onClick(View v) {
                 DataTransferService.addItem(labelsObj);
@@ -201,7 +171,7 @@ public class ConfirmLabels extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment = new LabelsTabsSeason();
-                selectTab(2);
+                selectTab(1);
             }
         });
     }
