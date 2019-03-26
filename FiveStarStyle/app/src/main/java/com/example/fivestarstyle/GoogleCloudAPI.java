@@ -145,6 +145,8 @@ public class GoogleCloudAPI extends BaseActivity {
         confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
         confirmLabels.setVisibility(View.GONE);
 
+        newLabelsObject = new LabelsObject();
+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
@@ -665,7 +667,7 @@ public class GoogleCloudAPI extends BaseActivity {
     }
 
     public void updateLabels(List labels) {
-        newLabelsObject = new LabelsObject();
+//        newLabelsObject = new LabelsObject();
         newLabelsObject.labelSetCategory(String.valueOf(labels.get(1)));
         newLabelsObject.labelSetColor(String.valueOf(labels.get(3)));
         Log.d("LABELS-CATEGORY", newLabelsObject.labelGetCategory());
