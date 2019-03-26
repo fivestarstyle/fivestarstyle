@@ -26,10 +26,6 @@
                 android:layout_height="130dp"
                 android:background="@drawable/main_image" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
             <ImageButton
                 android:id="@+id/choose_my_outfit"
                 android:layout_width="match_parent"
@@ -41,7 +37,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="47dp" />
+                android:layout_height="10dp" />
 
             <ImageButton
                 android:id="@+id/view_my_closet"
@@ -54,7 +50,19 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="47dp" />
+                android:layout_height="10dp" />
+
+            <ImageButton
+                android:id="@+id/add_to_my_closet"
+                android:layout_width="wrap_content"
+                android:layout_height="109dp"
+                android:padding="00dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/add_to_my_closet" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <ImageButton
                 android:id="@+id/overview"
