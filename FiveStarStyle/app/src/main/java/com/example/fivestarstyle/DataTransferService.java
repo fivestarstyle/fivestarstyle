@@ -39,8 +39,8 @@ public class DataTransferService {
     private final static String TAG = "DataTransferService";
 
     //method to upload image to storage then add image and data to the database
-    public static void addItem(final LabelsObject item) {
-//        final String category, final List<String> seasons, final List<String> events, final BatchAnnotateImagesResponse response) {
+    public static Boolean addItem(final LabelsObject item) {
+        final Boolean success;
         if (user != null) {
             //upload picture to storage
             final String id = UUID.randomUUID().toString();
@@ -68,7 +68,9 @@ public class DataTransferService {
                     uploadItem(downloadUrl.toString(), item);
                 }
             });
+            return true;
         }
+        return false;
     }
 
     //method to upload item to database by category
