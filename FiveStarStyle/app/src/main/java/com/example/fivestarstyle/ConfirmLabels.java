@@ -38,39 +38,15 @@ public class ConfirmLabels extends AppCompatActivity {
 
         right = (Button) findViewById(R.id.right_btn);
         left = (Button) findViewById(R.id.left_btn);
-
-        if( (!category.equals("none") && category.length() != 0) ||
-                (!color.equals("none") && color.length() != 0) ) {
-            right.setOnClickListener(new View.OnClickListener() {
-                Fragment fragment = null;
-                @Override
-                public void onClick(View v) {
-                    fragment = new LabelsTabsColor();
-                    selectTab(2);
-                }
-            });
-            left.setVisibility(View.VISIBLE);
-            left.setOnClickListener(new View.OnClickListener() {
-                Fragment fragment = null;
-                @Override
-                public void onClick(View v) {
-                    fragment = new LabelsTabsCategory();
-                    selectTab(0);
-                }
-            });
-        }
-        else {
-
-            left.setVisibility(View.GONE);
-            right.setOnClickListener(new View.OnClickListener() {
-                Fragment fragment = null;
-                @Override
-                public void onClick(View v) {
-                    fragment = new LabelsTabsSeason();
-                    selectTab(1);
-                }
-            });
-        }
+        left.setVisibility(View.GONE);
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                fragment = new LabelsTabsSeason();
+                selectTab(1);
+            }
+        });
         createTabs();
     }
 
@@ -98,16 +74,8 @@ public class ConfirmLabels extends AppCompatActivity {
         fourthTab.setText("Event");
         tabLayout.addTab(fourthTab);
         // choose tab that is selected
-        Fragment fragment = null;
-        if( (!category.equals("none") && category.length() != 0) ||
-                (!color.equals("none") && color.length() != 0) ) {
-            fragment = new LabelsTabsSeason();
-            thirdTab.select();
-        }
-        else {
-            fragment = new LabelsTabsCategory();
-            firstTab.select();
-        }
+        Fragment fragment = new LabelsTabsCategory();
+        firstTab.select();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.simpleFrameLayout, fragment);
@@ -118,15 +86,7 @@ public class ConfirmLabels extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment;
-                // get the current selected tab's position and replace the fragment accordingly
-                if( (!category.equals("none") && category.length() != 0) ||
-                        (!color.equals("none") && color.length() != 0) ) {
-                            fragment = new LabelsTabsSeason();
-                }
-                else {
-                    fragment = new LabelsTabsCategory();
-                }
+                Fragment fragment = new LabelsTabsCategory();
                 switch (tab.getPosition()) {
                     case 0:
                         fragment = new LabelsTabsCategory();
