@@ -39,9 +39,32 @@ public class LabelsObject implements Serializable {
 
     public void labelAddSeason(String c) { this.seasons.add(c); }
 
-    public List<String> labelGetSeasons(String c) { return seasons; }
+    public List<String> labelGetSeasons() { return seasons; }
+
+    public void labelRemoveSeason(String c) {
+        int i = 0;
+        List<String> newSeasons = new ArrayList<>();
+        for(i = 0; i < seasons.size(); i++) {
+            if(seasons.get(i) != c) {
+                newSeasons.add(seasons.get(i));
+            }
+        }
+        seasons = newSeasons;
+    }
 
     public void labelAddEvent(String c) { this.events.add(c); }
 
-    public List<String> labelGetEvents(String c) { return events; }
+    public List<String> labelGetEvents() { return events; }
+
+    public void labelRemoveEvent(String c) {
+        int i = 0;
+        List<String> newEvents = new ArrayList<>();
+        for(i = 0; i < events.size(); i++) {
+            if(events.get(i) != c) {
+                newEvents.add(events.get(i));
+            }
+        }
+        events = newEvents;
+    }
+
 }

@@ -180,189 +180,179 @@ public class ConfirmLabelsNoColor extends AppCompatActivity {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
+        // categories
         View checkboxTops = (CheckBox) findViewById(R.id.category_top);
         View checkboxBottoms = (CheckBox) findViewById(R.id.category_bottom);
         View checkboxDress = (CheckBox) findViewById(R.id.category_dress);
         View checkboxOuterwear = (CheckBox) findViewById(R.id.category_outerwear);
         View checkboxShoes = (CheckBox) findViewById(R.id.category_shoe);
         View checkboxAccessories = (CheckBox) findViewById(R.id.category_accessories);
+
         // Check which checkbox was clicked
         switch(view.getId()) {
+            // events
             case R.id.category_work:
                 if (checked) {
-                    // add to work stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Work",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add work event label
+                    labelsObj.labelAddEvent("work");
+                } else {
+                    // remove work event label
+                    labelsObj.labelRemoveEvent("work");
+                }
                 break;
             case R.id.category_bar:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Bar",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // add bar event label
+                    labelsObj.labelAddEvent("bar");
+                } else {
+                    // remove bar event label
+                    labelsObj.labelRemoveEvent("bar");
                 }
                 break;
             case R.id.category_gym:
                 if (checked) {
-                    // add to gym stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Gym",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add gym event label
+                    labelsObj.labelAddEvent("gym");
+                } else {
+                    // remove gym event label
+                    labelsObj.labelRemoveEvent("gym");
+                }
                 break;
             case R.id.category_casual:
                 if (checked) {
-                    // add to casual stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Casual",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add casual event label
+                    labelsObj.labelAddEvent("casual");
+                } else {
+                    // remove casual event label
+                    labelsObj.labelRemoveEvent("casual");
+                }
                 break;
             case R.id.category_cocktail:
                 if (checked) {
-                    // add to cocktail stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Cocktail",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add cocktail event label
+                    labelsObj.labelAddEvent("cocktail");
+                } else {
+                    // remove cocktail event label
+                    labelsObj.labelRemoveEvent("cocktail");
+                }
                 break;
             case R.id.category_formal:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Formal",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add formal event label
+                    labelsObj.labelAddEvent("formal");
+                } else {
+                    // remove formal event label
+                    labelsObj.labelRemoveEvent("formal");
+                }
                 break;
+            // categories
             case R.id.category_top:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxBottoms).setChecked(false);
                     ((CheckBox) checkboxDress).setChecked(false);
                     ((CheckBox) checkboxOuterwear).setChecked(false);
                     ((CheckBox) checkboxShoes).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
-
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Top",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set top category label
+                    labelsObj.labelSetCategory("top");
                 };
                 break;
             case R.id.category_bottom:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxTops).setChecked(false);
                     ((CheckBox) checkboxDress).setChecked(false);
                     ((CheckBox) checkboxOuterwear).setChecked(false);
                     ((CheckBox) checkboxShoes).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
-
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Bottom",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set bottom category label
+                    labelsObj.labelSetCategory("bottom");
                 };
                 break;
             case R.id.category_dress:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxBottoms).setChecked(false);
                     ((CheckBox) checkboxTops).setChecked(false);
                     ((CheckBox) checkboxOuterwear).setChecked(false);
                     ((CheckBox) checkboxShoes).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Dresses/Suits",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set dress_or_suit category label
+                    labelsObj.labelSetCategory("dress_or_suit");
                 };
                 break;
             case R.id.category_outerwear:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxBottoms).setChecked(false);
                     ((CheckBox) checkboxDress).setChecked(false);
                     ((CheckBox) checkboxTops).setChecked(false);
                     ((CheckBox) checkboxShoes).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Outerwear",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set outwear category label
+                    labelsObj.labelSetCategory("outerwear");
                 };
                 break;
             case R.id.category_shoe:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxBottoms).setChecked(false);
                     ((CheckBox) checkboxDress).setChecked(false);
                     ((CheckBox) checkboxOuterwear).setChecked(false);
                     ((CheckBox) checkboxTops).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Shoes",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set shoe category label
+                    labelsObj.labelSetCategory("shoe");
                 };
                 break;
             case R.id.category_accessories:
                 if (checked) {
-                    //make sure other checkboxes aren't checked
+                    // enforce only selecting one
                     ((CheckBox) checkboxBottoms).setChecked(false);
                     ((CheckBox) checkboxDress).setChecked(false);
                     ((CheckBox) checkboxOuterwear).setChecked(false);
                     ((CheckBox) checkboxShoes).setChecked(false);
                     ((CheckBox) checkboxTops).setChecked(false);
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Accessories",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
+                    // set accessories category label
+                    labelsObj.labelSetCategory("accessories");
                 };
                 break;
+            // seasons
             case R.id.season_spring:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Spring",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add spring season label
+                    labelsObj.labelAddSeason("spring");
+                } else {
+                    labelsObj.labelRemoveSeason("spring");
+                }
                 break;
             case R.id.season_summer:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Summer",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add summer season label
+                    labelsObj.labelAddSeason("summer");
+                } else {
+                    // remove summer season label
+                    labelsObj.labelRemoveSeason("summer");
+                }
                 break;
             case R.id.season_fall:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Fall",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add fall season label
+                    labelsObj.labelAddSeason("fall");
+                } else {
+                    // remove fall season label
+                    labelsObj.labelRemoveSeason("fall");
+                }
                 break;
             case R.id.season_winter:
                 if (checked) {
-                    // add to bar stuff
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "You Chose Winter",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                };
+                    // add winter season label
+                    labelsObj.labelAddSeason("winter");
+                } else {
+                    // remove winter season label
+                    labelsObj.labelRemoveSeason("winter");
+                }
                 break;
             default:
                 // add to casual?

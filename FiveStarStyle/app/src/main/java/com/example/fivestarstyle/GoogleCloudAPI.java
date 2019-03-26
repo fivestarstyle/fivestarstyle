@@ -562,7 +562,7 @@ public class GoogleCloudAPI extends BaseActivity {
                     break;
                 case "dress":
                 case "jumper":
-                    newList.add("dress");
+                    newList.add("dress_or_suit");
                     break;
                 // outerwear
                 case "jacket":
