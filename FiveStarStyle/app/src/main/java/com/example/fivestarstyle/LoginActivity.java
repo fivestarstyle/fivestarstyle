@@ -95,6 +95,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isValidPassword(password)) {
+            return;
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -133,6 +137,16 @@ public class LoginActivity extends AppCompatActivity {
         boolean returnValue = (hasAtSign && hasDot);
         return returnValue;
     }
+
+
+    public boolean isValidPassword(String password) {
+        boolean hasUppercase = !password.equals(password.toLowerCase());
+        boolean hasLowercase = !password.equals(password.toUpperCase());
+        boolean isLongEnough = password.length() > 4;
+        boolean returnValue = (hasUppercase && hasLowercase && isLongEnough);
+        return returnValue;
+    }
+
 
     public boolean validateForm() {
         boolean valid = true;
