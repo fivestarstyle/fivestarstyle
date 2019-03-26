@@ -3,68 +3,52 @@ package com.example.fivestarstyle;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.vision.v1.Vision;
-import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
-import com.google.api.services.vision.v1.model.ImageProperties;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -91,6 +75,8 @@ public class GoogleCloudAPI extends BaseActivity {
     Dialog myDialog;
     LabelsObject newLabelsObject;
     Bitmap image;
+//    ByteArrayOutputStream bStream;
+//    byte[] byteArray;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -183,7 +169,7 @@ public class GoogleCloudAPI extends BaseActivity {
         final CheckBox chkCategory;
         final CheckBox chkColor;
 
-        View view = findViewById(R.id.linearLayout1);
+        View view = findViewById(R.id.confirmLabelsAll);
         myDialog.setContentView(R.layout.labels_popup);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
         btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
@@ -205,8 +191,9 @@ public class GoogleCloudAPI extends BaseActivity {
                 chkCategory.setChecked(false);
                 newLabelsObject.labelSetCategory("none");
                 newLabelsObject.labelSetColor("none");
-                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
+                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
                 confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+//                confirmLabelIntent.putExtra("image", byteArray);
                 startActivity(confirmLabelIntent);
             }
             // just color label found
@@ -221,11 +208,17 @@ public class GoogleCloudAPI extends BaseActivity {
                 btnFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent confirmLabelIntent;
                         if(!chkColor.isChecked()) {
                             newLabelsObject.labelSetColor("none");
+                            // no labels passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                        }
+                        else {
+                            // just color label passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
                         }
                         newLabelsObject.labelSetCategory("none");
-                        Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
                         confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
                         startActivity(confirmLabelIntent);
                     }
@@ -249,11 +242,16 @@ public class GoogleCloudAPI extends BaseActivity {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent confirmLabelIntent;
                     if(!chkCategory.isChecked()) {
                         newLabelsObject.labelSetCategory("none");
+                        // no labels passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                    } else {
+                        // just category label passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
                     }
                     newLabelsObject.labelSetColor("none");
-                    Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
                     confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
                     startActivity(confirmLabelIntent);
                 }
@@ -275,13 +273,26 @@ public class GoogleCloudAPI extends BaseActivity {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent confirmLabelIntent;
                     if(!chkCategory.isChecked()) {
                         newLabelsObject.labelSetCategory("none");
+                        if(!chkColor.isChecked()) {
+                            newLabelsObject.labelSetColor("none");
+                            // no labels passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                        } else {
+                            // just color label passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
+                        }
                     }
-                    if(!chkColor.isChecked()) {
+                    else if(!chkColor.isChecked()) {
                         newLabelsObject.labelSetColor("none");
+                        // just category label passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
+                    } else {
+                        // both labels passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCatOrColor.class);
                     }
-                    Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
                     confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
                     startActivity(confirmLabelIntent);
                 }
@@ -465,6 +476,11 @@ public class GoogleCloudAPI extends BaseActivity {
                     Log.d("Response", String.valueOf(response));
                     //add image to object being passed
                     image = bitmap;
+                    MyApplication.setBitmap(bitmap);
+                    Log.d("DATA", String.valueOf(bitmap));
+//                    bStream = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.PNG, 50, bStream);
+//                    byteArray = bStream.toByteArray();
 //                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
