@@ -189,9 +189,8 @@ public class ConfirmLabels extends AppCompatActivity {
             public void onClick(View v) {
                 Boolean success = DataTransferService.addItem(labelsObj);
                 Log.d(TAG, "Add item =>" + labelsObj);
-                //add method to
-                if (success) {
 
+                if (success) {
 //                    new Intent with prompt to add more or return to closet
                 } else {
 //                    "error try again" redirect to add page

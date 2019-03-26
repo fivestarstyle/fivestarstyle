@@ -102,8 +102,8 @@ public class DataTransferService {
     }
 
     //method to retrieve imageUrls from database
-    public static List<String> retrieveImagesForCloset(String category){
-        final List<String> imageUrls = new ArrayList<>();
+    public static ArrayList<String> retrieveImagesForCloset(String category){
+        final ArrayList<String> imageUrls = new ArrayList<>();
         if (category == "all") {
             // loop to iterate through all categories
             for (String cat : MyApplication.categories){
@@ -125,7 +125,7 @@ public class DataTransferService {
                 }
         }
         else {
-        db.collection("userClosets/" + user.getUid() + "/" + category)
+            db.collection("userClosets/" + user.getUid() + "/" + category)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

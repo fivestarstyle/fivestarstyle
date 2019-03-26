@@ -16,6 +16,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ClosetActivity extends AppCompatActivity {
 
     private Uri mImageUri = null;
@@ -102,7 +107,14 @@ public class ClosetActivity extends AppCompatActivity {
         getDressesSuits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataTransferService.retrieveImagesForCloset("Dresses_Suits");
+//                ArrayList<String> imageUrls = DataTransferService.retrieveImagesForCloset("Dresses_Suits");
+                //TEST
+                ArrayList<String> imageUrls =  new ArrayList<>(Arrays.asList("https://i.imgur.com/tGbaZCY.jpg", ""));
+                Intent viewIntent = new Intent(ClosetActivity.this, PopulateViewClosetActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("images", imageUrls);
+                viewIntent.putExtras(bundle);
+                startActivity(viewIntent);
             }
         });
     }

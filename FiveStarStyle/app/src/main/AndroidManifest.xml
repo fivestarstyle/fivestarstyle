@@ -21,11 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PopulateViewClosetActivity">
+        </activity>
         <activity
             android:name=".PullImages"
-            android:label="@string/title_activity_pull_images">
-        </activity>
-        <activity android:name=".ConfirmLabels"></activity>
+            android:label="@string/title_activity_pull_images"></activity>
+        <activity android:name=".ConfirmLabels" />
         <activity android:name=".AddClothesForReal" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".GoogleCloudAPI" />
@@ -40,7 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
