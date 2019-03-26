@@ -9,7 +9,7 @@ public class LabelsObject implements Serializable {
     private String category = "";
     private String color = "";
 
-    //added to test
+    //added to test -c
     public void labelSetImage(Bitmap i) {
         this.image = i;
     }

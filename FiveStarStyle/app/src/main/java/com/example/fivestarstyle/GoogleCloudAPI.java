@@ -460,6 +460,7 @@ public class GoogleCloudAPI extends BaseActivity {
 
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
                     Log.d("Response", String.valueOf(response));
+                    //add image to object being passed
                     newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
