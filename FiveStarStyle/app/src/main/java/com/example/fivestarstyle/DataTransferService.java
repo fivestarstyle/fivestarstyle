@@ -46,10 +46,12 @@ public class DataTransferService {
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Bitmap bitmap = item.labelGetImage();
+            Bitmap bitmap = MyApplication.getBitmap();
+            Log.d(TAG, String.valueOf(bitmap));
+//            Bitmap bitmap = item.labelGetImage();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
-
+            Log.d(TAG, String.valueOf(data));
             UploadTask uploadTask = userStorage.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override

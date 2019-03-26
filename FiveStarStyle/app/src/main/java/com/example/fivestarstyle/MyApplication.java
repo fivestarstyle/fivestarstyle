@@ -1,6 +1,7 @@
 package com.example.fivestarstyle;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,4 +23,12 @@ public class MyApplication extends Application {
             "Tops", "Bottoms", "Dresses_Suits", "Outerwear", "Shoes", "Accessories"
             );
 
+
+    private static Bitmap bitmap;
+    public static Bitmap getBitmap() {
+        return bitmap;
+    }
+    public static void setBitmap(Bitmap b) {
+        bitmap = b;
+    }
 }

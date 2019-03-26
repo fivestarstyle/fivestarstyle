@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         ImageButton overviewScreen = (ImageButton) findViewById(R.id.overview);
         ImageButton chooseOutfitScreen = (ImageButton) findViewById(R.id.choose_my_outfit);
         ImageButton viewMyClosetScreen = (ImageButton) findViewById(R.id.view_my_closet);
+        ImageButton addToMyClosetScreen = (ImageButton) findViewById(R.id.add_to_my_closet);
 
         overviewScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Intent viewClosetIntent = new Intent(MainActivity.this, ClosetActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(viewClosetIntent);
+            }
+        });
+
+        addToMyClosetScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addClosetIntent = new Intent(MainActivity.this, GoogleCloudAPI.class);
+                startActivity(addClosetIntent);
             }
         });
 
