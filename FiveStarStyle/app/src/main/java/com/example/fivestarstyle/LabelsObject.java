@@ -5,17 +5,17 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class LabelsObject implements Serializable {
-    private Bitmap image;
+//    private Bitmap image;
     private String category = "";
     private String color = "";
 
     //added to test -c
-    public void labelSetImage(Bitmap i) {
-        this.image = i;
-    }
-    public Bitmap labelGetImage() {
-        return image;
-    }
+//    public void labelSetImage(Bitmap i) {
+//        this.image = i;
+//    }
+//    public Bitmap labelGetImage() {
+//        return image;
+//    }
 
     public void labelSetCategory(String c) {
         this.category = c;

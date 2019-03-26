@@ -90,6 +90,7 @@ public class GoogleCloudAPI extends BaseActivity {
     private Integer counter = 0;
     Dialog myDialog;
     LabelsObject newLabelsObject;
+    Bitmap image;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -463,7 +464,8 @@ public class GoogleCloudAPI extends BaseActivity {
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
                     Log.d("Response", String.valueOf(response));
                     //add image to object being passed
-                    newLabelsObject.labelSetImage(bitmap);
+                    image = bitmap;
+//                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {

@@ -41,34 +41,34 @@ public class DataTransferService {
     //method to upload image to storage then add image and data to the database
     public static void addItem(final LabelsObject item) {
 //        final String category, final List<String> seasons, final List<String> events, final BatchAnnotateImagesResponse response) {
-        if (user != null) {
-            //upload picture to storage
-            final String id = UUID.randomUUID().toString();
-            final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Bitmap bitmap = item.labelGetImage();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-
-            UploadTask uploadTask = userStorage.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                    Log.e(TAG, "Image failed to upload");
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                    while (!urlTask.isSuccessful());
-                    Uri downloadUrl = urlTask.getResult();
-                    Log.d(TAG, "imageURL : " + downloadUrl.toString());
-                    //add image and tags to database
-                    uploadItem(downloadUrl.toString(), item);
-                }
-            });
-        }
+//        if (user != null) {
+//            //upload picture to storage
+//            final String id = UUID.randomUUID().toString();
+//            final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            Bitmap bitmap = item.labelGetImage();
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//            byte[] data = baos.toByteArray();
+//
+//            UploadTask uploadTask = userStorage.putBytes(data);
+//            uploadTask.addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception exception) {
+//                    // Handle unsuccessful uploads
+//                    Log.e(TAG, "Image failed to upload");
+//                }
+//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+//                    while (!urlTask.isSuccessful());
+//                    Uri downloadUrl = urlTask.getResult();
+//                    Log.d(TAG, "imageURL : " + downloadUrl.toString());
+//                    //add image and tags to database
+//                    uploadItem(downloadUrl.toString(), item);
+//                }
+//            });
+//        }
     }
 
     //method to upload item to database by category
