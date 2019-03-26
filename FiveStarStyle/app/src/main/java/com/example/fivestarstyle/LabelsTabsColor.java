@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ColorTab extends Fragment {
-    public ColorTab() {
+public class LabelsTabsColor extends Fragment {
+    public LabelsTabsColor() {
         // Required empty public constructor
     }
 
@@ -19,6 +19,6 @@ public class ColorTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.color_tab, container, false);
+        return inflater.inflate(R.layout.labels_tabs_color, container, false);
     }
 }

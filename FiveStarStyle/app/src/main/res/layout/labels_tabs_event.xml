@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ConfirmLabels">
 
-
-
     <ImageView
         android:layout_width="400dp"
         android:layout_height="125dp"

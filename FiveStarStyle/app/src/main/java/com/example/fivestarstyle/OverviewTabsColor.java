@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
-public class CategoryTab extends Fragment {
-    public CategoryTab() {
+
+public class OverviewTabsColor extends Fragment {
+    public OverviewTabsColor() {
         // required empty public constructor
     }
 
@@ -20,9 +20,7 @@ public class CategoryTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        return inflater.inflate(R.layout.category_tab, container, false);
+        return inflater.inflate(R.layout.overview_tabs, container, false);
     }
-
-
 
 }
