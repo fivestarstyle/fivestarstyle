@@ -29,6 +29,7 @@ public class ClosetActivity extends AppCompatActivity {
         return true;
     }
 
+    /*Functionality to the dropdown menu in the top right corner*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
@@ -62,6 +63,7 @@ public class ClosetActivity extends AppCompatActivity {
         return true;
     }
 
+    /*Functionality for the add button, goes to the add clothing page*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +116,7 @@ public class ClosetActivity extends AppCompatActivity {
 //        }
 //    }
 
+    /*Requests for use of camera*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -31,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    /*Adds the menu in the top right corner*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
@@ -64,11 +65,13 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    /*Pulls information from firebase to display on the settings page*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //pulls information from firebase and initializes other variables
         TextView emailTextView = (TextView) findViewById(R.id.emailFilled);
         TextView nameTextView = (TextView) findViewById(R.id.nameFilled);
         TextView genderTextView = (TextView) findViewById(R.id.genderFilled);
@@ -81,6 +84,8 @@ public class SettingsActivity extends AppCompatActivity {
         current.setChecked(true);
         final Switch custom = (Switch) findViewById(R.id.customLocationSwitch);
 
+        //makes it so if current location is checked the text box will not appear
+        //and makes it so that when current location is checked custom is not
         current.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -90,6 +95,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //makes it so if custom location is checked then the text box appears to fill in information
+        //and makes it so that when custom location is checked current is not
         custom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -100,6 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        //fills in information from database on the display
         if (user != null) {
             String email = user.getEmail();
             emailTextView.setText(email);
@@ -111,6 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
         Button btnSubmit = (Button) findViewById(R.id.SubmitButton);
         final EditText mZipField = findViewById(R.id.txtZip);
 
+        //sets custom zipCode when the submit button is clicked
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    //Toast to say whether or not zip code was filled in when submit button was clicked
     private void custom(String zip) {
         if (zip.length() != 0) {
             MyApplication.customZipCode = zip;
