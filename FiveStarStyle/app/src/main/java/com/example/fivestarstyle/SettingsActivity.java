@@ -1,6 +1,7 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -74,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
         //pulls information from firebase and initializes other variables
         TextView emailTextView = (TextView) findViewById(R.id.emailFilled);
         TextView nameTextView = (TextView) findViewById(R.id.nameFilled);
-        TextView genderTextView = (TextView) findViewById(R.id.genderFilled);
+        //TextView genderTextView = (TextView) findViewById(R.id.genderFilled);
         TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -107,13 +111,40 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final String TAG = "Settings";
+        DocumentReference docRef = db.collection("userClosets").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        MyApplication.firstName = document.get("first").toString();
+                        MyApplication.lastName = document.get("last").toString();
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        Log.d(TAG, "First Name: " + MyApplication.firstName);
+        Log.d(TAG, "Last Name: " + MyApplication.lastName);
+        //Log.d(TAG, "Latitude: " + MyApplication.latitude);
+        //Log.d(TAG, "Longitude: " + MyApplication.longitude);
+        //Log.d(TAG, "Zip Code: " + MyApplication.zipCode);
+
         //fills in information from database on the display
         if (user != null) {
             String email = user.getEmail();
             emailTextView.setText(email);
-            nameTextView.setText(MyApplication.firstName + MyApplication.lastName);
-            genderTextView.setText(MyApplication.gender);
-            locationTextView.setText(MyApplication.city);
+            nameTextView.setText(MyApplication.firstName + " " + MyApplication.lastName);
+            //genderTextView.setText(MyApplication.gender);
+            locationTextView.setText(MyApplication.zipCode);
         }
 
         Button btnSubmit = (Button) findViewById(R.id.SubmitButton);
