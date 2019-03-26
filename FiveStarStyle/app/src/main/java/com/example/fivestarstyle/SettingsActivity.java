@@ -130,15 +130,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //Toast to say whether or not zip code was filled in when submit button was clicked
-    private void custom(String zip) {
+    public boolean custom(String zip) {
         if (zip.length() != 0) {
             MyApplication.customZipCode = zip;
-            Toast.makeText(SettingsActivity.this, "Zip Code Set",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(SettingsActivity.this, "Zip Code Set",
+             //       Toast.LENGTH_SHORT).show();
+            return true;
         }
         else {
-            Toast.makeText(SettingsActivity.this, "Need to fill in information!",
-                    Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(SettingsActivity.this, "Need to fill in information!",
+          //          Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 }
