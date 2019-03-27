@@ -97,7 +97,7 @@ public class ChooseOutfit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_outfit);
-        getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
+        //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
         getJSON(MyApplication.longitude, MyApplication.latitude, MyApplication.customZipCode, MyApplication.customCity, MyApplication.customState, "bba8e629ce93f0a063c0a46c47dc5960");
         currentTemp = (TextView) findViewById(R.id.currentTemp);
         humidity = (TextView) findViewById(R.id.humidity);
@@ -250,36 +250,36 @@ public class ChooseOutfit extends AppCompatActivity {
         return icon;
     }
 
-    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
-        String strAdd = "";
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
-            if (addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("");
-
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                strAdd = strReturnedAddress.toString();
-                String[] strAddArray = strAdd.split("\\s*,\\s*");
-                String[] strAddArray2 = strAddArray[2].split("\\s+");
-                MyApplication.city = strAddArray[1];
-                MyApplication.state = strAddArray2[0];
-                MyApplication.zipCode = strAddArray2[1];
-                Log.w("My Current location address", MyApplication.city);
-                Log.w("My Current location address", MyApplication.state);
-                Log.w("My Current location address", MyApplication.zipCode);
-
-            } else {
-                Log.w("My Current location address", "No Address returned!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.w("My Current location address", "Cannot get Address!");
-        }
-        return strAdd;
-    }
+//    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+//        String strAdd = "";
+//        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+//        try {
+//            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+//            if (addresses != null) {
+//                Address returnedAddress = addresses.get(0);
+//                StringBuilder strReturnedAddress = new StringBuilder("");
+//
+//                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+//                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+//                }
+//                strAdd = strReturnedAddress.toString();
+//                String[] strAddArray = strAdd.split("\\s*,\\s*");
+//                String[] strAddArray2 = strAddArray[2].split("\\s+");
+//                MyApplication.city = strAddArray[1];
+//                MyApplication.state = strAddArray2[0];
+//                MyApplication.zipCode = strAddArray2[1];
+//                Log.w("My Current location address", MyApplication.city);
+//                Log.w("My Current location address", MyApplication.state);
+//                Log.w("My Current location address", MyApplication.zipCode);
+//
+//            } else {
+//                Log.w("My Current location address", "No Address returned!");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.w("My Current location address", "Cannot get Address!");
+//        }
+//        return strAdd;
+//    }
 
 }

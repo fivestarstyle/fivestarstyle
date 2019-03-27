@@ -158,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/color_brown"
         android:layout_marginLeft="40dp"
-        android:id="@+id/gray"
+        android:id="@+id/color_gray"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="15dp"
         android:text="Gray"

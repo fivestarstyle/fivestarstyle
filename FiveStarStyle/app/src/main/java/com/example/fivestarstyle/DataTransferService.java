@@ -45,6 +45,10 @@ public class DataTransferService {
         final Boolean success;
         if (user != null) {
             //upload picture to storage
+            Log.d("DATA-CATEGORY", item.labelGetCategory());
+            Log.d("DATA-COLOR", item.labelGetColor());
+            Log.d("DATA_SEASONS", item.labelGetSeasons().toString());
+            Log.d("DATA_EVENTS", item.labelGetEvents().toString());
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
