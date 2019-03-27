@@ -29,6 +29,7 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         try {
             Log.d("tokenBackground", "before");
+            Log.d("tokenBackground", "before");
             String token = fetchToken();
             Log.d("tokenBackground", "made it");
             if (token != null) {
@@ -47,6 +48,7 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     protected String fetchToken() throws IOException {
         String accessToken;
         try {
+            Log.d("token", "token1");
             Log.d("token", "token1");
             accessToken = GoogleAuthUtil.getToken(mActivity, mAccount, mScope);
             Log.d("token", "token2");

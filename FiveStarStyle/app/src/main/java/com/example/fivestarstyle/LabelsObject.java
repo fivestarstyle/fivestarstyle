@@ -37,7 +37,15 @@ public class LabelsObject implements Serializable {
         return color;
     }
 
-    public void labelAddSeason(String c) { this.seasons.add(c); }
+    public void labelAddSeason(String c) {
+        int i;
+        for(i = 0; i < seasons.size(); i++) {
+            if(c.equals(seasons.get(i))) {
+                return;
+            }
+        }
+        this.seasons.add(c);
+    }
 
     public List<String> labelGetSeasons() { return seasons; }
 
@@ -52,7 +60,15 @@ public class LabelsObject implements Serializable {
         seasons = newSeasons;
     }
 
-    public void labelAddEvent(String c) { this.events.add(c); }
+    public void labelAddEvent(String c) {
+        int i;
+        for(i = 0; i < events.size(); i++) {
+            if(c.equals(events.get(i))) {
+                return;
+            }
+        }
+        this.events.add(c);
+    }
 
     public List<String> labelGetEvents() { return events; }
 

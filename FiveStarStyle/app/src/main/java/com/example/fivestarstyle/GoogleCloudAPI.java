@@ -132,6 +132,7 @@ public class GoogleCloudAPI extends BaseActivity {
         confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
         confirmLabels.setVisibility(View.GONE);
 
+
         newLabelsObject = new LabelsObject();
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
