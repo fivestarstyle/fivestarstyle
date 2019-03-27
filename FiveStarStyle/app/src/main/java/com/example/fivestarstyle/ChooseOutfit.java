@@ -268,9 +268,9 @@ public class ChooseOutfit extends AppCompatActivity {
                 MyApplication.city = strAddArray[1];
                 MyApplication.state = strAddArray2[0];
                 MyApplication.zipCode = strAddArray2[1];
-                Log.w("My Current location address", MyApplication.city);
-                Log.w("My Current location address", MyApplication.state);
-                Log.w("My Current location address", MyApplication.zipCode);
+                Log.d("My Current location address", MyApplication.city);
+                Log.d("My Current location address", MyApplication.state);
+                Log.d("My Current location address", MyApplication.zipCode);
 
             } else {
                 Log.w("My Current location address", "No Address returned!");
