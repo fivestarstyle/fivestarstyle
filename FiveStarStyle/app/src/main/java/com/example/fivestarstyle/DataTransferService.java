@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionLabel;
@@ -35,16 +38,24 @@ public class DataTransferService {
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private final static String TAG = "DataTransferService";
 
-    public static void addItem(Bitmap bitmap, final List<String> labels, final BatchAnnotateImagesResponse response) {
-        //final string type, final string season){
+    //method to upload image to storage then add image and data to the database
+    public static void addItem(final LabelsObject item) {
+        // final String category, final List<String> seasons, final List<String> events, final BatchAnnotateImagesResponse response) {
         if (user != null) {
             //upload picture to storage
+            Log.d("DATA-CATEGORY", item.labelGetCategory());
+            Log.d("DATA-COLOR", item.labelGetColor());
+            Log.d("DATA_SEASONS", item.labelGetSeasons().toString());
+            Log.d("DATA_EVENTS", item.labelGetEvents().toString());
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Bitmap bitmap = MyApplication.getBitmap();
+            Log.d(TAG, String.valueOf(bitmap));
+//            Bitmap bitmap = item.labelGetImage();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
-
+            Log.d(TAG, String.valueOf(data));
             UploadTask uploadTask = userStorage.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -55,32 +66,35 @@ public class DataTransferService {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Log.d(TAG, "imageURL : " + userStorage.getDownloadUrl().toString());
                     Task<Uri> urlTask = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     Log.d(TAG, "imageURL : " + downloadUrl.toString());
-                    uploadImage(downloadUrl.toString(), labels, response);
+                    //add image and tags to database
+                    uploadItem(downloadUrl.toString(), item);
                 }
             });
         }
     }
 
-
-    private static void uploadImage(String image, List<String> labels, BatchAnnotateImagesResponse response) {
-        //String type, String season) {
+    //method to upload item to database by category
+    private static void uploadItem(String image, LabelsObject item){
+        //de
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-//        newItem.put("labels", extractTags(labels));
+//        newItem.put("seasons", seasons);
+//        newItem.put("events", events);
+        newItem.put("color", item.labelGetColor());
 
-
+        String category = item.labelGetCategory();
         // Add a new document with a generated ID
-        db.collection("userClosets/" + user.getUid() + "/Items")
+        db.collection("userClosets/" + user.getUid() + "/" + category)
                 .add(newItem)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -89,6 +103,49 @@ public class DataTransferService {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    //method to retrieve imageUrls from database
+    public static List<String> retrieveImagesForCloset(String category){
+        final List<String> imageUrls = new ArrayList<>();
+        if (category == "all") {
+            // loop to iterate through all categories
+            for (String cat : MyApplication.categories){
+                db.collection("userClosets/" + user.getUid() + "/" + cat)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+                                        imageUrls.add(document.get("image").toString());
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                }
+        }
+        else {
+        db.collection("userClosets/" + user.getUid() + "/" + category)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+                                imageUrls.add(document.get("image").toString());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        }
+        return imageUrls;
     }
 
 }

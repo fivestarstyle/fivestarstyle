@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    android:background="@color/colorBackground"
+    android:id="@+id/linearLayout"
+    android:padding="5dp"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/txtclose"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:textColor="@color/colorPrimary"
+        android:text="CLOSE"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose the labels you want to be applied:"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"/>
+        <CheckBox
+            android:id="@+id/chkCategory"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category: "
+            android:checked="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"/>
+        <CheckBox
+            android:id="@+id/chkColor"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color: "
+            android:checked="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnfollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:theme="@style/ButtonTheme"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorWhite"/>
+
+</LinearLayout>

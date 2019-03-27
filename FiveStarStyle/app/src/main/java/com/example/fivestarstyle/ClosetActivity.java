@@ -78,6 +78,33 @@ public class ClosetActivity extends AppCompatActivity {
                 startActivity(gcapiIntent);
             }
         });
+
+        ImageButton getCloset = (ImageButton) findViewById(R.id.AllButton);
+
+        getCloset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImagesForCloset("all");
+            }
+        });
+
+        ImageButton getTops = (ImageButton) findViewById(R.id.TopButton);
+
+        getTops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImagesForCloset("Top");
+            }
+        });
+
+        ImageButton getDressesSuits = (ImageButton) findViewById(R.id.DressesSuitsButton);
+
+        getDressesSuits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataTransferService.retrieveImagesForCloset("Dresses_Suits");
+            }
+        });
     }
 
 //    static final int REQUEST_IMAGE_CAPTURE = 1;

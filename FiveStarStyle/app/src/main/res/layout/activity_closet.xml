@@ -15,8 +15,8 @@
 
         <ImageButton
             android:id="@+id/AddButton"
-            android:layout_width="70sp"
-            android:layout_height="59sp"
+            android:layout_width="70dp"
+            android:layout_height="59dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_outline_add_24px"
             android:backgroundTint="@color/colorPrimary"
@@ -31,7 +31,7 @@
         <ImageButton
             android:id="@+id/AllButton"
             android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_height="150dp"
             android:layout_below="@id/AddButton"
             android:background="@drawable/closet"
             />
@@ -39,7 +39,7 @@
         <LinearLayout
             android:id="@+id/row3"
             android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_height="150dp"
             android:orientation="horizontal"
             android:layout_below="@id/AllButton"
             android:weightSum="2.0"
@@ -47,17 +47,18 @@
 
             <ImageButton
                 android:id="@+id/TopButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/tops" />
+                android:background="@drawable/tops"
+                />
             <View
-                android:layout_width="1sp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
             <ImageButton
                 android:id="@+id/PantsButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/bottoms" />
@@ -66,7 +67,7 @@
         <LinearLayout
             android:id="@+id/row4"
             android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_height="150dp"
             android:orientation="horizontal"
             android:layout_below="@id/row3"
             android:weightSum="2.0"
@@ -74,17 +75,17 @@
 
             <ImageButton
                 android:id="@+id/OuterwearButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/outerwear" />
             <View
-                android:layout_width="1sp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
             <ImageButton
                 android:id="@+id/DressesSuitsButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/suits_dresses"/>
@@ -93,7 +94,7 @@
         <LinearLayout
             android:id="@+id/row5"
             android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_height="150dp"
             android:orientation="horizontal"
             android:layout_below="@id/row4"
             android:weightSum="2.0"
@@ -101,17 +102,17 @@
 
             <ImageButton
                 android:id="@+id/AccButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/accessories" />
             <View
-                android:layout_width="1sp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"/>
 
             <ImageButton
                 android:id="@+id/ShoesButton"
-                android:layout_width="0sp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/shoes" />

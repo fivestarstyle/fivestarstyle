@@ -3,27 +3,28 @@ package com.example.fivestarstyle;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,28 +32,23 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.vision.v1.Vision;
-import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
-import com.google.api.services.vision.v1.model.ImageProperties;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -66,7 +62,7 @@ public class GoogleCloudAPI extends BaseActivity {
     static final int REQUEST_CODE_CAMERA = 14;
     private final String LOG_TAG = "GoogleCloudAPI";
     private ImageView selectedImage;
-    private TextView resultTextView;
+//    private TextView resultTextView;
     private Account mAccount;
     private ProgressDialog mProgressDialog;
     private Button selectImage;
@@ -76,6 +72,11 @@ public class GoogleCloudAPI extends BaseActivity {
     private Integer takePictureFlag = 0;
     private Uri uri;
     private Integer counter = 0;
+    Dialog myDialog;
+    LabelsObject newLabelsObject;
+    Bitmap image;
+//    ByteArrayOutputStream bStream;
+//    byte[] byteArray;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -125,10 +126,13 @@ public class GoogleCloudAPI extends BaseActivity {
         setContentView(R.layout.activity_google_cloud_api);
         mProgressDialog = new ProgressDialog(this);
         selectedImage = (ImageView) findViewById(R.id.selected_image);
-        resultTextView = (TextView) findViewById(R.id.result);
+//        resultTextView = (TextView) findViewById(R.id.result);
         selectImage = (Button) findViewById(R.id.btn_choose_picture);
         takePhoto = (Button) findViewById(R.id.btn_take_picture);
         confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
+        confirmLabels.setVisibility(View.GONE);
+
+        newLabelsObject = new LabelsObject();
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -153,27 +157,152 @@ public class GoogleCloudAPI extends BaseActivity {
             }
         });
 
-        confirmLabels.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabels.class);
-                startActivity(confirmLabelIntent);
-            }
-        });
+        myDialog = new Dialog(this);
+                //
 //        checkStoragePermission(RC_STORAGE_PERMS1);
 //        findViewById(R.id.select_image_button).setOnClickListener(this);
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.select_image_button:
-////                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
-////                        new String[]{Manifest.permission.GET_ACCOUNTS},
-////                        REQUEST_PERMISSIONS);
-//                checkStoragePermission(RC_STORAGE_PERMS1);
-//        }
-//    }
+    public void ShowPopup(View v) {
+        TextView txtclose;
+        Button btnFollow;
+        final CheckBox chkCategory;
+        final CheckBox chkColor;
+
+        View view = findViewById(R.id.confirmLabelsAll);
+        myDialog.setContentView(R.layout.labels_popup);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        chkCategory = (CheckBox) myDialog.findViewById(R.id.chkCategory);
+        chkColor = (CheckBox) myDialog.findViewById(R.id.chkColor);
+
+//        newLabelsObject.labelSetCategory("Top");
+//        newLabelsObject.labelSetColor("Red");
+
+        // check if category/color labels were found/updated
+        String category = newLabelsObject.labelGetCategory();
+        String color = newLabelsObject.labelGetColor();
+
+        if(category.equals("none") || category.length() == 0) {
+            if(color.equals("none") || color.length() == 0) {
+                // no labels found
+                Log.d("LABELS", "dismissed");
+                chkCategory.setChecked(false);
+                chkCategory.setChecked(false);
+                newLabelsObject.labelSetCategory("none");
+                newLabelsObject.labelSetColor("none");
+                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+//                confirmLabelIntent.putExtra("image", byteArray);
+                startActivity(confirmLabelIntent);
+            }
+            // just color label found
+            else {
+                Log.d("LABELS", "Just Color");
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                btnFollow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent confirmLabelIntent;
+                        if(!chkColor.isChecked()) {
+                            newLabelsObject.labelSetColor("none");
+                            // no labels passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                        }
+                        else {
+                            // just color label passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
+                        }
+                        newLabelsObject.labelSetCategory("none");
+                        confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                        startActivity(confirmLabelIntent);
+                    }
+                });
+                chkColor.setText("Color: " + color);
+                chkCategory.setChecked(false);
+                chkCategory.setVisibility(View.GONE);
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+            }
+        }
+        // just category label found
+        else if(color.equals("none") || color.length() == 0) {
+            Log.d("LABELS", "Just Category");
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent confirmLabelIntent;
+                    if(!chkCategory.isChecked()) {
+                        newLabelsObject.labelSetCategory("none");
+                        // no labels passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                    } else {
+                        // just category label passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
+                    }
+                    newLabelsObject.labelSetColor("none");
+                    confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                    startActivity(confirmLabelIntent);
+                }
+            });
+            chkCategory.setText("Category: " + category);
+            chkColor.setChecked(false);
+            chkColor.setVisibility(View.GONE);
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+        }
+        // both labels found
+        else {
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent confirmLabelIntent;
+                    if(!chkCategory.isChecked()) {
+                        newLabelsObject.labelSetCategory("none");
+                        if(!chkColor.isChecked()) {
+                            newLabelsObject.labelSetColor("none");
+                            // no labels passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                        } else {
+                            // just color label passed
+                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
+                        }
+                    }
+                    else if(!chkColor.isChecked()) {
+                        newLabelsObject.labelSetColor("none");
+                        // just category label passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
+                    } else {
+                        // both labels passed
+                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCatOrColor.class);
+                    }
+                    confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
+                    startActivity(confirmLabelIntent);
+                }
+            });
+            chkCategory.setText("Category: " + category);
+            chkColor.setText("Color: " + color);
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+        }
+    }
 
     private void launchImagePicker() {
         Intent intent = new Intent();
@@ -300,7 +429,7 @@ public class GoogleCloudAPI extends BaseActivity {
     }
 
     private void callCloudVision(final Bitmap bitmap) throws IOException {
-        resultTextView.setText("Retrieving results from cloud");
+//        resultTextView.setText("Retrieving results from cloud");
 
         new AsyncTask<Object, Void, String>() {
             @Override
@@ -345,6 +474,14 @@ public class GoogleCloudAPI extends BaseActivity {
 
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
                     Log.d("Response", String.valueOf(response));
+                    //add image to object being passed
+                    image = bitmap;
+                    MyApplication.setBitmap(bitmap);
+                    Log.d("DATA", String.valueOf(bitmap));
+//                    bStream = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.PNG, 50, bStream);
+//                    byteArray = bStream.toByteArray();
+//                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {
@@ -357,7 +494,17 @@ public class GoogleCloudAPI extends BaseActivity {
 
             protected void onPostExecute(String result) {
                 Log.d(LOG_TAG, "post");
-                resultTextView.setText(result);
+//                resultTextView.setText(result);
+                takePhoto.setText(R.string.try_again);
+                takePhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent startOver = new Intent(GoogleCloudAPI.this, GoogleCloudAPI.class);
+                        GoogleCloudAPI.this.startActivity(startOver);
+                    }
+                });
+                selectImage.setVisibility(View.GONE);
+                confirmLabels.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -385,7 +532,9 @@ public class GoogleCloudAPI extends BaseActivity {
         }
         Log.d("LIST", String.valueOf(filterLabels(filteredMessage)));
 //        return message.toString();
-        return String.valueOf(filterLabels(filteredMessage));
+        List<String> filtered = filterLabels(filteredMessage);
+        updateLabels(filtered);
+        return String.valueOf(filtered);
     }
 
     private List<String> filterLabels(List labels) {
@@ -393,7 +542,6 @@ public class GoogleCloudAPI extends BaseActivity {
         int i = 0;
         newList.add("category");
         for(i = 0; i < labels.size(); i++) {
-            Log.d("LIST", String.valueOf(labels.get(i)));
             // check for category
             switch (String.valueOf(labels.get(i)).toLowerCase()) {
                 // tops
@@ -414,7 +562,7 @@ public class GoogleCloudAPI extends BaseActivity {
                     break;
                 case "dress":
                 case "jumper":
-                    newList.add("dress");
+                    newList.add("dress_or_suit");
                     break;
                 // outerwear
                 case "jacket":
@@ -448,9 +596,9 @@ public class GoogleCloudAPI extends BaseActivity {
                     newList.add("shoes");
                     break;
             }
-            if (newList.size() == 1) {
-                newList.add("none");
-            }
+        }
+        if (newList.size() == 1) {
+            newList.add("none");
         }
         newList.add("color");
         for(i = 0; i < labels.size(); i++) {
@@ -467,7 +615,6 @@ public class GoogleCloudAPI extends BaseActivity {
                 // orange
                 case "orange":
                 case "pumpkin":
-                case "peach":
                 case "melon":
                 case "amber":
                 case "carrot":
@@ -525,12 +672,24 @@ public class GoogleCloudAPI extends BaseActivity {
                 case "gray":
                     newList.add("gray");
                     break;
-            }
-            if(newList.size() == 3) {
-                newList.add("none");
+                case "pink":
+                case "peach":
+                case "salmon":
+                    newList.add("pink");
             }
         }
+        if (newList.size() == 3) {
+            newList.add("none");
+        }
         return newList;
+    }
+
+    public void updateLabels(List labels) {
+//        newLabelsObject = new LabelsObject();
+        newLabelsObject.labelSetCategory(String.valueOf(labels.get(1)));
+        newLabelsObject.labelSetColor(String.valueOf(labels.get(3)));
+        Log.d("LABELS-CATEGORY", newLabelsObject.labelGetCategory());
+        Log.d("LABELS-COLOR", newLabelsObject.labelGetColor());
     }
 
     public Bitmap resizeBitmap(Bitmap bitmap) {
