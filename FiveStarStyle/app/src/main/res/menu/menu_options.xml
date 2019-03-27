@@ -19,6 +19,12 @@
         android:title="@string/view_my_closet"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/add_menu_option"
+        android:icon="@drawable/closet_menu_icon"
+        android:title="Add To Closet"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/overview_menu_option"
         android:title="@string/overview"
         android:icon="@drawable/overview_menu_icon"
@@ -31,9 +37,5 @@
     <item android:id="@+id/logout_menu_option"
         android:title="@string/logout"
         android:icon="@drawable/overview_menu_icon"
-        app:showAsAction="never"/>
-
-    <item android:id="@+id/test_add_menu_option"
-        android:title="@string/test_add"
         app:showAsAction="never"/>
 </menu>

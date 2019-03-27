@@ -158,6 +158,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Intent overviewIntent = new Intent(this,ClosetActivity.class);
             this.startActivity(overviewIntent);
         }
+        else if(item.getItemId() == R.id.add_menu_option) {
+            Intent overviewIntent = new Intent(this,GoogleCloudAPI.class);
+            this.startActivity(overviewIntent);
+        }
         else if(item.getItemId() == R.id.overview_menu_option) {
             Intent overviewIntent = new Intent(this,ClosetStatistics.class);
             this.startActivity(overviewIntent);
@@ -170,12 +174,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Intent overviewIntent = new Intent(this,SettingsActivity.class);
             this.startActivity(overviewIntent);
         }
-        //remove this item later VVV
-        else if(item.getItemId() == R.id.test_add_menu_option) {
-            Intent overviewIntent = new Intent(this,AddClothesForReal.class);
-            this.startActivity(overviewIntent);
-        }
-        //remove above item ^^^
         else if(item.getItemId() == R.id.logout_menu_option) {
             try {
                 FirebaseAuth.getInstance().signOut();
