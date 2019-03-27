@@ -493,11 +493,13 @@ public class ConfirmLabelsNoColor extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataTransferService.addItem(labelsObj);
+                Boolean success = DataTransferService.addItem(labelsObj);
                 Log.d(TAG, "Add item =>" + labelsObj);
-                //add method to
-                // if (success) new Intent with prompt to add more or return to closet
-                // else "error try again" redirect to add page
+                if (success) {
+//                    new Intent with prompt to add more or return to closet
+                } else {
+//                    "error try again" redirect to add page
+                }
             }
         });
 
