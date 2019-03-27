@@ -172,8 +172,8 @@ public class SettingsActivity extends AppCompatActivity {
             return true;
         }
         else {
-            //Toast.makeText(SettingsActivity.this, "Need to fill in information!",
-            //       Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SettingsActivity.this, "Need to fill in information!",
+//                   Toast.LENGTH_SHORT).show();
             return false;
         }
     }
