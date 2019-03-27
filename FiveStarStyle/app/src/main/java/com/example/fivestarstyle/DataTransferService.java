@@ -85,8 +85,8 @@ public class DataTransferService {
         //de
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("image", image);
-//        newItem.put("seasons", seasons);
-//        newItem.put("events", events);
+        newItem.put("seasons", item.labelGetSeasons());
+        newItem.put("events", item.labelGetEvents());
         newItem.put("color", item.labelGetColor());
 
         String category = item.labelGetCategory();

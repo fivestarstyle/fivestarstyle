@@ -58,19 +58,19 @@ public class ClosetActivity extends AppCompatActivity {
         btnTops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImages("tops");
+                getImages("top");
             }
         });
         btnDressesSuits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImages("dress");
+                getImages("dress_or_suit");
             }
         });
         btnBottoms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImages("bottoms");
+                getImages("bottom");
             }
         });
         btnOuterwear.setOnClickListener(new View.OnClickListener() {
