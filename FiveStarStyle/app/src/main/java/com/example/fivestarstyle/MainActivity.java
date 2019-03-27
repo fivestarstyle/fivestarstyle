@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
@@ -25,8 +27,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
+import java.util.Locale;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
         setContentView(R.layout.activity_main);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -71,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
         requestLocationPermission();
+
+        //Log.d(TAG, "Latitude is :" + MyApplication.latitude);
+        //Log.d(TAG, "Longitude is :" + MyApplication.longitude);
+        //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
 
         ImageButton overviewScreen = (ImageButton) findViewById(R.id.overview);
         ImageButton chooseOutfitScreen = (ImageButton) findViewById(R.id.choose_my_outfit);
@@ -112,6 +127,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("userClosets").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        MyApplication.firstName = document.get("first").toString();
+                        MyApplication.lastName = document.get("last").toString();
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+                Log.d(TAG, "First Name: " + MyApplication.firstName);
+                Log.d(TAG, "Last Name: " + MyApplication.lastName);
+            }
+        });
+
+
+
 
     }
 
@@ -127,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void requestLocationPermission() {
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
         if(EasyPermissions.hasPermissions(this, perms)) {
-            Log.d(TAG2,"Location permission has been granted.");
+            Log.d(TAG,"Location permission has been granted.");
         }
         else {
 //            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
@@ -216,10 +256,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLocation != null) {
 
             // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
-            longitude = String.valueOf(mLocation.getLatitude());
+            MyApplication.latitude = String.valueOf(mLocation.getLatitude());
             //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
-            latitude = String.valueOf(mLocation.getLongitude());
-            Log.d(TAG2,latitude + longitude);
+            MyApplication.longitude = String.valueOf(mLocation.getLongitude());
+            Log.d(TAG,MyApplication.latitude + MyApplication.longitude);
+            getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
         } else {
 //            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
@@ -322,5 +363,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                String[] strAddArray = strAdd.split("\\s*,\\s*");
+                String[] strAddArray2 = strAddArray[2].split("\\s+");
+                MyApplication.city = strAddArray[1];
+                MyApplication.state = strAddArray2[0];
+                MyApplication.zipCode = strAddArray2[1];
+                Log.w(TAG,"My Current city " + MyApplication.city);
+                Log.w(TAG, "My Current state " +  MyApplication.state);
+                Log.w(TAG, "My Current zip code " +  MyApplication.zipCode);
+
+            } else {
+                Log.w("My Current location address", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current location address", "Cannot get Address!");
+        }
+        return strAdd;
     }
 }

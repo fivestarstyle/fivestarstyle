@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView emailTextView = (TextView) findViewById(R.id.emailFilled);
         TextView nameTextView = (TextView) findViewById(R.id.nameFilled);
         //TextView genderTextView = (TextView) findViewById(R.id.genderFilled);
-        TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
+        final TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final LinearLayout viewCustom = (LinearLayout) findViewById(R.id.customView);
@@ -94,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     custom.setChecked(false);
+                    locationTextView.setText(MyApplication.zipCode);
                     viewCustom.setVisibility(viewCustom.GONE);
                 }
             }
@@ -111,29 +112,29 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final String TAG = "Settings";
-        DocumentReference docRef = db.collection("userClosets").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        MyApplication.firstName = document.get("first").toString();
-                        MyApplication.lastName = document.get("last").toString();
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-        Log.d(TAG, "First Name: " + MyApplication.firstName);
-        Log.d(TAG, "Last Name: " + MyApplication.lastName);
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final String TAG = "Settings";
+//        DocumentReference docRef = db.collection("userClosets").document(user.getUid());
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+//                        MyApplication.firstName = document.get("first").toString();
+//                        MyApplication.lastName = document.get("last").toString();
+//                    } else {
+//                        Log.d(TAG, "No such document");
+//                    }
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                }
+//            }
+//        });
+//
+//        Log.d(TAG, "First Name: " + MyApplication.firstName);
+//        Log.d(TAG, "Last Name: " + MyApplication.lastName);
         //Log.d(TAG, "Latitude: " + MyApplication.latitude);
         //Log.d(TAG, "Longitude: " + MyApplication.longitude);
         //Log.d(TAG, "Zip Code: " + MyApplication.zipCode);
@@ -162,10 +163,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     //Toast to say whether or not zip code was filled in when submit button was clicked
     private void custom(String zip) {
+        TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
         if (zip.length() != 0) {
             MyApplication.customZipCode = zip;
-            Toast.makeText(SettingsActivity.this, "Zip Code Set",
-                    Toast.LENGTH_SHORT).show();
+            locationTextView.setText(MyApplication.customZipCode);
+            //Toast.makeText(SettingsActivity.this, "Zip Code Set",
+                    //Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(SettingsActivity.this, "Need to fill in information!",
