@@ -38,4 +38,5 @@
         android:title="@string/logout"
         android:icon="@drawable/overview_menu_icon"
         app:showAsAction="never"/>
+
 </menu>
