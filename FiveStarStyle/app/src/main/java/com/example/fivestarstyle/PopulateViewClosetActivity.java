@@ -18,25 +18,22 @@ public class PopulateViewClosetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_populate_view_closet);
-        //TEST
-//        String imageUri = "https://i.imgur.com/tGbaZCY.jpg";
-//        ImageView ivBasicImage = (ImageView) findViewById(R.id.ivBasicImage);
-//        Picasso.get().load(imageUri).into(ivBasicImage);
-        //TEST
 
         //get imageUrls from old intent
         Bundle bundle = getIntent().getExtras();
         ArrayList<String> imageUrls = (ArrayList) bundle.getSerializable("images");
+        Log.d(TAG, "imageURLs: " + imageUrls);
         LinearLayout layout = (LinearLayout)findViewById(R.id.imageLayout);
+
         for(String imageUri : imageUrls){
             Log.d(TAG, "Image =>" + imageUri);
             ImageView image = new ImageView(this);
-            image.setLayoutParams(new android.view.ViewGroup.LayoutParams(80,60));
-            image.setMaxHeight(20);
-            image.setMaxWidth(20);
-            // Adds the view to the layout
-            layout.addView(image);
+            image.setLayoutParams(new android.view.ViewGroup.LayoutParams(500,500));
+            image.setMaxHeight(500);
+            image.setMaxWidth(500);
             Picasso.get().load(imageUri).into(image);
+//            Adds the view to the layout
+            layout.addView(image);
         }
     }
 }

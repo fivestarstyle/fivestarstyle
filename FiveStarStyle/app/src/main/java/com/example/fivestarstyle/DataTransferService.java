@@ -2,6 +2,7 @@ package com.example.fivestarstyle;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.protobuf.Any;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,11 +49,10 @@ public class DataTransferService {
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Bitmap bitmap = MyApplication.getBitmap();
-            Log.d(TAG, String.valueOf(bitmap));
-//            Bitmap bitmap = item.labelGetImage();
+//            Log.d(TAG, String.valueOf(bitmap));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
-            Log.d(TAG, String.valueOf(data));
+//            Log.d(TAG, String.valueOf(data));
             UploadTask uploadTask = userStorage.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -104,7 +105,8 @@ public class DataTransferService {
     }
 
     //method to retrieve imageUrls from database
-    public static ArrayList<String> retrieveImagesForCloset(String category){
+    public static ArrayList<String> retrieveImagesForCloset(String category, final OnGetImagesListener listener){
+        listener.onStart(); //TEST
         final ArrayList<String> imageUrls = new ArrayList<>();
         if (category == "all") {
             // loop to iterate through all categories
@@ -133,11 +135,13 @@ public class DataTransferService {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
-                                imageUrls.add(document.get("image").toString());
-                            }
+                            listener.onSuccess(task.getResult());
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+//                                imageUrls.add(document.get("image").toString());
+//                            }
                         } else {
+                            listener.onFailed(task.getException());
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
