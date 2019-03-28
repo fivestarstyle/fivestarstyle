@@ -58,6 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
         mLastNameField = findViewById(R.id.txtLastName);
 //        mGenderField = findViewById(R.id.gender_spinner);
 
+        if (!isValidEmailAddress(mEmailField.getText().toString())) {
+            return;
+        }
+        if (!isValidPassword(mPasswordField.getText().toString())) {
+            return;
+        }
+
         MaterialButton btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +73,23 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /*checks that email address has an @ sign and a period*/
+    public boolean isValidEmailAddress(String email) {
+        boolean hasAtSign = email.contains("@");
+        boolean hasDot = email.contains(".");
+        boolean returnValue = (hasAtSign && hasDot);
+        return returnValue;
+    }
+
+    /*checks that password is longer than 4 chars, has one uppercase letter, and one lowercase letter*/
+    public boolean isValidPassword(String password) {
+        boolean hasUppercase = !password.equals(password.toLowerCase());
+        boolean hasLowercase = !password.equals(password.toUpperCase());
+        boolean isLongEnough = password.length() > 4;
+        boolean returnValue = (hasUppercase && hasLowercase && isLongEnough);
+        return returnValue;
     }
 
     private void createAccount(String email, String password) {
