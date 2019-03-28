@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //Log.d(TAG, "Longitude is :" + MyApplication.longitude);
         //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
 
+
+        /*Creates main image buttons on Home page*/
         ImageButton overviewScreen = (ImageButton) findViewById(R.id.overview);
         ImageButton chooseOutfitScreen = (ImageButton) findViewById(R.id.choose_my_outfit);
         ImageButton viewMyClosetScreen = (ImageButton) findViewById(R.id.view_my_closet);
@@ -182,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    /*create options menu in upper right corner*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_options,menu);

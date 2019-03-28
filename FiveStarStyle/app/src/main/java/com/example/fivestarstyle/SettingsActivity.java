@@ -3,6 +3,7 @@ package com.example.fivestarstyle;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,13 +30,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    /*Adds the menu in the top right corner*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_options,menu);
         return true;
     }
 
-    /*Adds the menu in the top right corner*/
+    /*Menu Options*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
@@ -161,8 +163,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    //Toast to say whether or not zip code was filled in when submit button was clicked
-    private boolean custom(String zip) {
+    //Return true/false to say whether or not zip code was filled in when submit button was clicked
+    public boolean custom(String zip) {
+        if (zip.isEmpty()) {
+            return false;
+        }
+        //checkZip(zip);
         TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
         if (zip.length() != 0) {
             MyApplication.customZipCode = zip;
@@ -177,4 +183,6 @@ public class SettingsActivity extends AppCompatActivity {
             return false;
         }
     }
+
+
 }
