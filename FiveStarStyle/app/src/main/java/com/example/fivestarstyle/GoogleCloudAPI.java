@@ -597,6 +597,9 @@ public class GoogleCloudAPI extends BaseActivity {
                     newList.add("shoes");
                     break;
             }
+            if(newList.size() == 2) {
+                break;
+            }
         }
         if (newList.size() == 1) {
             newList.add("none");
@@ -677,6 +680,9 @@ public class GoogleCloudAPI extends BaseActivity {
                 case "peach":
                 case "salmon":
                     newList.add("pink");
+            }
+            if(newList.size() == 4) {
+                break;
             }
         }
         if (newList.size() == 3) {
