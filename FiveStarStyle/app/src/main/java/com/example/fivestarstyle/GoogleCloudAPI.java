@@ -298,8 +298,11 @@ public class GoogleCloudAPI extends BaseActivity {
                     startActivity(confirmLabelIntent);
                 }
             });
-            chkCategory.setText("Category: " + category);
-            chkColor.setText("Color: " + color);
+            if(category == "dress_or_suit") {
+                category = "Dress or Suit";
+            }
+            chkCategory.setText("Category: " + category.substring(0,1).toUpperCase() + category.substring(1));
+            chkColor.setText("Color: " + color.substring(0,1).toUpperCase() + color.substring(1));
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             myDialog.show();
         }
