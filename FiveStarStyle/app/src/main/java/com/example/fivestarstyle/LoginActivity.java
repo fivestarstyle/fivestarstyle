@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordField = findViewById(R.id.txtPassword);
         mAuth = FirebaseAuth.getInstance();
 
+        /*creates register, login, and forgot password buttons*/
         MaterialButton btnRegister = (MaterialButton) findViewById(R.id.btnRegister);
         MaterialButton btnLogin = (MaterialButton) findViewById(R.id.btnLogin);
         MaterialButton btnForgotPass = (MaterialButton) findViewById(R.id.btnForgotPassword);
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /*checks that email and password used are valid and that there is actually something typed in the form*/
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
 
@@ -121,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /*go to home page*/
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -131,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /*checks that email address has an @ sign and a period*/
     public boolean isValidEmailAddress(String email) {
         boolean hasAtSign = email.contains("@");
         boolean hasDot = email.contains(".");
@@ -138,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         return returnValue;
     }
 
-
+    /*checks that password is longer than 4 chars, has one uppercase letter, and one lowercase letter*/
     public boolean isValidPassword(String password) {
         boolean hasUppercase = !password.equals(password.toLowerCase());
         boolean hasLowercase = !password.equals(password.toUpperCase());
@@ -147,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         return returnValue;
     }
 
-
+    /*checks that there is text in the form username and password fields*/
     public boolean validateForm() {
         boolean valid = true;
 
