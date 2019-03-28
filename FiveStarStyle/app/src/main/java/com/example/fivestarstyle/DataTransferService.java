@@ -110,7 +110,7 @@ public class DataTransferService {
 
     //method to retrieve imageUrls from database
     public static ArrayList<String> retrieveImagesForCloset(String category, final OnGetImagesListener listener){
-        listener.onStart(); //TEST
+        listener.onStart();
         final ArrayList<String> imageUrls = new ArrayList<>();
         if (category == "all") {
             // loop to iterate through all categories
@@ -140,13 +140,8 @@ public class DataTransferService {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             listener.onSuccess(task.getResult());
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
-//                                imageUrls.add(document.get("image").toString());
-//                            }
                         } else {
                             listener.onFailed(task.getException());
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });

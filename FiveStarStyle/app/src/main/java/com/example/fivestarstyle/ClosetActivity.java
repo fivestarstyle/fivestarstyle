@@ -1,8 +1,6 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,24 +12,18 @@ import android.widget.ImageButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class ClosetActivity extends AppCompatActivity {
     private final static String TAG = "ClosetActivity";
-    private static final  int GALLERY_REQUEST =1;
-    private static final int CAMERA_REQUEST_CODE=1;
-    private StorageReference mStorage;
-    private Uri mImageUri;
-    private ArrayList<String> imageUrls = new ArrayList<>();
 
-    /*Functionality for the add button, goes to the add clothing page*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_closet);
 
+        /*Functionality for the add button, goes to the add clothing page*/
         ImageButton addClothing = (ImageButton) findViewById(R.id.AddButton);
         addClothing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +41,8 @@ public class ClosetActivity extends AppCompatActivity {
         ImageButton btnOuterwear = (ImageButton) findViewById(R.id.OuterwearButton);
         ImageButton btnShoes = (ImageButton) findViewById(R.id.ShoesButton);
         ImageButton btnAccessories = (ImageButton) findViewById(R.id.AccButton);
+
+        //onClickListeners for retrievals
         btnCloset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,10 +91,11 @@ public class ClosetActivity extends AppCompatActivity {
         DataTransferService.retrieveImagesForCloset(category, new OnGetImagesListener() {
             @Override
             public void onStart() {
-                //DO SOME THING WHEN START GET DATA HERE
+                Log.d(TAG, "start data retrieval");
             }
             @Override
             public void onSuccess(QuerySnapshot data) {
+                ArrayList<String> imageUrls = new ArrayList<>();
                 for (QueryDocumentSnapshot document : data) {
                     Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
                     imageUrls.add(document.get("image").toString());
@@ -114,32 +109,9 @@ public class ClosetActivity extends AppCompatActivity {
             }
             @Override
             public void onFailed(Exception databaseError) {
-                //DO SOME THING WHEN GET DATA FAILED HERE
+                Log.d(TAG, "Error getting documents: ", databaseError);
             }
         });
-    }
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    /*Requests for use of camera*/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
-        if(requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
-            mImageUri = data.getData();
-
-//            CropImage.activity(mImageUri)
-//                    .setGuidelines(CropImageView.Guidelines.ON)
-//                    .setAspectRatio(1,1)
-//                    .start(this);
-        }
     }
 
     @Override

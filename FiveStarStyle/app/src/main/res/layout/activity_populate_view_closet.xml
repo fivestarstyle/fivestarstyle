@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/imageLayout"
@@ -13,12 +8,16 @@
         android:orientation="vertical"
         tools:context=".PopulateViewClosetActivity">
 
-        <!--<ImageView-->
-        <!--android:id="@+id/ivBasicImage"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:srcCompat="@color/colorBackground"-->
-        <!--/>-->
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gridView"
+            android:numColumns="2"
+            android:columnWidth="525dp"
+            android:rowHeight="525dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            >
+        </GridView>
 
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

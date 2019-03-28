@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
+import android.widget.GridView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,20 +23,12 @@ public class PopulateViewClosetActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         ArrayList<String> imageUrls = (ArrayList) bundle.getSerializable("images");
         Log.d(TAG, "imageURLs: " + imageUrls);
-        LinearLayout layout = (LinearLayout)findViewById(R.id.imageLayout);
 
-        //dynamically add imageViews based on number of items
-        for(String imageUri : imageUrls){
-            Log.d(TAG, "Image =>" + imageUri);
-            ImageView image = new ImageView(this);
-            image.setLayoutParams(new android.view.ViewGroup.LayoutParams(500,500));
-            image.setMaxHeight(500);
-            image.setMaxWidth(500);
-            Picasso.get().load(imageUri).into(image);
-            // Adds the view to the layout
-            layout.addView(image);
-        }
+        //dynamically load images through GridView
+        GridView gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setAdapter(new ImageAdapter(this, imageUrls));
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_options,menu);
