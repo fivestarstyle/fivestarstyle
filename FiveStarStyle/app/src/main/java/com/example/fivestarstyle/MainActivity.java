@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         checkLocation();
 
 
+        Intent i = getIntent();
+        String msg = (String) i.getSerializableExtra("msg");
+        if (msg != null) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+
         requestLocationPermission();
 
         //Log.d(TAG, "Latitude is :" + MyApplication.latitude);
