@@ -2,35 +2,26 @@ package com.example.fivestarstyle;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.ml.vision.FirebaseVision;
-import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.label.FirebaseVisionLabel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.protobuf.Any;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,7 +43,7 @@ public class DataTransferService {
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Bitmap bitmap = MyApplication.getBitmap();
+            Bitmap bitmap = GlobalVariables.getBitmap();
 //            Log.d(TAG, String.valueOf(bitmap));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
@@ -114,7 +105,7 @@ public class DataTransferService {
         final ArrayList<String> imageUrls = new ArrayList<>();
         if (category == "all") {
             // loop to iterate through all categories
-            for (String cat : MyApplication.categories){
+            for (String cat : GlobalVariables.categories){
                 db.collection("userClosets/" + user.getUid() + "/" + cat)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

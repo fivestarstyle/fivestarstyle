@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+public class Activity_Register extends AppCompatActivity {
     private static final String TAG = "Register";
     private FirebaseAuth mAuth;
     private EditText mEmailField;
@@ -95,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
-            Toast.makeText(RegisterActivity.this, "Registration Failed: Please Fill Required Fields.",
+            Toast.makeText(Activity_Register.this, "Registration Failed: Please Fill Required Fields.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -103,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Activity_Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -115,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                            Toast.makeText(Activity_Register.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -133,9 +131,9 @@ public class RegisterActivity extends AppCompatActivity {
             test.put("last", mLastNameField.getText().toString());
 //            test.put("gender", mGenderField.getSelectedItem().toString());
 
-            MyApplication.firstName = mFirstNameField.getText().toString();
-            MyApplication.lastName = mLastNameField.getText().toString();
-//            MyApplication.gender = mGenderField.getSelectedItem().toString();
+            GlobalVariables.firstName = mFirstNameField.getText().toString();
+            GlobalVariables.lastName = mLastNameField.getText().toString();
+//            GlobalVariables.gender = mGenderField.getSelectedItem().toString();
 
             // Add a new document with a generated ID
             db.collection("userClosets" ).document(user.getUid())
@@ -157,8 +155,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent newIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-            RegisterActivity.this.startActivity(newIntent);
+            Intent newIntent = new Intent(Activity_Register.this, Activity_Login.class);
+            Activity_Register.this.startActivity(newIntent);
         } else {
             Log.w(TAG, "Error changing screen");
         }

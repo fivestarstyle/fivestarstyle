@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MainActivityTest extends MainActivity {
+public class ActivityMainTest extends Activity_Main {
 
     double latitude = 33.2098;
     double longitude = 87.5692;

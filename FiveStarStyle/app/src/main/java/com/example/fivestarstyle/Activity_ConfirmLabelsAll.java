@@ -2,8 +2,6 @@ package com.example.fivestarstyle;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
@@ -19,17 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ConfirmLabelsAll extends AppCompatActivity {
-    private final static String TAG = "ConfirmLabelsAll";
+public class Activity_ConfirmLabelsAll extends AppCompatActivity {
+    private final static String TAG = "Activity_ConfirmLabelsAll";
     private Button right;
     private Button left;
     String category;
@@ -69,7 +63,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                     fragment = new LabelsTabsSeason();
                     selectTab(1);
                 } else {
-                    Toast.makeText(ConfirmLabelsAll.this, "Please select one category.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ConfirmLabelsAll.this, "Please select one category.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -162,7 +156,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                     fragment = new LabelsTabsSeason();
                     selectTab(1);
                 } else {
-                    Toast.makeText(ConfirmLabelsAll.this, "Please select one category.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ConfirmLabelsAll.this, "Please select one category.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -179,7 +173,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                     fragment = new LabelsTabsSeason();
                     selectTab(2);
                 } else {
-                    Toast.makeText(ConfirmLabelsAll.this, "Please select one color.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ConfirmLabelsAll.this, "Please select one color.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -204,7 +198,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                     fragment = new LabelsTabsEvent();
                     selectTab(3);
                 } else {
-                    Toast.makeText(ConfirmLabelsAll.this, "Please select at least one season.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ConfirmLabelsAll.this, "Please select at least one season.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -228,7 +222,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                 if(eventFlag >= 1) {
                     showPopup(v);
                 } else {
-                    Toast.makeText(ConfirmLabelsAll.this, "Please select at lease one event.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_ConfirmLabelsAll.this, "Please select at lease one event.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -707,28 +701,28 @@ public class ConfirmLabelsAll extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -762,7 +756,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent restartIntent = new Intent(ConfirmLabelsAll.this, ConfirmLabelsAll.class);
+                Intent restartIntent = new Intent(Activity_ConfirmLabelsAll.this, Activity_ConfirmLabelsAll.class);
                 LabelsObject emptyObj = new LabelsObject();
                 restartIntent.putExtra("labelsObj", emptyObj);
                 startActivity(restartIntent);
@@ -777,7 +771,7 @@ public class ConfirmLabelsAll extends AppCompatActivity {
                 if (success) {
 //                    new Intent with prompt to add more or return to closet
                     String msg = "Success! Item added to closet.";
-                    Intent confirmIntent = new Intent(ConfirmLabelsAll.this, MainActivity.class);
+                    Intent confirmIntent = new Intent(Activity_ConfirmLabelsAll.this, Activity_Main.class);
                     confirmIntent.putExtra("msg", msg);
                     startActivity(confirmIntent);
                 } else {

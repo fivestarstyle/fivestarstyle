@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LoginActivityTest extends LoginActivity {
+public class LoginActivityTest extends Activity_Login {
 
     String goodEmail = "test@test.com";
     String badEmail = "testtestcom";

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MyApplication extends Application {
+public class GlobalVariables extends Application {
     public static String longitude = "";
     public static String latitude = "";
     public static String city = "";

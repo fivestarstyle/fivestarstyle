@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ChooseOutfitTest extends ChooseOutfit {
+public class ActivityChooseMyOutfitTest extends Activity_ChooseMyOutfit {
 
     int testIdOne = 200;
     int testIdTwo = 300;

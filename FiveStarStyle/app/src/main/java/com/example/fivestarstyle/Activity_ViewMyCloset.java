@@ -15,20 +15,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ClosetActivity extends AppCompatActivity {
-    private final static String TAG = "ClosetActivity";
+public class Activity_ViewMyCloset extends AppCompatActivity {
+    private final static String TAG = "Activity_ViewMyCloset";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet);
+        setContentView(R.layout.activity_view_my_closet);
 
         /*Functionality for the add button, goes to the add clothing page*/
         ImageButton addClothing = (ImageButton) findViewById(R.id.AddButton);
         addClothing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gcapiIntent = new Intent(ClosetActivity.this, GoogleCloudAPI.class);
+                Intent gcapiIntent = new Intent(Activity_ViewMyCloset.this, Activity_GoogleCloudAPI.class);
                 startActivity(gcapiIntent);
             }
         });
@@ -101,7 +101,7 @@ public class ClosetActivity extends AppCompatActivity {
                     imageUrls.add(document.get("image").toString());
                 }
                 Log.d(TAG, "imageUrls received");
-                Intent viewIntent = new Intent(ClosetActivity.this, PopulateViewClosetActivity.class);
+                Intent viewIntent = new Intent(Activity_ViewMyCloset.this, Activity_PopulateViewCloset.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("images", imageUrls);
                 viewIntent.putExtras(bundle);
@@ -124,28 +124,28 @@ public class ClosetActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {

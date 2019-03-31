@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class Activity_Login extends AppCompatActivity {
     private static final String TAG = "Login";
     private FirebaseAuth mAuth;
     private EditText mEmailField;
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Log.d(TAG, "user:" + user.getEmail());
             // User is signed in
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            Intent i = new Intent(Activity_Login.this, Activity_Main.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             i.putExtra("user", user); //Optional parameters
             startActivity(i);
@@ -62,9 +61,9 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent myIntent = new Intent(Activity_Login.this, Activity_Register.class);
 //                myIntent.putExtra("key", value); //Optional parameters
-                LoginActivity.this.startActivity(myIntent);
+                Activity_Login.this.startActivity(myIntent);
             }
         });
 
@@ -76,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this,"Reset Email Sent", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Activity_Login.this,"Reset Email Sent", Toast.LENGTH_LONG).show();
                                     Log.d(TAG, "Email sent.");
                                 }
                             }
@@ -102,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Activity_Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -113,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(Activity_Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -126,9 +125,9 @@ public class LoginActivity extends AppCompatActivity {
     /*go to home page*/
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent homeIntent = new Intent(Activity_Login.this, Activity_Main.class);
             homeIntent.putExtra("user", user); //Optional parameters
-            LoginActivity.this.startActivity(homeIntent);
+            Activity_Login.this.startActivity(homeIntent);
         } else {
 
         }

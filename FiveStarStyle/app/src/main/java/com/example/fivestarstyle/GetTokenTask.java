@@ -33,7 +33,7 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
             String token = fetchToken();
             Log.d("tokenBackground", "made it");
             if (token != null) {
-                ((GoogleCloudAPI)mActivity).onTokenReceived(token);
+                ((Activity_GoogleCloudAPI)mActivity).onTokenReceived(token);
             }
         } catch (IOException e) {
             e.printStackTrace();

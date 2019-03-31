@@ -1,13 +1,8 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
-import android.nfc.Tag;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,18 +12,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SettingsActivity extends AppCompatActivity {
+public class Activity_Settings extends AppCompatActivity {
 
     /*Adds the menu in the top right corner*/
     @Override
@@ -41,28 +29,28 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -96,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     custom.setChecked(false);
-                    locationTextView.setText(MyApplication.zipCode);
+                    locationTextView.setText(GlobalVariables.zipCode);
                     viewCustom.setVisibility(viewCustom.GONE);
                 }
             }
@@ -124,8 +112,8 @@ public class SettingsActivity extends AppCompatActivity {
 //                    DocumentSnapshot document = task.getResult();
 //                    if (document.exists()) {
 //                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//                        MyApplication.firstName = document.get("first").toString();
-//                        MyApplication.lastName = document.get("last").toString();
+//                        GlobalVariables.firstName = document.get("first").toString();
+//                        GlobalVariables.lastName = document.get("last").toString();
 //                    } else {
 //                        Log.d(TAG, "No such document");
 //                    }
@@ -135,19 +123,19 @@ public class SettingsActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        Log.d(TAG, "First Name: " + MyApplication.firstName);
-//        Log.d(TAG, "Last Name: " + MyApplication.lastName);
-        //Log.d(TAG, "Latitude: " + MyApplication.latitude);
-        //Log.d(TAG, "Longitude: " + MyApplication.longitude);
-        //Log.d(TAG, "Zip Code: " + MyApplication.zipCode);
+//        Log.d(TAG, "First Name: " + GlobalVariables.firstName);
+//        Log.d(TAG, "Last Name: " + GlobalVariables.lastName);
+        //Log.d(TAG, "Latitude: " + GlobalVariables.latitude);
+        //Log.d(TAG, "Longitude: " + GlobalVariables.longitude);
+        //Log.d(TAG, "Zip Code: " + GlobalVariables.zipCode);
 
         //fills in information from database on the display
         if (user != null) {
             String email = user.getEmail();
             emailTextView.setText(email);
-            nameTextView.setText(MyApplication.firstName + " " + MyApplication.lastName);
-            //genderTextView.setText(MyApplication.gender);
-            locationTextView.setText(MyApplication.zipCode);
+            nameTextView.setText(GlobalVariables.firstName + " " + GlobalVariables.lastName);
+            //genderTextView.setText(GlobalVariables.gender);
+            locationTextView.setText(GlobalVariables.zipCode);
         }
 
         Button btnSubmit = (Button) findViewById(R.id.SubmitButton);
@@ -171,14 +159,14 @@ public class SettingsActivity extends AppCompatActivity {
         //checkZip(zip);
         TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
         if (zip.length() != 0) {
-            MyApplication.customZipCode = zip;
-            locationTextView.setText(MyApplication.customZipCode);
-            //Toast.makeText(SettingsActivity.this, "Zip Code Set",
+            GlobalVariables.customZipCode = zip;
+            locationTextView.setText(GlobalVariables.customZipCode);
+            //Toast.makeText(Activity_Settings.this, "Zip Code Set",
                     //Toast.LENGTH_SHORT).show();
             return true;
         }
         else {
-//            Toast.makeText(SettingsActivity.this, "Need to fill in information!",
+//            Toast.makeText(Activity_Settings.this, "Need to fill in information!",
 //                   Toast.LENGTH_SHORT).show();
             return false;
         }

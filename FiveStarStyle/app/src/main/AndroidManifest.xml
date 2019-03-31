@@ -21,29 +21,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PopulateViewClosetActivity"></activity>
-        <activity android:name=".ConfirmLabelsNoColor"></activity>
-        <activity android:name=".ConfirmLabelsNoCat" />
-        <activity android:name=".ConfirmLabelsNoCatOrColor" />
+        <activity android:name=".Activity_PopulateViewCloset"></activity>
+        <activity android:name=".Activity_ConfirmLabelsNoColor"></activity>
+        <activity android:name=".Activity_ConfirmLabelsNoCat" />
+        <activity android:name=".Activity_ConfirmLabelsNoCatOrColor" />
         <activity
             android:name=".PullImages"
             android:label="@string/title_activity_pull_images" />
-        <activity android:name=".ConfirmLabelsAll" />
-        <activity android:name=".AddClothesForReal" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".GoogleCloudAPI" />
-        <activity android:name=".ClosetActivity" />
-        <activity android:name=".ChooseOutfit" />
-        <activity android:name=".ClosetStatistics" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity_ConfirmLabelsAll" />
+        <activity android:name=".Activity_Settings" />
+        <activity android:name=".Activity_GoogleCloudAPI" />
+        <activity android:name=".Activity_ViewMyCloset" />
+        <activity android:name=".Activity_ChooseMyOutfit" />
+        <activity android:name=".Activity_Overview" />
+        <activity android:name=".Activity_Register" />
+        <activity android:name=".Activity_Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Activity_Main" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"

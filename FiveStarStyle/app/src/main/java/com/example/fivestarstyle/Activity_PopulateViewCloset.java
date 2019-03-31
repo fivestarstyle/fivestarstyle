@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class PopulateViewClosetActivity extends AppCompatActivity {
+public class Activity_PopulateViewCloset extends AppCompatActivity {
     private final static String TAG = "PopulateView";
 
     @Override
@@ -39,28 +39,28 @@ public class PopulateViewClosetActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {

@@ -11,7 +11,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,9 +42,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
 
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class Activity_Main extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-    private final static String TAG = "MainActivity";
+    private final static String TAG = "Activity_Main";
     private final static String TAG2 = "Location Permission";
 
     private final int REQUEST_LOCATION_PERMISSION = 1;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
+        //getCompleteAddressString(Double.valueOf(GlobalVariables.latitude), Double.valueOf(GlobalVariables.longitude));
         setContentView(R.layout.activity_main);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -89,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         requestLocationPermission();
 
-        //Log.d(TAG, "Latitude is :" + MyApplication.latitude);
-        //Log.d(TAG, "Longitude is :" + MyApplication.longitude);
-        //getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
+        //Log.d(TAG, "Latitude is :" + GlobalVariables.latitude);
+        //Log.d(TAG, "Longitude is :" + GlobalVariables.longitude);
+        //getCompleteAddressString(Double.valueOf(GlobalVariables.latitude), Double.valueOf(GlobalVariables.longitude));
 
 
         /*Creates main image buttons on Home page*/
@@ -103,34 +102,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         overviewScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent overviewIntent = new Intent(MainActivity.this, ClosetStatistics.class);
+                Intent overviewIntent = new Intent(Activity_Main.this, Activity_Overview.class);
 //                myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(overviewIntent);
+                Activity_Main.this.startActivity(overviewIntent);
             }
         });
 
         chooseOutfitScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chooseOutfitIntent = new Intent(MainActivity.this, ChooseOutfit.class);
+                Intent chooseOutfitIntent = new Intent(Activity_Main.this, Activity_ChooseMyOutfit.class);
 //                myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(chooseOutfitIntent);
+                Activity_Main.this.startActivity(chooseOutfitIntent);
             }
         });
 
         viewMyClosetScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewClosetIntent = new Intent(MainActivity.this, ClosetActivity.class);
+                Intent viewClosetIntent = new Intent(Activity_Main.this, Activity_ViewMyCloset.class);
 //                myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(viewClosetIntent);
+                Activity_Main.this.startActivity(viewClosetIntent);
             }
         });
 
         addToMyClosetScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addClosetIntent = new Intent(MainActivity.this, GoogleCloudAPI.class);
+                Intent addClosetIntent = new Intent(Activity_Main.this, Activity_GoogleCloudAPI.class);
                 startActivity(addClosetIntent);
             }
         });
@@ -145,16 +144,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        MyApplication.firstName = document.get("first").toString();
-                        MyApplication.lastName = document.get("last").toString();
+                        GlobalVariables.firstName = document.get("first").toString();
+                        GlobalVariables.lastName = document.get("last").toString();
                     } else {
                         Log.d(TAG, "No such document");
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
-                Log.d(TAG, "First Name: " + MyApplication.firstName);
-                Log.d(TAG, "Last Name: " + MyApplication.lastName);
+                Log.d(TAG, "First Name: " + GlobalVariables.firstName);
+                Log.d(TAG, "Last Name: " + GlobalVariables.lastName);
             }
         });
 
@@ -200,34 +199,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.add_menu_option) {
-            Intent overviewIntent = new Intent(this,GoogleCloudAPI.class);
+            Intent overviewIntent = new Intent(this, Activity_GoogleCloudAPI.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             try {
                 FirebaseAuth.getInstance().signOut();
                 Log.d(TAG, "User signed out");
-                Intent overviewIntent = new Intent(this,LoginActivity.class);
+                Intent overviewIntent = new Intent(this, Activity_Login.class);
                 this.startActivity(overviewIntent);
             }catch (Exception e) {
                 Log.e(TAG, "onClick: Exception "+e.getMessage(),e );
@@ -263,11 +262,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLocation != null) {
 
             // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
-            MyApplication.latitude = String.valueOf(mLocation.getLatitude());
+            GlobalVariables.latitude = String.valueOf(mLocation.getLatitude());
             //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
-            MyApplication.longitude = String.valueOf(mLocation.getLongitude());
-            Log.d(TAG,MyApplication.latitude + MyApplication.longitude);
-            getCompleteAddressString(Double.valueOf(MyApplication.latitude), Double.valueOf(MyApplication.longitude));
+            GlobalVariables.longitude = String.valueOf(mLocation.getLongitude());
+            Log.d(TAG, GlobalVariables.latitude + GlobalVariables.longitude);
+            getCompleteAddressString(Double.valueOf(GlobalVariables.latitude), Double.valueOf(GlobalVariables.longitude));
         } else {
 //            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
@@ -330,12 +329,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
-        MyApplication.latitude = latitude;
+        GlobalVariables.latitude = latitude;
         longitude = String.valueOf(location.getLongitude());
-        MyApplication.longitude = longitude;
+        GlobalVariables.longitude = longitude;
         Log.d(TAG2,msg);
-        Log.d(TAG2,MyApplication.latitude);
-        Log.d(TAG2,MyApplication.longitude);
+        Log.d(TAG2, GlobalVariables.latitude);
+        Log.d(TAG2, GlobalVariables.longitude);
     }
 
     private boolean checkLocation() {
@@ -387,12 +386,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 strAdd = strReturnedAddress.toString();
                 String[] strAddArray = strAdd.split("\\s*,\\s*");
                 String[] strAddArray2 = strAddArray[2].split("\\s+");
-                MyApplication.city = strAddArray[1];
-                MyApplication.state = strAddArray2[0];
-                MyApplication.zipCode = strAddArray2[1];
-                Log.w(TAG,"My Current city " + MyApplication.city);
-                Log.w(TAG, "My Current state " +  MyApplication.state);
-                Log.w(TAG, "My Current zip code " +  MyApplication.zipCode);
+                GlobalVariables.city = strAddArray[1];
+                GlobalVariables.state = strAddArray2[0];
+                GlobalVariables.zipCode = strAddArray2[1];
+                Log.w(TAG,"My Current city " + GlobalVariables.city);
+                Log.w(TAG, "My Current state " +  GlobalVariables.state);
+                Log.w(TAG, "My Current zip code " +  GlobalVariables.zipCode);
 
             } else {
                 Log.w("My Current location address", "No Address returned!");

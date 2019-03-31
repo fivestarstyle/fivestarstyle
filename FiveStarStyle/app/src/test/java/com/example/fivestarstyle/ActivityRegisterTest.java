@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RegisterActivityTest extends RegisterActivity {
+public class ActivityRegisterTest extends Activity_Register {
 
 
     String goodEmail = "mjwilliams1@gmail.com";

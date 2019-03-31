@@ -53,14 +53,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class GoogleCloudAPI extends BaseActivity {
+public class Activity_GoogleCloudAPI extends LibraryPermissions {
     private static String accessToken;
     static final int REQUEST_GALLERY_IMAGE = 10;
     static final int REQUEST_CODE_PICK_ACCOUNT = 11;
     static final int REQUEST_ACCOUNT_AUTHORIZATION = 12;
     static final int REQUEST_PERMISSIONS = 13;
     static final int REQUEST_CODE_CAMERA = 14;
-    private final String LOG_TAG = "GoogleCloudAPI";
+    private final String LOG_TAG = "Activity_GoogleCloudAPI";
     private ImageView selectedImage;
 //    private TextView resultTextView;
     private Account mAccount;
@@ -90,28 +90,28 @@ public class GoogleCloudAPI extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -141,7 +141,7 @@ public class GoogleCloudAPI extends BaseActivity {
         selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
+                ActivityCompat.requestPermissions(Activity_GoogleCloudAPI.this,
                         new String[]{Manifest.permission.GET_ACCOUNTS},
                         REQUEST_PERMISSIONS);
                 chooseImageFlag = 1;
@@ -151,7 +151,7 @@ public class GoogleCloudAPI extends BaseActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(GoogleCloudAPI.this,
+                ActivityCompat.requestPermissions(Activity_GoogleCloudAPI.this,
                         new String[]{Manifest.permission.GET_ACCOUNTS},
                         REQUEST_PERMISSIONS);
                 takePictureFlag = 1;
@@ -192,7 +192,7 @@ public class GoogleCloudAPI extends BaseActivity {
                 chkCategory.setChecked(false);
                 newLabelsObject.labelSetCategory("none");
                 newLabelsObject.labelSetColor("none");
-                Intent confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                Intent confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                 confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
 //                confirmLabelIntent.putExtra("image", byteArray);
                 startActivity(confirmLabelIntent);
@@ -213,11 +213,11 @@ public class GoogleCloudAPI extends BaseActivity {
                         if(!chkColor.isChecked()) {
                             newLabelsObject.labelSetColor("none");
                             // no labels passed
-                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                            confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                         }
                         else {
                             // just color label passed
-                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
+                            confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoColor.class);
                         }
                         newLabelsObject.labelSetCategory("none");
                         confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
@@ -247,10 +247,10 @@ public class GoogleCloudAPI extends BaseActivity {
                     if(!chkCategory.isChecked()) {
                         newLabelsObject.labelSetCategory("none");
                         // no labels passed
-                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                        confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                     } else {
                         // just category label passed
-                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
+                        confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCat.class);
                     }
                     newLabelsObject.labelSetColor("none");
                     confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
@@ -280,19 +280,19 @@ public class GoogleCloudAPI extends BaseActivity {
                         if(!chkColor.isChecked()) {
                             newLabelsObject.labelSetColor("none");
                             // no labels passed
-                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsAll.class);
+                            confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                         } else {
                             // just color label passed
-                            confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoColor.class);
+                            confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoColor.class);
                         }
                     }
                     else if(!chkColor.isChecked()) {
                         newLabelsObject.labelSetColor("none");
                         // just category label passed
-                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCat.class);
+                        confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCat.class);
                     } else {
                         // both labels passed
-                        confirmLabelIntent = new Intent(GoogleCloudAPI.this, ConfirmLabelsNoCatOrColor.class);
+                        confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCatOrColor.class);
                     }
                     confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
                     startActivity(confirmLabelIntent);
@@ -345,7 +345,7 @@ public class GoogleCloudAPI extends BaseActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getAuthToken();
                 } else {
-                    Toast.makeText(GoogleCloudAPI.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_GoogleCloudAPI.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case REQUEST_CODE_CAMERA:
@@ -480,7 +480,7 @@ public class GoogleCloudAPI extends BaseActivity {
                     Log.d("Response", String.valueOf(response));
                     //add image to object being passed
                     image = bitmap;
-                    MyApplication.setBitmap(bitmap);
+                    GlobalVariables.setBitmap(bitmap);
                     Log.d("DATA", String.valueOf(bitmap));
 //                    bStream = new ByteArrayOutputStream();
 //                    image.compress(Bitmap.CompressFormat.PNG, 50, bStream);
@@ -503,8 +503,8 @@ public class GoogleCloudAPI extends BaseActivity {
                 takePhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent startOver = new Intent(GoogleCloudAPI.this, GoogleCloudAPI.class);
-                        GoogleCloudAPI.this.startActivity(startOver);
+                        Intent startOver = new Intent(Activity_GoogleCloudAPI.this, Activity_GoogleCloudAPI.class);
+                        Activity_GoogleCloudAPI.this.startActivity(startOver);
                     }
                 });
                 selectImage.setVisibility(View.GONE);
@@ -747,7 +747,7 @@ public class GoogleCloudAPI extends BaseActivity {
             Log.d(LOG_TAG, "pick account");
         } else {
 //            Log.d(LOG_TAG, "getTokenTask");
-            new GetTokenTask(GoogleCloudAPI.this, mAccount, SCOPE, REQUEST_ACCOUNT_AUTHORIZATION)
+            new GetTokenTask(Activity_GoogleCloudAPI.this, mAccount, SCOPE, REQUEST_ACCOUNT_AUTHORIZATION)
                     .execute();
 //            checkStoragePermission(RC_STORAGE_PERMS1);
             Log.d(LOG_TAG, "getTokenTask");

@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 
-public class BaseActivity extends AppCompatActivity {
+// description: this class deals with asking the user for permission to both access and write to their photo library
+//              and selecting an image from the user's photo library
+
+public class LibraryPermissions extends AppCompatActivity {
     public static final int RC_STORAGE_PERMS1 = 101;
     public static final int RC_SELECT_PICTURE = 103;
     public static final String ACTION_BAR_TITLE = "action_bar_title";
@@ -26,11 +28,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setTitle(getIntent().getStringExtra(ACTION_BAR_TITLE));
-//        }
     }
 
     @Override
@@ -39,31 +36,38 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    // setup three dots menu and set intents
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
-            Intent homeIntent = new Intent(this,MainActivity.class);
+            // go to the home page
+            Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetActivity.class);
+            // go to view closet page
+            Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
-            Intent overviewIntent = new Intent(this,ClosetStatistics.class);
+            // go to closet overview page
+            Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
-            Intent overviewIntent = new Intent(this,ChooseOutfit.class);
+            // go to choose outfit page
+            Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
-            Intent overviewIntent = new Intent(this,SettingsActivity.class);
+            // go to settings page
+            Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
+            // log current user out and go to login page
             FirebaseAuth.getInstance().signOut();
-            Intent overviewIntent = new Intent(this,LoginActivity.class);
+            Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
         }
         else {
@@ -77,53 +81,30 @@ public class BaseActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case RC_STORAGE_PERMS1:
-
-//If the permission request is granted, then...//
-
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-//...call selectPicture//
-
+                    // permission for camera library is granted, call function to select an image
                     selectPicture();
-
-//If the permission request is denied, then...//
-
                 } else {
-
-//...display the “permission_request” string//
-
+                    // permission is denied, ask again
                     MyHelper.needPermission(this, requestCode, R.string.permission_request);
                 }
                 break;
-
         }
     }
 
-//Check whether the user has granted the WRITE_STORAGE permission//
-
+    //Check whether the user has granted the WRITE_STORAGE permission//
     public void checkStoragePermission(int requestCode) {
         switch (requestCode) {
             case RC_STORAGE_PERMS1:
                 int hasWriteExternalStoragePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-//If we have access to external storage...//
-
                 if (hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED) {
-
-//...call selectPicture, which launches an Activity where the user can select an image//
-
+                    // permission for external storage is granted, call function to select an image
                     selectPicture();
-
-//If permission hasn’t been granted, then...//
-
                 } else {
-
-//...request the permission//
-
+                    // permission is denied, ask again
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
                 }
                 break;
-
         }
     }
 

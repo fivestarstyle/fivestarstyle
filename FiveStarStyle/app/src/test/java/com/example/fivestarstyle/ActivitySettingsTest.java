@@ -1,12 +1,10 @@
 package com.example.fivestarstyle;
 
 import org.junit.Test;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import static org.junit.Assert.*;
 
-public class SettingsActivityTest extends SettingsActivity {
+public class ActivitySettingsTest extends Activity_Settings {
 
     String goodZip = "35205";
     String nullZip = "";
