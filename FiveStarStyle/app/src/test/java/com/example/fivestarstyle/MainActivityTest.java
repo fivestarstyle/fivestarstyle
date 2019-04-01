@@ -24,6 +24,7 @@ public class MainActivityTest extends MainActivity {
         assertNotEquals(getCompleteAddressString(latitude,longitude),"Birmingham, Alabama");
     }
 
+
     @Test
     public void menuTestAssertEquals()  {
         //  create mock

@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Log.d(TAG2,MyApplication.longitude);
     }
 
-    private boolean checkLocation() {
+    public boolean checkLocation() {
         if(!isLocationEnabled())
             showAlert();
         return isLocationEnabled();
@@ -366,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         dialog.show();
     }
 
-    private boolean isLocationEnabled() {
+    public boolean isLocationEnabled() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);

@@ -12,6 +12,11 @@ public class SettingsActivityTest extends SettingsActivity {
     String nullZip = "";
 
 
+//    @Test
+//    public void customTrue() {
+//        assertTrue(custom(goodZip));
+//    }
+
 
     @Test
     public void customFalse() {
