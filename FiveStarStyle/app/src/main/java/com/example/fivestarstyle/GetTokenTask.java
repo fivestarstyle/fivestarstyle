@@ -11,7 +11,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 
 import java.io.IOException;
 
-
+// this class gets the GCAPI token and calls the API
 public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     Activity mActivity;
     String mScope;
@@ -19,6 +19,7 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     int mRequestCode;
 
     GetTokenTask(Activity activity, Account account, String scope, int requestCode) {
+        // initializes variables with parameters
         this.mActivity = activity;
         this.mScope = scope;
         this.mAccount = account;
@@ -28,36 +29,34 @@ public class GetTokenTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         try {
-            Log.d("tokenBackground", "before");
-            Log.d("tokenBackground", "before");
             String token = fetchToken();
-            Log.d("tokenBackground", "made it");
             if (token != null) {
+                // call GCAPI with token
                 ((Activity_GoogleCloudAPI)mActivity).onTokenReceived(token);
             }
         } catch (IOException e) {
+            // catch exception if fails
             e.printStackTrace();
         }
         return null;
     }
 
-    /**
-     * Gets an authentication token from Google and handles any
-     * GoogleAuthException that may occur.
-     */
+    // gets an authentication token from Google and handles any GoogleAuthException that may occur.
     protected String fetchToken() throws IOException {
         String accessToken;
         try {
-            Log.d("token", "token1");
-            Log.d("token", "token1");
+            // set access token to retrieved token
             accessToken = GoogleAuthUtil.getToken(mActivity, mAccount, mScope);
-            Log.d("token", "token2");
-            GoogleAuthUtil.clearToken (mActivity, accessToken); // used to remove stale tokens.
+            // used to remove stale tokens.
+            GoogleAuthUtil.clearToken (mActivity, accessToken);
+            // get token again after stale token has been removed
             accessToken = GoogleAuthUtil.getToken(mActivity, mAccount, mScope);
             return accessToken;
         } catch (UserRecoverableAuthException userRecoverableException) {
+            // catch authentication exception
             mActivity.startActivityForResult(userRecoverableException.getIntent(), mRequestCode);
         } catch (GoogleAuthException fatalException) {
+            // catch fatal exception
             fatalException.printStackTrace();
         }
         return null;

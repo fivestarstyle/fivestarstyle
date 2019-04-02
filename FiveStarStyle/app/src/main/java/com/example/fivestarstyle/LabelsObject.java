@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+// this class holds the labels and the functions to get/alter the labels for a closet item
 @SuppressWarnings("serial")
 public class LabelsObject implements Serializable {
     private String category = "";
