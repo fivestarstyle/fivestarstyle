@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class initializes the event tab for adding labels
+
 public class LabelsTabsEvent extends Fragment {
     public LabelsTabsEvent() {
         // Required empty public constructor

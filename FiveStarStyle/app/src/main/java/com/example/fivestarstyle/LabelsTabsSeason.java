@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class initializes the season tab for adding labels
 
 public class LabelsTabsSeason extends Fragment {
     public LabelsTabsSeason() {
