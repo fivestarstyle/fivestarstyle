@@ -348,7 +348,7 @@ public class Activity_ConfirmLabelsNoColor extends AppCompatActivity {
                     ((CheckBox) checkboxTops).setChecked(false);
                     ((CheckBox) checkboxAccessories).setChecked(false);
                     // set shoe category label
-                    labelsObj.labelSetCategory("shoe");
+                    labelsObj.labelSetCategory("shoes");
                     catFlag = 1;
                 } else {
                     catFlag = 0;
