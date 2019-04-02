@@ -30,7 +30,6 @@ public class Activity_Register extends AppCompatActivity {
     private EditText mPasswordField;
     private EditText mFirstNameField;
     private EditText mLastNameField;
-//    private Spinner mGenderField;
 
 
     @Override
@@ -38,15 +37,6 @@ public class Activity_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-//        //initialize DropDown
-//            Spinner spinner = (Spinner) findViewById(R.id.gender_spinner);
-//            // Create an ArrayAdapter using the string array and a default spinner layout
-//            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                    R.array.gender_array, android.R.layout.simple_spinner_item);
-//            // Specify the layout to use when the list of choices appears
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            // Apply the adapter to the spinner
-//            spinner.setAdapter(adapter);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -54,7 +44,6 @@ public class Activity_Register extends AppCompatActivity {
         mPasswordField = findViewById(R.id.txtPassword);
         mFirstNameField = findViewById(R.id.txtFirstName);
         mLastNameField = findViewById(R.id.txtLastName);
-//        mGenderField = findViewById(R.id.gender_spinner);
 
         if (!isValidEmailAddress(mEmailField.getText().toString())) {
             return;
@@ -129,11 +118,9 @@ public class Activity_Register extends AppCompatActivity {
             Map<String, Object> test = new HashMap<>();
             test.put("first", mFirstNameField.getText().toString());
             test.put("last", mLastNameField.getText().toString());
-//            test.put("gender", mGenderField.getSelectedItem().toString());
 
             GlobalVariables.firstName = mFirstNameField.getText().toString();
             GlobalVariables.lastName = mLastNameField.getText().toString();
-//            GlobalVariables.gender = mGenderField.getSelectedItem().toString();
 
             // Add a new document with a generated ID
             db.collection("userClosets" ).document(user.getUid())

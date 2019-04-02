@@ -19,8 +19,15 @@ public class GlobalVariables extends Application {
     public static String gender = "";
     public static String firstName = "";
     public static String lastName = "";
+    public static String top = "top";
+    public static String bottom = "bottom";
+    public static String dress_or_suit = "dress_or_suit";
+    public static String outerwear = "outerwear";
+    public static String shoes = "shoes";
+    public static String accessories = "accessories";
+
     public static List<String> categories = Arrays.asList(
-            "Tops", "Bottoms", "Dresses_Suits", "Outerwear", "Shoes", "Accessories"
+            top, bottom, dress_or_suit, outerwear, shoes, accessories
             );
 
 

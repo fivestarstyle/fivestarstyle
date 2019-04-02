@@ -83,13 +83,6 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/gender_spinner"
-        android:layout_width="fill_parent"
-        android:paddingVertical="10dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/gender_array" />
-
     <android.support.design.button.MaterialButton
         android:id="@+id/btnRegister"
         android:layout_width="129dp"
