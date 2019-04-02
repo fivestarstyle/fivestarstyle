@@ -131,15 +131,16 @@ public class MyHelper {
         return compressImage(imageFile, BitmapFactory.decodeFile(path, options));
     }
 
-    private static Bitmap compressImage(File imageFile, Bitmap bmp) {
-        try {
-            FileOutputStream fos = new FileOutputStream(imageFile);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmp;
+    public static Bitmap compressImage(File imageFile, Bitmap bmp) {
+            try {
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bmp;
+
     }
 
     public static List<String> extractLabels(BatchAnnotateImagesResponse response) {
