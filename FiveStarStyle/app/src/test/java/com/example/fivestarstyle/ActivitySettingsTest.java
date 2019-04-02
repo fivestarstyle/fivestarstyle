@@ -10,6 +10,10 @@ public class ActivitySettingsTest extends Activity_Settings {
     String nullZip = "";
 
 
+    @Test (expected = NullPointerException.class)
+    public void customTrue() {
+        custom(goodZip);
+    }
 
     @Test
     public void customFalse() {
