@@ -201,7 +201,7 @@ public class Activity_ConfirmLabelsNoColor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check if at least one event has been selected
-                if(eventFlag == 1) {
+                if(eventFlag >= 1) {
                     // at least one event has been selected, move on to confirming labels
                     showPopup(v);
                 } else {
