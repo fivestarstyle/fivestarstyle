@@ -497,6 +497,10 @@ public class Activity_ConfirmLabelsNoColor extends AppCompatActivity {
                 Log.d(TAG, "Add item =>" + labelsObj);
                 if (success) {
 //                    new Intent with prompt to add more or return to closet
+                    String msg = "Success! Item added to closet.";
+                    Intent confirmIntent = new Intent(Activity_ConfirmLabelsNoColor.this, Activity_Main.class);
+                    confirmIntent.putExtra("msg", msg);
+                    startActivity(confirmIntent);
                 } else {
 //                    "error try again" redirect to add page
                 }
