@@ -513,7 +513,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         }.execute();
     }
 
-    private String convertResponseToString(BatchAnnotateImagesResponse response) {
+    public String convertResponseToString(BatchAnnotateImagesResponse response) {
         Log.d("RESPONSE-LABELS", String.valueOf(response));
         StringBuilder message = new StringBuilder("Results:\n\n");
         List<String> filteredMessage = new ArrayList<>();
@@ -541,7 +541,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         return String.valueOf(filtered);
     }
 
-    private List<String> filterLabels(List labels) {
+    public List<String> filterLabels(List labels) {
         List<String> newList = new ArrayList<>();
         int i = 0;
         newList.add("category");

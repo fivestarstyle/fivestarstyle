@@ -5,38 +5,35 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+// this class holds the labels and the functions to get/alter the labels for a closet item
 @SuppressWarnings("serial")
 public class LabelsObject implements Serializable {
-//    private Bitmap image;
     private String category = "";
     private String color = "";
     private List<String> seasons = new ArrayList<>();
     private List<String> events = new ArrayList<>();
 
-    //added to test -c
-//    public void labelSetImage(Bitmap i) {
-//        this.image = i;
-//    }
-//    public Bitmap labelGetImage() {
-//        return image;
-//    }
-
+    // set category
     public void labelSetCategory(String c) {
         this.category = c;
     }
 
+    // get category
     public String labelGetCategory() {
         return category;
     }
 
+    // set color
     public void labelSetColor(String c) {
         this.color = c;
     }
 
+    // get color
     public String labelGetColor() {
         return color;
     }
 
+    // add season if it does not already exist in seasons list
     public void labelAddSeason(String c) {
         int i;
         for(i = 0; i < seasons.size(); i++) {
@@ -47,8 +44,10 @@ public class LabelsObject implements Serializable {
         this.seasons.add(c);
     }
 
+    // get list of seasons
     public List<String> labelGetSeasons() { return seasons; }
 
+    // remove season from list
     public void labelRemoveSeason(String c) {
         int i = 0;
         List<String> newSeasons = new ArrayList<>();
@@ -60,6 +59,7 @@ public class LabelsObject implements Serializable {
         seasons = newSeasons;
     }
 
+    // add event if it does not already exist in events list
     public void labelAddEvent(String c) {
         int i;
         for(i = 0; i < events.size(); i++) {
@@ -70,8 +70,10 @@ public class LabelsObject implements Serializable {
         this.events.add(c);
     }
 
+    // get list of events
     public List<String> labelGetEvents() { return events; }
 
+    // remove event from from list
     public void labelRemoveEvent(String c) {
         int i = 0;
         List<String> newEvents = new ArrayList<>();

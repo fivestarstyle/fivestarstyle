@@ -32,9 +32,12 @@ import java.util.Locale;
 import static android.graphics.BitmapFactory.decodeFile;
 import static android.graphics.BitmapFactory.decodeStream;
 
+// this class aids in accessing the users's library/camera when adding new item to closet
+
 public class MyHelper {
     private static Dialog mDialog;
 
+    // get path to the image
     public static String getPath(Context context, Uri uri) {
         String path = "";
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -49,6 +52,7 @@ public class MyHelper {
         return path;
     }
 
+    // create a temp file for picture taken with camera
     public static File createTempFile(File file) {
         File dir = new File(Environment.getExternalStorageDirectory().getPath() + "/com.example.mlkit");
         if (!dir.exists() || !dir.isDirectory()) {
@@ -60,6 +64,7 @@ public class MyHelper {
         return file;
     }
 
+    // show message on page
     public static void showDialog(Context context) {
         mDialog = new Dialog(context);
         mDialog.addContentView(
@@ -72,12 +77,14 @@ public class MyHelper {
         }
     }
 
+    // dismiss the shown message
     public static void dismissDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
 
+    // get permissions for library/camera if needed
     public static void needPermission(final Activity activity, final int requestCode, int msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setMessage(msg);
@@ -100,6 +107,7 @@ public class MyHelper {
         alert.show();
     }
 
+    // resize existing image in order to display
     public static Bitmap resizeImage(File imageFile, Context context, Uri uri, ImageView view) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         try {
@@ -114,6 +122,7 @@ public class MyHelper {
         }
     }
 
+    // resize taken image in order to display
     public static Bitmap resizeImage(File imageFile, String path, ImageView view) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -131,17 +140,20 @@ public class MyHelper {
         return compressImage(imageFile, BitmapFactory.decodeFile(path, options));
     }
 
-    private static Bitmap compressImage(File imageFile, Bitmap bmp) {
-        try {
-            FileOutputStream fos = new FileOutputStream(imageFile);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmp;
+    // compress image to bitmap
+    public static Bitmap compressImage(File imageFile, Bitmap bmp) {
+            try {
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bmp;
+
     }
 
+    // extract labels from the GCAPI for the image
     public static List<String> extractLabels(BatchAnnotateImagesResponse response) {
         List<String> tags = new ArrayList<>();
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();

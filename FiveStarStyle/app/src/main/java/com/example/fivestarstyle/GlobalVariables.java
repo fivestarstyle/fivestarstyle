@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// this class contains the global variables for the application
 public class GlobalVariables extends Application {
     public static String longitude = "";
     public static String latitude = "";
@@ -25,12 +26,9 @@ public class GlobalVariables extends Application {
     public static String outerwear = "outerwear";
     public static String shoes = "shoes";
     public static String accessories = "accessories";
-
     public static List<String> categories = Arrays.asList(
             top, bottom, dress_or_suit, outerwear, shoes, accessories
             );
-
-
     private static Bitmap bitmap;
     public static Bitmap getBitmap() {
         return bitmap;

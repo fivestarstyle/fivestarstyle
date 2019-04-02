@@ -39,13 +39,11 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_labels_all);
 
+        // get object containing labels passed from google cloud API
         Intent i = getIntent();
         labelsObj = (LabelsObject) i.getSerializableExtra("labelsObj");
-        category = labelsObj.labelGetCategory();
-        color = labelsObj.labelGetColor();
-        Log.d("LABELS-CATEGORY", category);
-        Log.d("LABELS-COLOR", color);
 
+        // initialize buttons and click listeners
         right = (Button) findViewById(R.id.right_btn);
         left = (Button) findViewById(R.id.left_btn);
         left.setVisibility(View.GONE);
@@ -53,24 +51,28 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // check if a color has been selected
                 if(colorFlag == 1) {
+                    // a color has been selected, move on to next page
                     fragment = new LabelsTabsSeason();
                     selectTab(1);
                 } else {
+                    // a color has not been selected, notify user and stay on the same page
                     Toast.makeText(Activity_ConfirmLabelsNoCat.this, "Please select one color.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        // initialize the tab layout
         createTabs();
+        // create a dialog for the confirmation popup
         myDialog = new Dialog(this);
     }
 
+    // initialize the tab layout
     public void createTabs() {
-        FrameLayout simpleFrameLayout;
         TabLayout tabLayout;
 
         // get reference of FrameLayout and TabLayout
-        simpleFrameLayout = (FrameLayout) findViewById(R.id.simpleFrameLayout);
         tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
         // create first tab
         TabLayout.Tab firstTab = tabLayout.newTab();
@@ -84,7 +86,7 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         TabLayout.Tab thirdTab = tabLayout.newTab();
         thirdTab.setText("Event");
         tabLayout.addTab(thirdTab);
-        // choose tab that is selected
+        // choose first tab to be selected on start
         Fragment fragment = new LabelsTabsColor();
         firstTab.select();
         FragmentManager fm = getSupportFragmentManager();
@@ -97,21 +99,26 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                // initialize fragment to first tab
                 Fragment fragment = new LabelsTabsColor();
                 switch (tab.getPosition()) {
                     case 0:
+                        // switch to first tab
                         fragment = new LabelsTabsColor();
                         colorTab();
                         break;
                     case 1:
+                        // switch to second tab
                         fragment = new LabelsTabsSeason();
                         seasonTab();
                         break;
                     case 2:
+                        // switch to third tab
                         fragment = new LabelsTabsEvent();
                         eventTab();
                         break;
                 }
+                // commit fragment change
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.simpleFrameLayout, fragment);
@@ -121,26 +128,30 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                // necessary empty method
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                // necessary empty method
             }
         });
     }
 
+    // configure buttons for first tab
     public void colorTab() {
         right.setText("Next");
         right.setOnClickListener(new View.OnClickListener() {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // check if a color has been selected
                 if(colorFlag == 1) {
+                    // a color has been selected, move on to the next page
                     fragment = new LabelsTabsSeason();
                     selectTab(1);
                 } else {
+                    // a color has not been selected, notify user and stay on same page
                     Toast.makeText(Activity_ConfirmLabelsNoCat.this, "Please select one color.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -148,16 +159,20 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         left.setVisibility(View.GONE);
     }
 
+    // configure buttons for second tab
     public void seasonTab() {
         right.setText("Next");
         right.setOnClickListener(new View.OnClickListener() {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // check if at least one season has been selected
                 if(seasonFlag >= 1) {
+                    // at least one season has been selected, move on to the next tab
                     fragment = new LabelsTabsEvent();
                     selectTab(2);
                 } else {
+                    // no seasons have been selected, notify user and stay on same page
                     Toast.makeText(Activity_ConfirmLabelsNoCat.this, "Please select at least one season.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -167,21 +182,26 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // go back to the previous tab
                 fragment = new LabelsTabsColor();
                 selectTab(0);
             }
         });
     }
 
+    // configure buttons for third tab
     public void eventTab() {
         right.setText("Add Item");
         right.setOnClickListener(new View.OnClickListener() {
             //            Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // check if at least one event has been selected
                 if(seasonFlag >= 1) {
+                    // at least one event has been selected, move on to confirming labels
                     showPopup(v);
                 } else {
+                    // no events have been selected, notify user and stay on same page
                     Toast.makeText(Activity_ConfirmLabelsNoCat.this, "Please select at least one event.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -191,12 +211,14 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
             Fragment fragment = null;
             @Override
             public void onClick(View v) {
+                // go back to previous tab
                 fragment = new LabelsTabsSeason();
                 selectTab(1);
             }
         });
     }
 
+    // event listener for a clicked checkbox
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -289,6 +311,7 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
                     labelsObj.labelAddSeason("spring");
                     seasonFlag++;
                 } else {
+                    // remove spring season label
                     labelsObj.labelRemoveSeason("spring");
                     seasonFlag--;
                 }
@@ -548,40 +571,48 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
                 }
                 break;
             default:
-                // add to casual?
+                // none
                 break;
         }
     }
 
+    // inflate the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_options,menu);
         return true;
     }
 
+    // setup three dots menu and set intents
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
+            // go to home page
             Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
+            // go to view my closet page
             Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
+            // go to overview page
             Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
+            // go to choose my outfit page
             Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
+            // go to settings page
             Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
+            // log current user out and go to login page
             FirebaseAuth.getInstance().signOut();
             Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
@@ -592,12 +623,14 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         return true;
     }
 
+    // selects the tab with the index that is passed to the function
     public void selectTab(Integer index) {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
         TabLayout.Tab tab = tabLayout.getTabAt(index);
         tab.select();
     }
 
+    // shows confirmation popup for the selected labels
     public void showPopup(View v) {
         TextView txtCategory;
         TextView txtColor;
@@ -614,6 +647,7 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         btnRestart = (Button) myDialog.findViewById(R.id.btnRestart);
         btnConfirm = (Button) myDialog.findViewById(R.id.btnConfirm);
 
+        // user wants to start over with choosing labels, go back to first page of confirm labels
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -624,23 +658,27 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
             }
         });
 
+        // user confirms selected labels, pass item to data transfer service
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Boolean success = DataTransferService.addItem(labelsObj);
                 Log.d(TAG, "Add item =>" + labelsObj);
+                // check whether item was successfully added to closet
                 if (success) {
-//                    new Intent with prompt to add more or return to closet
+                    // item was added to closet, notify user of success
                     String msg = "Success! Item added to closet.";
                     Intent confirmIntent = new Intent(Activity_ConfirmLabelsNoCat.this, Activity_Main.class);
                     confirmIntent.putExtra("msg", msg);
                     startActivity(confirmIntent);
                 } else {
-//                    "error try again" redirect to add page
+                    // item was not added to closet, notify user and have them try again
+                    Toast.makeText(Activity_ConfirmLabelsNoCat.this, "Whoops! An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        // display labels for user approval
         txtCategory.setText("Category: " + labelsObj.labelGetCategory().substring(0,1).toUpperCase() + labelsObj.labelGetCategory().substring(1));
         txtColor.setText("Color: " + labelsObj.labelGetColor().substring(0,1).toUpperCase() + labelsObj.labelGetColor().substring(1));
         StringBuilder seasons = new StringBuilder();
@@ -675,7 +713,7 @@ public class Activity_ConfirmLabelsNoCat extends AppCompatActivity {
         }
         txtEvents.setText(String.valueOf(events));
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show popup on screen
         myDialog.show();
     }
-
 }
