@@ -54,7 +54,7 @@ public class Activity_Overview extends AppCompatActivity {
         TabLayout.Tab fourthTab = tabLayout.newTab();
         fourthTab.setText("Event");
         tabLayout.addTab(fourthTab);
-        // set first tab to be selected
+        // set first tab to be selected on start
         Fragment fragment = new OverviewTabsCategory();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -71,22 +71,27 @@ public class Activity_Overview extends AppCompatActivity {
                 Fragment fragment = new OverviewTabsCategory();
                 switch (tab.getPosition()) {
                     case 0:
+                        // switch to first tab
                         fragment = new OverviewTabsCategory();
                         createCategoryPieGraph();
                         break;
                     case 1:
+                        // switch to second tab
                         fragment = new OverviewTabsSeason();
                         createSeasonPieGraph();
                         break;
                     case 2:
+                        // switch to third tab
                         fragment = new OverviewTabsColor();
                         createColorPieGraph();
                         break;
                     case 3:
+                        // switch to fourth tab
                         fragment = new OverviewTabsEvent();
                         createEventPieGraph();
                         break;
                 }
+                // commit fragment change
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.simpleFrameLayout, fragment);
