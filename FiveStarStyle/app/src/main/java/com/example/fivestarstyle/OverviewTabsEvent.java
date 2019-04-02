@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class initializes the fragment tab for the overview activity
 
 public class OverviewTabsEvent extends Fragment {
     public OverviewTabsEvent() {

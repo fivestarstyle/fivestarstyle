@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class initializes the season tab for the overview activity
 
 public class OverviewTabsSeason extends Fragment {
     public OverviewTabsSeason() {
