@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class initializes the category tab for adding labels
+
 public class LabelsTabsCategory extends Fragment {
     public LabelsTabsCategory() {
         // required empty public constructor

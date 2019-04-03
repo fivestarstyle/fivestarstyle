@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+// this class implements the google cloud API in order to analyze the images
+
 public class Activity_GoogleCloudAPI extends LibraryPermissions {
     private static String accessToken;
     static final int REQUEST_GALLERY_IMAGE = 10;
@@ -62,7 +64,6 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
     static final int REQUEST_CODE_CAMERA = 14;
     private final String LOG_TAG = "Activity_GoogleCloudAPI";
     private ImageView selectedImage;
-//    private TextView resultTextView;
     private Account mAccount;
     private ProgressDialog mProgressDialog;
     private Button selectImage;
@@ -75,41 +76,45 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
     Dialog myDialog;
     LabelsObject newLabelsObject;
     Bitmap image;
-//    ByteArrayOutputStream bStream;
-//    byte[] byteArray;
-
-
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    // inflate the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_options,menu);
         return true;
     }
 
+    // set up the three dots menu and set the intent
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.home__menu_option) {
+            // go to home page
             Intent homeIntent = new Intent(this, Activity_Main.class);
             this.startActivity(homeIntent);
         }
         else if(item.getItemId() == R.id.closet_menu_option) {
+            // go to view my closet page
             Intent overviewIntent = new Intent(this, Activity_ViewMyCloset.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.overview_menu_option) {
+            // go to closet overview page
             Intent overviewIntent = new Intent(this, Activity_Overview.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.choosemyoutfit_menu_option) {
+            // go to choose my outfit page
             Intent overviewIntent = new Intent(this, Activity_ChooseMyOutfit.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.settings_menu_option) {
+            // go to settings page
             Intent overviewIntent = new Intent(this, Activity_Settings.class);
             this.startActivity(overviewIntent);
         }
         else if(item.getItemId() == R.id.logout_menu_option) {
+            // log out current user and go to login page
             FirebaseAuth.getInstance().signOut();
             Intent overviewIntent = new Intent(this, Activity_Login.class);
             this.startActivity(overviewIntent);
@@ -126,18 +131,15 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         setContentView(R.layout.activity_google_cloud_api);
         mProgressDialog = new ProgressDialog(this);
         selectedImage = (ImageView) findViewById(R.id.selected_image);
-//        resultTextView = (TextView) findViewById(R.id.result);
         selectImage = (Button) findViewById(R.id.btn_choose_picture);
         takePhoto = (Button) findViewById(R.id.btn_take_picture);
         confirmLabels = (Button) findViewById(R.id.btn_confirm_label);
         confirmLabels.setVisibility(View.GONE);
-
-
         newLabelsObject = new LabelsObject();
-
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
+        // click listener to select image from photo library
         selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +150,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
             }
         });
 
+        // click listener to use camera to take image
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,11 +160,8 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                 takePictureFlag = 1;
             }
         });
-
+        // set dialog to show popup
         myDialog = new Dialog(this);
-                //
-//        checkStoragePermission(RC_STORAGE_PERMS1);
-//        findViewById(R.id.select_image_button).setOnClickListener(this);
     }
 
     public void ShowPopup(View v) {
@@ -177,29 +177,25 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         chkCategory = (CheckBox) myDialog.findViewById(R.id.chkCategory);
         chkColor = (CheckBox) myDialog.findViewById(R.id.chkColor);
 
-//        newLabelsObject.labelSetCategory("Top");
-//        newLabelsObject.labelSetColor("Red");
-
         // check if category/color labels were found/updated
         String category = newLabelsObject.labelGetCategory();
         String color = newLabelsObject.labelGetColor();
 
+        // category not found
         if(category.equals("none") || category.length() == 0) {
+            // color not found
             if(color.equals("none") || color.length() == 0) {
-                // no labels found
-                Log.d("LABELS", "dismissed");
+                // no labels found - go to confirm labels all
                 chkCategory.setChecked(false);
                 chkCategory.setChecked(false);
                 newLabelsObject.labelSetCategory("none");
                 newLabelsObject.labelSetColor("none");
                 Intent confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                 confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
-//                confirmLabelIntent.putExtra("image", byteArray);
                 startActivity(confirmLabelIntent);
             }
-            // just color label found
             else {
-                Log.d("LABELS", "Just Color");
+                // just color label found, show popup with color for user to confirm
                 txtclose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -212,11 +208,11 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                         Intent confirmLabelIntent;
                         if(!chkColor.isChecked()) {
                             newLabelsObject.labelSetColor("none");
-                            // no labels passed
+                            // no labels passed, go to confirm labels all
                             confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                         }
                         else {
-                            // just color label passed
+                            // just color label passed, go to confirm labels no color
                             confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoColor.class);
                         }
                         newLabelsObject.labelSetCategory("none");
@@ -228,12 +224,12 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                 chkCategory.setChecked(false);
                 chkCategory.setVisibility(View.GONE);
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // show popup
                 myDialog.show();
             }
         }
-        // just category label found
+        // just category label found, show popup with category for user to confirm
         else if(color.equals("none") || color.length() == 0) {
-            Log.d("LABELS", "Just Category");
             txtclose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -246,10 +242,10 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                     Intent confirmLabelIntent;
                     if(!chkCategory.isChecked()) {
                         newLabelsObject.labelSetCategory("none");
-                        // no labels passed
+                        // no labels passed, go to confirm labels all
                         confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                     } else {
-                        // just category label passed
+                        // just category label passed, go to confirm labels no cat
                         confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCat.class);
                     }
                     newLabelsObject.labelSetColor("none");
@@ -261,6 +257,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
             chkColor.setChecked(false);
             chkColor.setVisibility(View.GONE);
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // show popup
             myDialog.show();
         }
         // both labels found
@@ -279,19 +276,19 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                         newLabelsObject.labelSetCategory("none");
                         if(!chkColor.isChecked()) {
                             newLabelsObject.labelSetColor("none");
-                            // no labels passed
+                            // no labels passed, go to confirm labels all
                             confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsAll.class);
                         } else {
-                            // just color label passed
+                            // just color label passed, go to confirm labels no color
                             confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoColor.class);
                         }
                     }
                     else if(!chkColor.isChecked()) {
                         newLabelsObject.labelSetColor("none");
-                        // just category label passed
+                        // just category label passed, go to confirm labels no cat
                         confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCat.class);
                     } else {
-                        // both labels passed
+                        // both labels passed, go to confirm labels no cat or color
                         confirmLabelIntent = new Intent(Activity_GoogleCloudAPI.this, Activity_ConfirmLabelsNoCatOrColor.class);
                     }
                     confirmLabelIntent.putExtra("labelsObj", newLabelsObject);
@@ -304,38 +301,31 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
             chkCategory.setText("Category: " + category.substring(0,1).toUpperCase() + category.substring(1));
             chkColor.setText("Color: " + color.substring(0,1).toUpperCase() + color.substring(1));
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // show popup
             myDialog.show();
         }
     }
 
-    private void launchImagePicker() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select an image"),
-                REQUEST_GALLERY_IMAGE);
-    }
-
+    // take picture with camera
     private void dispatchTakePictureIntent() throws IOException {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
-        counter++; //this is an int
-        String imageFileName = "JPEG_" + counter; //make a better file name
+        counter++;
+        // makes unique file name
+        String imageFileName = "JPEG_" + counter;
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        // create new file for the image
         File image = File.createTempFile(imageFileName,
                 ".jpg",
                 storageDir
         );
-
         uri = Uri.fromFile(image);
+        // take photo
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
     }
 
+    // handles permission requests - either for camera access or photo library access
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -350,23 +340,19 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                 break;
             case REQUEST_CODE_CAMERA:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-//                    Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
                     try {
                         Log.d(LOG_TAG, "Camera Permission Granted!");
                         dispatchTakePictureIntent();
                     } catch (IOException e) {
                         Log.d(LOG_TAG, "error taking photo");
                     }
-
                 } else {
-
                     Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_LONG).show();
-
                 }
         }
     }
 
+    // handles result of activities
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -385,7 +371,6 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                     }
                 }
                 getAuthToken();
-//                checkStoragePermission(RC_STORAGE_PERMS1);
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "No Account Selected", Toast.LENGTH_SHORT)
                         .show();
@@ -405,18 +390,16 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                     checkStoragePermission(requestCode);
                     break;
                 case RC_SELECT_PICTURE:
-//                    resultTextView.setText("Woohoo!");
                     Uri dataUri = data.getData();
                     uploadImage(dataUri);
                     break;
                 case REQUEST_IMAGE_CAPTURE:
-//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-//                    Uri u = data.getData();
                     uploadImage(uri);
             }
         }
     }
 
+    // upload image to page
     public void uploadImage(Uri uri) {
         if (uri != null) {
             try {
@@ -432,33 +415,31 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         }
     }
 
+    // call cloud vision API to analyze image
     private void callCloudVision(final Bitmap bitmap) throws IOException {
-//        resultTextView.setText("Retrieving results from cloud");
 
         new AsyncTask<Object, Void, String>() {
             @Override
             protected String doInBackground(Object... params) {
                 try {
+                    // use token to access API
                     GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
                     HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
                     JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
+                    // create a new vision builder with credentials
                     Vision.Builder builder = new Vision.Builder
                             (httpTransport, jsonFactory, credential);
                     Vision vision = builder.build();
 
+                    // analyze list of features
                     List<Feature> featureList = new ArrayList<>();
                     Feature labelDetection = new Feature();
                     labelDetection.setType("LABEL_DETECTION");
                     labelDetection.setMaxResults(10);
                     featureList.add(labelDetection);
 
-//                    Feature imageProperties = new Feature();
-//                    imageProperties.setType("IMAGE_PROPERTIES");
-//                    imageProperties.setMaxResults(5);
-//                    Log.d("IMAGE", String.valueOf(imageProperties));
-//                    featureList.add(imageProperties);
-
+                    // analyze image list
                     List<AnnotateImageRequest> imageList = new ArrayList<>();
                     AnnotateImageRequest annotateImageRequest = new AnnotateImageRequest();
                     Image base64EncodedImage = getBase64EncodedJpeg(bitmap);
@@ -466,6 +447,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                     annotateImageRequest.setFeatures(featureList);
                     imageList.add(annotateImageRequest);
 
+                    // process images request
                     BatchAnnotateImagesRequest batchAnnotateImagesRequest =
                             new BatchAnnotateImagesRequest();
                     batchAnnotateImagesRequest.setRequests(imageList);
@@ -476,29 +458,29 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                     annotateRequest.setDisableGZipContent(true);
                     Log.d(LOG_TAG, "sending request");
 
+                    // execute images request
                     BatchAnnotateImagesResponse response = annotateRequest.execute();
                     Log.d("Response", String.valueOf(response));
                     //add image to object being passed
                     image = bitmap;
                     GlobalVariables.setBitmap(bitmap);
                     Log.d("DATA", String.valueOf(bitmap));
-//                    bStream = new ByteArrayOutputStream();
-//                    image.compress(Bitmap.CompressFormat.PNG, 50, bStream);
-//                    byteArray = bStream.toByteArray();
-//                    newLabelsObject.labelSetImage(bitmap);
                     return convertResponseToString(response);
 
                 } catch (GoogleJsonResponseException e) {
+                    // catch and log json exception
                     Log.e(LOG_TAG, "Request failed: " + e.getContent());
                 } catch (IOException e) {
+                    // catch and log IOException
                     Log.d(LOG_TAG, "Request failed: " + e.getMessage());
                 }
+                // return error message
                 return "Cloud Vision API request failed.";
             }
 
+            // change buttons to display trying again
             protected void onPostExecute(String result) {
                 Log.d(LOG_TAG, "post");
-//                resultTextView.setText(result);
                 takePhoto.setText(R.string.try_again);
                 takePhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -513,34 +495,28 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         }.execute();
     }
 
+    // convert labels for image to a string
     public String convertResponseToString(BatchAnnotateImagesResponse response) {
-        Log.d("RESPONSE-LABELS", String.valueOf(response));
         StringBuilder message = new StringBuilder("Results:\n\n");
         List<String> filteredMessage = new ArrayList<>();
         message.append("Labels:\n");
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
-//        ImageProperties colors = response.getResponses().get(0).getImagePropertiesAnnotation();
-//        labels.add(response.getResponses().get(0).getImagePropertiesAnnotation());
         Log.d("LABELS", String.valueOf(labels));
-//        Log.d("COLORS", String.valueOf(colors));
         if (labels != null) {
             for (EntityAnnotation label : labels) {
                 filteredMessage.add(String.format(Locale.getDefault(), "%s", label.getDescription()));
                 message.append(String.format(Locale.getDefault(), "%s", label.getDescription()));
                 message.append("\n");
             }
-//            message.append(String.format(Locale.getDefault(), "%s", colors.getDominantColors().getColors().get(0).getColor()));
-
         } else {
             message.append("nothing\n");
         }
-        Log.d("LIST", String.valueOf(filterLabels(filteredMessage)));
-//        return message.toString();
         List<String> filtered = filterLabels(filteredMessage);
         updateLabels(filtered);
         return String.valueOf(filtered);
     }
 
+    // filter labels for the images to folllow what we are looking for
     public List<String> filterLabels(List labels) {
         List<String> newList = new ArrayList<>();
         int i = 0;
@@ -694,22 +670,19 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         return newList;
     }
 
+    // update labels for the object
     public void updateLabels(List labels) {
-//        newLabelsObject = new LabelsObject();
         newLabelsObject.labelSetCategory(String.valueOf(labels.get(1)));
         newLabelsObject.labelSetColor(String.valueOf(labels.get(3)));
-        Log.d("LABELS-CATEGORY", newLabelsObject.labelGetCategory());
-        Log.d("LABELS-COLOR", newLabelsObject.labelGetColor());
     }
 
+    // resize image
     public Bitmap resizeBitmap(Bitmap bitmap) {
-
         int maxDimension = 1024;
         int originalWidth = bitmap.getWidth();
         int originalHeight = bitmap.getHeight();
         int resizedWidth = maxDimension;
         int resizedHeight = maxDimension;
-
         if (originalHeight > originalWidth) {
             resizedHeight = maxDimension;
             resizedWidth = (int) (resizedHeight * (float) originalWidth / (float) originalHeight);
@@ -723,6 +696,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
 
+    // change image format
     public Image getBase64EncodedJpeg(Bitmap bitmap) {
         Image image = new Image();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -732,6 +706,7 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         return image;
     }
 
+    // pick user account for image processing
     private void pickUserAccount() {
         String[] accountTypes = new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE};
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
@@ -739,30 +714,29 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
         startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
     }
 
+    // get auth token to access Google API
     private void getAuthToken() {
         String SCOPE = "oauth2:https://www.googleapis.com/auth/cloud-platform";
         if (mAccount == null) {
             pickUserAccount();
-//            checkStoragePermission(RC_STORAGE_PERMS1);
             Log.d(LOG_TAG, "pick account");
         } else {
-//            Log.d(LOG_TAG, "getTokenTask");
             new GetTokenTask(Activity_GoogleCloudAPI.this, mAccount, SCOPE, REQUEST_ACCOUNT_AUTHORIZATION)
                     .execute();
-//            checkStoragePermission(RC_STORAGE_PERMS1);
             Log.d(LOG_TAG, "getTokenTask");
         }
     }
 
+    // process token for api and use it to either take or choose an image
     public void onTokenReceived(String token){
         accessToken = token;
-//        dispatchTakePictureIntent();
-//        launchImagePicker();
         if(chooseImageFlag == 1) {
+            // choose image from user library
             checkStoragePermission(RC_STORAGE_PERMS1);
             chooseImageFlag = 0;
         }
         else if(takePictureFlag == 1) {
+            // take picture
             Log.d(LOG_TAG, "Camera Permission Granted!");
             try {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -778,7 +752,6 @@ public class Activity_GoogleCloudAPI extends LibraryPermissions {
                 Log.d(LOG_TAG, "error taking photo");
             }
             takePictureFlag = 0;
-
         }
     }
 }
