@@ -1,8 +1,11 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +15,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Activity_Settings extends AppCompatActivity {
+    private static final String TAG = "Settings";
 
     /*Adds the menu in the top right corner*/
     @Override
@@ -149,6 +156,25 @@ public class Activity_Settings extends AppCompatActivity {
             }
         });
 
+        //"Change Password" button
+        final String email = user.getEmail();
+        Button changePasswordBtn = (Button) findViewById(R.id.changePasswordButton);
+        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(Activity_Settings.this,"Reset Email Sent", Toast.LENGTH_LONG).show();
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
+            }
+        });
+
     }
 
     //Return true/false to say whether or not zip code was filled in when submit button was clicked
@@ -171,6 +197,7 @@ public class Activity_Settings extends AppCompatActivity {
             return false;
         }
     }
+
 
 
 }
