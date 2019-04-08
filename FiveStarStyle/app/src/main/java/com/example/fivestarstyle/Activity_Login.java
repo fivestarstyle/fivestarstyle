@@ -89,16 +89,21 @@ public class Activity_Login extends AppCompatActivity {
         Log.d(TAG, "signIn:" + email);
 
         if (!validateForm()) {
+            Toast.makeText(this, "Please enter a username and password.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidEmailAddress(email)) {
+            Toast.makeText(this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidPassword(password)) {
+            Toast.makeText(this, "Please enter a valid password.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        Toast.makeText(this, "HELLO", Toast.LENGTH_SHORT).show();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Activity_Login.this, new OnCompleteListener<AuthResult>() {
