@@ -178,5 +178,25 @@ public class DataTransferService {
     }
 
 
+    //Item Details
+    public static void getItemDetails(final String imageUrl, final String cat, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat)
+                .whereEqualTo("image", imageUrl)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, task.getResult().toString());
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+    }
+
+
 
 }
