@@ -188,7 +188,7 @@ public class DataTransferService {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, task.getResult().toString());
+                            Log.d(TAG, task.getResult().getDocuments().toString());
                             listener.onSuccess(task.getResult());
                         } else {
                             listener.onFailed(task.getException());

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Activity_ViewMyCloset extends AppCompatActivity {
     private final static String TAG = "Activity_ViewMyCloset";
@@ -87,7 +88,7 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
         });
     }
 
-    private void getImages(String category){
+    private void getImages(final String category){
         DataTransferService.retrieveImagesForCloset(category, new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -95,15 +96,30 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
             }
             @Override
             public void onSuccess(QuerySnapshot data) {
-                ArrayList<String> imageUrls = new ArrayList<>();
+//                ArrayList<String> imageUrls = new ArrayList<>();
+//                for (QueryDocumentSnapshot document : data) {
+//                    Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
+//                    imageUrls.add(document.get("image").toString());
+//                }
+//                Log.d(TAG, "imageUrls received");
+//                Intent viewIntent = new Intent(Activity_ViewMyCloset.this, Activity_PopulateViewCloset.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("images", imageUrls);
+//                viewIntent.putExtras(bundle);
+//                startActivity(viewIntent);
+                ArrayList<ItemDetailsObject> images = new ArrayList<>();
                 for (QueryDocumentSnapshot document : data) {
-                    Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
-                    imageUrls.add(document.get("image").toString());
+                    ItemDetailsObject obj = new ItemDetailsObject();
+                    obj.setImageUrl(document.get("image").toString());
+                    obj.setCat(category);
+                    obj.setEvents(Arrays.asList(document.get("events").toString()));
+                    obj.setSeasons(Arrays.asList(document.get("seasons").toString()));
+                    Log.d(TAG,  document.getData() + "=> " + obj.getEvents() + " " + obj.getSeasons());
                 }
                 Log.d(TAG, "imageUrls received");
                 Intent viewIntent = new Intent(Activity_ViewMyCloset.this, Activity_PopulateViewCloset.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("images", imageUrls);
+                bundle.putSerializable("images", images);
                 viewIntent.putExtras(bundle);
                 startActivity(viewIntent);
             }

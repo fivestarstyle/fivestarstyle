@@ -220,6 +220,10 @@ public class Activity_Overview extends AppCompatActivity {
                         count++;
                     }
                     totals.add(count);
+                    Log.d(TAG, "count =>" + count + " totals =>" + totals);
+                    if(totals.size() == 6) {
+                        createCategoryPieGraph(totals);
+                    }
                 }
 
                 @Override
@@ -228,8 +232,6 @@ public class Activity_Overview extends AppCompatActivity {
                 }
             });
         }
-        Log.d(TAG, "totals:" + totals);
-        this.createCategoryPieGraph(totals);
     }
 
 
