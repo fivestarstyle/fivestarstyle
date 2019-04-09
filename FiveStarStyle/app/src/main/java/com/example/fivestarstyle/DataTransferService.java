@@ -100,7 +100,7 @@ public class DataTransferService {
     }
 
     //method to retrieve imageUrls from database
-    public static ArrayList<String> retrieveImagesForCloset(String category, final OnGetImagesListener listener){
+    public static void retrieveImagesForCloset(String category, final OnGetDataListener listener){
         listener.onStart();
         final ArrayList<String> imageUrls = new ArrayList<>();
         if (category == "all") {
@@ -137,7 +137,46 @@ public class DataTransferService {
                     }
                 });
         }
-        return imageUrls;
     }
+
+    public static void getCategoryCount(String cat, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public static void getSeasonCount(final OnGetDataListener listener){
+        listener.onStart();
+
+        for (String cat : GlobalVariables.categories){
+            db.collection("userClosets/" + user.getUid() + "/" + cat)
+                    .whereEqualTo("capital", true)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        }
+    }
+
+
 
 }

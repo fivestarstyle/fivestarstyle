@@ -8,10 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 //              based on four different factors: category, season, color, and event
 
 public class Activity_Overview extends AppCompatActivity {
+    private final static String TAG = "ClosetOverview";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,7 @@ public class Activity_Overview extends AppCompatActivity {
         ft.replace(R.id.simpleFrameLayout, fragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-        createCategoryPieGraph();
+        getCategoryData();
 
         // perform setOnTabSelectedListener event on TabLayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -73,7 +77,8 @@ public class Activity_Overview extends AppCompatActivity {
                     case 0:
                         // switch to first tab
                         fragment = new OverviewTabsCategory();
-                        createCategoryPieGraph();
+                        getCategoryData();
+//                        createCategoryPieGraph();
                         break;
                     case 1:
                         // switch to second tab
@@ -109,18 +114,30 @@ public class Activity_Overview extends AppCompatActivity {
         });
     }
 
-    public void createCategoryPieGraph() {
+    public void createCategoryPieGraph(ArrayList<Integer> catCounts) {
         // reference pie chart view
+        Log.d(TAG, "createPieGraph");
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
-
+//        ArrayList<Integer> catCounts = getCategoryData();
         // assign values to pie slices
-        pieData.add(new SliceValue(15, Color.parseColor("#1B4F72")).setLabel("Dresses"));
-        pieData.add(new SliceValue(29, Color.parseColor("#0d3653")).setLabel("Shoes"));
-        pieData.add(new SliceValue(18, Color.parseColor("#001E3B")).setLabel("Accessories"));
-        pieData.add(new SliceValue(18, Color.parseColor("#99B5C3")).setLabel("Tops"));
-        pieData.add(new SliceValue(20, Color.parseColor("#567d9c")).setLabel("Bottoms"));
+        if (catCounts.size() != 0) {
+            pieData.add(new SliceValue(catCounts.get(0), Color.parseColor("#99B5C3")).setLabel("Tops"));
+            pieData.add(new SliceValue(catCounts.get(1), Color.parseColor("#567d9c")).setLabel("Bottoms"));
+            pieData.add(new SliceValue(catCounts.get(2), Color.parseColor("#1B4F72")).setLabel("Dresses/Suits"));
+            pieData.add(new SliceValue(catCounts.get(3), Color.parseColor("#567d9c")).setLabel("Outerwear"));
+            pieData.add(new SliceValue(catCounts.get(4), Color.parseColor("#0d3653")).setLabel("Shoes"));
+            pieData.add(new SliceValue(catCounts.get(5), Color.parseColor("#001E3B")).setLabel("Accessories"));
+        } else {
+            pieData.add(new SliceValue(1, Color.parseColor("#99B5C3")).setLabel("Tops"));
+            pieData.add(new SliceValue(1, Color.parseColor("#567d9c")).setLabel("Bottoms"));
+            pieData.add(new SliceValue(1, Color.parseColor("#1B4F72")).setLabel("Dresses/Suits"));
+            pieData.add(new SliceValue(1, Color.parseColor("#567d9c")).setLabel("Outerwear"));
+            pieData.add(new SliceValue(1, Color.parseColor("#0d3653")).setLabel("Shoes"));
+            pieData.add(new SliceValue(1, Color.parseColor("#001E3B")).setLabel("Accessories"));
+        }
+
 
         // call function to style pie chart data
         stylePieChart(pieData, pieChartView);
@@ -143,7 +160,7 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void createColorPieGraph() {
-        // reference pie chart view
+        // reference pie chart view+
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
@@ -184,6 +201,37 @@ public class Activity_Overview extends AppCompatActivity {
         pView.setPieChartData(pieChartData);
         pieChartData.setSlicesSpacing(3);
     }
+
+    //data retrieval listeners
+    public void getCategoryData(){
+        final ArrayList<Integer> totals = new ArrayList<>();
+        for (String cat : GlobalVariables.categories) {
+            DataTransferService.getCategoryCount(cat, new OnGetDataListener() {
+                @Override
+                public void onStart() {
+                    //on start method
+                }
+
+                @Override
+                public void onSuccess(QuerySnapshot data) {
+                    Log.d(TAG, "on success");
+                    int count = 0;
+                    for (DocumentSnapshot document : data) {
+                        count++;
+                    }
+                    totals.add(count);
+                }
+
+                @Override
+                public void onFailed(Exception databaseError) {
+                    Log.w(TAG, "Error adding document", databaseError);
+                }
+            });
+        }
+        Log.d(TAG, "totals:" + totals);
+        this.createCategoryPieGraph(totals);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

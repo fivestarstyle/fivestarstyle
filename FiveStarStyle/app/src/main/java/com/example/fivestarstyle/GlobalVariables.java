@@ -17,7 +17,6 @@ public class GlobalVariables extends Application {
     public static String customCity = "";
     public static String customState = "";
     public static String customZipCode = "";
-    public static String gender = "";
     public static String firstName = "";
     public static String lastName = "";
     public static String top = "top";

@@ -88,7 +88,7 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
     }
 
     private void getImages(String category){
-        DataTransferService.retrieveImagesForCloset(category, new OnGetImagesListener() {
+        DataTransferService.retrieveImagesForCloset(category, new OnGetDataListener() {
             @Override
             public void onStart() {
                 Log.d(TAG, "start data retrieval");
