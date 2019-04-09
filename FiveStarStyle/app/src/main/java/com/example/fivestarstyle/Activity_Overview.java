@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.PieChartData;
@@ -83,6 +84,7 @@ public class Activity_Overview extends AppCompatActivity {
                     case 1:
                         // switch to second tab
                         fragment = new OverviewTabsSeason();
+                        getSeasonData();
                         createSeasonPieGraph();
                         break;
                     case 2:
@@ -231,6 +233,37 @@ public class Activity_Overview extends AppCompatActivity {
                     Log.w(TAG, "Error adding document", databaseError);
                 }
             });
+        }
+    }
+
+    public void getSeasonData(){
+        final ArrayList<Integer> totals = new ArrayList<>();
+        final List<String> seasons = Arrays.asList("spring", "summer", "winter", "fall");
+        for (String cat : GlobalVariables.categories) {
+//            for (String season : seasons) {
+                DataTransferService.getSeasonCount(cat, "spring", new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+                        //on start method
+                    }
+
+                    @Override
+                    public void onSuccess(QuerySnapshot data) {
+                        Log.d(TAG, "on success");
+                        int count = 0;
+                        for (DocumentSnapshot document : data) {
+                            count++;
+                        }
+                        totals.add(count);
+                        Log.d(TAG, "count =>" + count + " totals =>" + totals);
+                    }
+
+                    @Override
+                    public void onFailed(Exception databaseError) {
+                        Log.w(TAG, "Error adding document", databaseError);
+                    }
+                });
+//            }
         }
     }
 

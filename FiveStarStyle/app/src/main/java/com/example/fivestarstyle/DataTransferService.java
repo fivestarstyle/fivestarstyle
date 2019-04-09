@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -155,46 +156,36 @@ public class DataTransferService {
                 });
     }
 
-    public static void getSeasonCount(final OnGetDataListener listener){
-        listener.onStart();
-
-        for (String cat : GlobalVariables.categories){
-            db.collection("userClosets/" + user.getUid() + "/" + cat)
-                    .whereEqualTo("capital", true)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-        }
-    }
-
-
-    //Item Details
-    public static void getItemDetails(final String imageUrl, final String cat, final OnGetDataListener listener){
+    public static void getSeasonCount(String cat, String season, final OnGetDataListener listener){
         listener.onStart();
         db.collection("userClosets/" + user.getUid() + "/" + cat)
-                .whereEqualTo("image", imageUrl)
+                .whereEqualTo("seasons", season)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, task.getResult().getDocuments().toString());
                             listener.onSuccess(task.getResult());
                         } else {
                             listener.onFailed(task.getException());
                         }
                     }
                 });
+
+    }
+
+
+    //Item Details
+    public static void getItemDetails(final String docTitle, final String cat, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat).document(docTitle)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+            }
+        });
     }
 
 

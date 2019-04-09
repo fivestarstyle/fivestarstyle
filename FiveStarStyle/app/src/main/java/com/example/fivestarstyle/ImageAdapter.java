@@ -12,6 +12,11 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -49,20 +54,31 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ImageView imageView = new ImageView(mContext);
-//        Picasso.get().load(mImageUrls.get(position)).into(imageView);
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        imageView.setLayoutParams(new GridView.LayoutParams(520, 520));
-//        return imageView;
-        ImageButton imageBtn = new ImageButton(mContext);
+        final int index = position;
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        ImageView imageBtn = new ImageView(mContext);
         Picasso.get().load(mImageUrls.get(position).getImageUrl()).into(imageBtn);
-        imageBtn.setScaleType(ImageButton.ScaleType.CENTER_CROP);
+        imageBtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageBtn.setLayoutParams(new GridView.LayoutParams(520,520));
+        imageBtn.setClickable(true);
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onclickImage");
 
+                Log.d(TAG, "onclickImage");
+                db.collection("userClosets/" + user.getUid() + "/" + mCategory).document(mImageUrls.get(index).getDocTitle())
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Intent detailIntent = new Intent(mContext, Activity_ImageDetail.class);
+//                                Bundle bundle = new Bundle();
+//                                bundle.putSerializable("doc", documentSnapshot);
+//                                viewIntent.putExtras(bundle);
+                                mContext.startActivity(detailIntent);
+                            }
+                        });
             }
         });
         return imageBtn;

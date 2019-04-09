@@ -7,8 +7,9 @@ import java.util.List;
 public class ItemDetailsObject implements Serializable {
     private String imageUrl = "";
     private String cat = "";
-    private List<String> events = new ArrayList<>();
-    private List<String> seasons = new ArrayList<>();
+    private String docTitle = "";
+//    private List<String> events = new ArrayList<>();
+//    private List<String> seasons = new ArrayList<>();
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -26,19 +27,27 @@ public class ItemDetailsObject implements Serializable {
         return this.cat;
     }
 
-    public void setEvents(List<String> events1) {
-        this.events = events1;
+    public void setDocTitle(String docTitle) {
+        this.docTitle = docTitle;
     }
 
-    public List<String> getEvents(){
-        return this.events;
+    public String getDocTitle(){
+        return this.docTitle;
     }
-
-    public void setSeasons(List<String> seasons1){
-        this.seasons = seasons1;
-    }
-
-    public List<String> getSeasons(){
-        return this.seasons;
-    }
+//
+//    public void setEvents(List<String> events1) {
+//        this.events = events1;
+//    }
+//
+//    public List<String> getEvents(){
+//        return this.events;
+//    }
+//
+//    public void setSeasons(List<String> seasons1){
+//        this.seasons = seasons1;
+//    }
+//
+//    public List<String> getSeasons(){
+//        return this.seasons;
+//    }
 }

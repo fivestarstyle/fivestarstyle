@@ -108,13 +108,16 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
 //                viewIntent.putExtras(bundle);
 //                startActivity(viewIntent);
                 ArrayList<ItemDetailsObject> images = new ArrayList<>();
+
                 for (QueryDocumentSnapshot document : data) {
                     ItemDetailsObject obj = new ItemDetailsObject();
                     obj.setImageUrl(document.get("image").toString());
                     obj.setCat(category);
-                    obj.setEvents(Arrays.asList(document.get("events").toString()));
-                    obj.setSeasons(Arrays.asList(document.get("seasons").toString()));
-                    Log.d(TAG,  document.getData() + "=> " + obj.getEvents() + " " + obj.getSeasons());
+                    obj.setDocTitle(document.getId());
+//                    obj.setEvents(Arrays.asList(document.get("events").toString()));
+//                    obj.setSeasons(Arrays.asList(document.get("seasons").toString()));
+                    Log.d(TAG,  document.getData() + "=> " + obj.getDocTitle());
+                    images.add(obj);
                 }
                 Log.d(TAG, "imageUrls received");
                 Intent viewIntent = new Intent(Activity_ViewMyCloset.this, Activity_PopulateViewCloset.class);
