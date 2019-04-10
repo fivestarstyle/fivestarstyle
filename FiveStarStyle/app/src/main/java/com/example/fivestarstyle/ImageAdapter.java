@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // adapter to load images into gridView for the closet
 public class ImageAdapter extends BaseAdapter {
@@ -73,9 +74,17 @@ public class ImageAdapter extends BaseAdapter {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Intent detailIntent = new Intent(mContext, Activity_ImageDetail.class);
-//                                Bundle bundle = new Bundle();
-//                                bundle.putSerializable("doc", documentSnapshot);
-//                                viewIntent.putExtras(bundle);
+                                Bundle bundle = new Bundle();
+                                ItemDetailsObject obj = new ItemDetailsObject();
+                                obj.setImageUrl(documentSnapshot.get("image").toString());
+                                obj.setDocTitle(mImageUrls.get(index).getDocTitle());
+                                obj.setSeasons(Arrays.asList(documentSnapshot.get("seasons").toString()));
+                                obj.setCat(mCategory);
+                                obj.setColor(documentSnapshot.get("color").toString());
+                                obj.setEvents(Arrays.asList(documentSnapshot.get("events").toString()));
+
+                                bundle.putSerializable("detail", obj);
+                                detailIntent.putExtras(bundle);
                                 mContext.startActivity(detailIntent);
                             }
                         });
