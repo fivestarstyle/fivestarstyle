@@ -34,7 +34,6 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
         });
 
         //retrieve image buttons
-        ImageButton btnCloset = (ImageButton) findViewById(R.id.AllButton);
         ImageButton btnTops = (ImageButton) findViewById(R.id.TopButton);
         ImageButton btnDressesSuits = (ImageButton) findViewById(R.id.DressesSuitsButton);
         ImageButton btnBottoms = (ImageButton) findViewById(R.id.PantsButton);
@@ -43,12 +42,6 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
         ImageButton btnAccessories = (ImageButton) findViewById(R.id.AccButton);
 
         //onClickListeners for retrievals
-        btnCloset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            getImages("all");
-            }
-        });
         btnTops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,14 +13,14 @@
         android:id="@+id/relativeLayout"
         tools:context=".Activity_ViewMyCloset">
 
-        <ImageButton
-            android:id="@+id/AddButton"
-            android:layout_width="70dp"
-            android:layout_height="59dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_outline_add_24px"
-            android:backgroundTint="@color/colorPrimary"
-            />
+        <!--<ImageButton-->
+            <!--android:id="@+id/AddButton"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="59dp"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:background="@drawable/ic_outline_add_24px"-->
+            <!--android:backgroundTint="@color/colorPrimary"-->
+            <!--/>-->
         <!--<Button-->
             <!--android:id="@+id/AddButton"-->
             <!--android:layout_width="59dp"-->
@@ -29,19 +29,18 @@
             <!--android:text="+" />-->
 
         <ImageButton
-            android:id="@+id/AllButton"
+            android:id="@+id/AddButton"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@id/AddButton"
-            android:background="@drawable/closet"
+            android:layout_height="151dp"
+            android:background="@drawable/add_to_my_closet"
             />
 
         <LinearLayout
             android:id="@+id/row3"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="151dp"
             android:orientation="horizontal"
-            android:layout_below="@id/AllButton"
+            android:layout_below="@id/AddButton"
             android:weightSum="2.0"
             android:gravity="center_horizontal">
 
@@ -67,7 +66,7 @@
         <LinearLayout
             android:id="@+id/row4"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="151dp"
             android:orientation="horizontal"
             android:layout_below="@id/row3"
             android:weightSum="2.0"
@@ -88,13 +87,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/suits_dresses"/>
+                android:background="@drawable/dresses_and_suits"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/row5"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="151dp"
             android:orientation="horizontal"
             android:layout_below="@id/row4"
             android:weightSum="2.0"
