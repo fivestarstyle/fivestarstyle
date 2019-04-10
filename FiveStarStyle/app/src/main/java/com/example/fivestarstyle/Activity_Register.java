@@ -45,17 +45,19 @@ public class Activity_Register extends AppCompatActivity {
         mFirstNameField = findViewById(R.id.txtFirstName);
         mLastNameField = findViewById(R.id.txtLastName);
 
-        if (!isValidEmailAddress(mEmailField.getText().toString())) {
-            return;
-        }
-        if (!isValidPassword(mPasswordField.getText().toString())) {
-            return;
-        }
-
         MaterialButton btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isValidEmailAddress(mEmailField.getText().toString())) {
+                    Toast.makeText(Activity_Register.this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!isValidPassword(mPasswordField.getText().toString())) {
+                    Toast.makeText(Activity_Register.this, "Please enter a password that contains upper and lowercase letters and is longer than four characters.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
             }
         });
