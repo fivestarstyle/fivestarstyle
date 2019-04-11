@@ -85,7 +85,7 @@ public class Activity_Overview extends AppCompatActivity {
                         // switch to second tab
                         fragment = new OverviewTabsSeason();
                         getSeasonData();
-                        createSeasonPieGraph();
+//                        createSeasonPieGraph();
                         break;
                     case 2:
                         // switch to third tab
@@ -145,17 +145,24 @@ public class Activity_Overview extends AppCompatActivity {
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createSeasonPieGraph() {
+    public void createSeasonPieGraph(ArrayList<Long> counts) {
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
 
         // assign values to pie slices
-        pieData.add(new SliceValue(35, Color.parseColor("#1B4F72")).setLabel("Fall"));
-        pieData.add(new SliceValue(15, Color.parseColor("#0d3653")).setLabel("Winter"));
-        pieData.add(new SliceValue(20, Color.parseColor("#001E3B")).setLabel("Spring"));
-        pieData.add(new SliceValue(30, Color.parseColor("#99B5C3")).setLabel("Summer"));
+        if (counts.size() != 0) {
+            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#1B4F72")).setLabel("Fall"));
+            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#001E3B")).setLabel("Spring"));
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#99B5C3")).setLabel("Summer"));
+            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#0d3653")).setLabel("Winter"));
+        } else {
+            pieData.add(new SliceValue(35, Color.parseColor("#1B4F72")).setLabel("Fall"));
+            pieData.add(new SliceValue(20, Color.parseColor("#001E3B")).setLabel("Spring"));
+            pieData.add(new SliceValue(30, Color.parseColor("#99B5C3")).setLabel("Summer"));
+            pieData.add(new SliceValue(15, Color.parseColor("#0d3653")).setLabel("Winter"));
+        }
 
         // call function to style pie chart
         stylePieChart(pieData, pieChartView);
@@ -237,34 +244,85 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void getSeasonData(){
-        final ArrayList<Integer> totals = new ArrayList<>();
-        final List<String> seasons = Arrays.asList("spring", "summer", "winter", "fall");
-        for (String cat : GlobalVariables.categories) {
-//            for (String season : seasons) {
-                DataTransferService.getSeasonCount(cat, "spring", new OnGetDataListener() {
-                    @Override
-                    public void onStart() {
-                        //on start method
-                    }
+        final ArrayList<Long> totals = new ArrayList<>();
+        DataTransferService.getSeasonCount( new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                //on start method
+            }
 
-                    @Override
-                    public void onSuccess(QuerySnapshot data) {
-                        Log.d(TAG, "on success");
-                        int count = 0;
-                        for (DocumentSnapshot document : data) {
-                            count++;
-                        }
-                        totals.add(count);
-                        Log.d(TAG, "count =>" + count + " totals =>" + totals);
-                    }
+            @Override
+            public void onSuccess(QuerySnapshot data) {
+                Log.d(TAG, "on success");
+                for (DocumentSnapshot document : data) {
+                    totals.add((long) document.get("total"));
+                }
+//                        totals.add(count);
+                if (totals.size() == 4) {
+                    createSeasonPieGraph(totals);
+                }
+                Log.d(TAG, "totals =>" + totals);
+            }
 
-                    @Override
-                    public void onFailed(Exception databaseError) {
-                        Log.w(TAG, "Error adding document", databaseError);
-                    }
-                });
-//            }
-        }
+            @Override
+            public void onFailed(Exception databaseError) {
+                Log.w(TAG, "Error getting totals", databaseError);
+            }
+        });
+    }
+
+    public void getEventData(){
+        final ArrayList<Long> totals = new ArrayList<>();
+        DataTransferService.getEventCount( new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                //on start method
+            }
+
+            @Override
+            public void onSuccess(QuerySnapshot data) {
+                Log.d(TAG, "on success");
+                for (DocumentSnapshot document : data) {
+                    totals.add((long) document.get("total"));
+                }
+                if (totals.size() == 6) {
+//                    createEventPieGraph(totals);
+                }
+                Log.d(TAG, "totals =>" + totals);
+            }
+
+            @Override
+            public void onFailed(Exception databaseError) {
+                Log.w(TAG, "Error getting totals", databaseError);
+            }
+        });
+    }
+
+    public void getColorData(){
+        final ArrayList<Long> totals = new ArrayList<>();
+        DataTransferService.getEventCount( new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                //on start method
+            }
+
+            @Override
+            public void onSuccess(QuerySnapshot data) {
+                Log.d(TAG, "on success");
+                for (DocumentSnapshot document : data) {
+                    totals.add((long) document.get("total"));
+                }
+                if (totals.size() == 11) {
+//                    createColorPieGraph(totals);
+                }
+                Log.d(TAG, "totals =>" + totals);
+            }
+
+            @Override
+            public void onFailed(Exception databaseError) {
+                Log.w(TAG, "Error getting totals", databaseError);
+            }
+        });
     }
 
 

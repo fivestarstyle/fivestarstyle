@@ -34,7 +34,6 @@ public class DataTransferService {
 
     //method to upload image to storage then add image and data to the database
     public static Boolean addItem(final LabelsObject item) {
-        final Boolean success;
         if (user != null) {
             //upload picture to storage
             Log.d("DATA-CATEGORY", item.labelGetCategory());
@@ -156,10 +155,43 @@ public class DataTransferService {
                 });
     }
 
-    public static void getSeasonCount(String cat, String season, final OnGetDataListener listener){
+    public static void getSeasonCount(final OnGetDataListener listener){
         listener.onStart();
-        db.collection("userClosets/" + user.getUid() + "/" + cat)
-                .whereEqualTo("seasons", season)
+        db.collection("userTotals/" + user.getUid() + "/seasons")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+
+    }
+
+    public static void getEventCount(final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userTotals/" + user.getUid() + "/events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+
+    }
+
+    public static void getColorCount(final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userTotals/" + user.getUid() + "/color")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
