@@ -139,6 +139,7 @@ public class DataTransferService {
         }
     }
 
+    //Counts for Overview Page
     public static void getCategoryCount(String cat, final OnGetDataListener listener){
         listener.onStart();
         db.collection("userClosets/" + user.getUid() + "/" + cat)
@@ -207,19 +208,63 @@ public class DataTransferService {
     }
 
 
-    //Item Details
-    public static void getItemDetails(final String docTitle, final String cat, final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userClosets/" + user.getUid() + "/" + cat).document(docTitle)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-            }
-        });
+    //Update Totals
+    public static void updateEventTotal(String event){
+        db.collection("userTotals/" + user.getUid() + "/events").document(event)
+                .update("total",  1);
     }
 
 
+    //Queries for Choose My Outfit Page
+    public static void getItemsByEvent(String cat, String event, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat)
+                .whereArrayContains("events", event)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public static void getItemsBySeason(String cat, String season, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat)
+                .whereArrayContains("seasons", season)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public static void getItemsByColor(String cat, String color, final OnGetDataListener listener){
+        listener.onStart();
+        db.collection("userClosets/" + user.getUid() + "/" + cat)
+                .whereEqualTo("color", color)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            listener.onSuccess(task.getResult());
+                        } else {
+                            listener.onFailed(task.getException());
+                        }
+                    }
+                });
+    }
 
 }

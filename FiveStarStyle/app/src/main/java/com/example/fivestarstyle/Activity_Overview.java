@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,6 +38,38 @@ public class Activity_Overview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
         // set up the tab layout
+
+        //TEST CODE
+        Button test = (Button) findViewById(R.id.btnLeastFrequentlyWorn);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ArrayList<Integer> totals = new ArrayList<>();
+                DataTransferService.getItemsByColor("shoes", "blue", new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+                        //on start
+                    }
+
+                    @Override
+                    public void onSuccess(QuerySnapshot data) {
+                        Log.d(TAG, "TESTER on success");
+                        int count = 0;
+                        for (DocumentSnapshot document : data) {
+                            count++;
+                        }
+                        totals.add(count);
+                        Log.d(TAG, "TESTER count =>" + count + " totals =>" + totals);
+                    }
+
+                    @Override
+                    public void onFailed(Exception databaseError) {
+                        Log.w(TAG, databaseError);
+                    }
+                });
+            }
+        });
+        ///END TEST CODE
         createTabs();
     }
 
@@ -79,25 +113,21 @@ public class Activity_Overview extends AppCompatActivity {
                         // switch to first tab
                         fragment = new OverviewTabsCategory();
                         getCategoryData();
-//                        createCategoryPieGraph();
                         break;
                     case 1:
                         // switch to second tab
                         fragment = new OverviewTabsSeason();
                         getSeasonData();
-//                        createSeasonPieGraph();
                         break;
                     case 2:
                         // switch to third tab
                         fragment = new OverviewTabsColor();
                         getColorData();
-//                        createColorPieGraph();
                         break;
                     case 3:
                         // switch to fourth tab
                         fragment = new OverviewTabsEvent();
                         getEventData();
-//                        createEventPieGraph();
                         break;
                 }
                 // commit fragment change
@@ -124,7 +154,6 @@ public class Activity_Overview extends AppCompatActivity {
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
-//        ArrayList<Integer> catCounts = getCategoryData();
         // assign values to pie slices
         if (catCounts.size() != 0) {
             pieData.add(new SliceValue(catCounts.get(0), Color.parseColor("#99B5C3")).setLabel("Tops"));
@@ -141,8 +170,6 @@ public class Activity_Overview extends AppCompatActivity {
             pieData.add(new SliceValue(1, Color.parseColor("#0d3653")).setLabel("Shoes"));
             pieData.add(new SliceValue(1, Color.parseColor("#001E3B")).setLabel("Accessories"));
         }
-
-
         // call function to style pie chart data
         stylePieChart(pieData, pieChartView);
     }
@@ -152,7 +179,6 @@ public class Activity_Overview extends AppCompatActivity {
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
-
         // assign values to pie slices
         if (counts.size() != 0) {
             pieData.add(new SliceValue(counts.get(0), Color.parseColor("#1B4F72")).setLabel("Fall"));
