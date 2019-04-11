@@ -14,7 +14,7 @@ public class Activity_ImageDetail extends AppCompatActivity {
         setContentView(R.layout.activity__image_detail);
 
         Bundle bundle = getIntent().getExtras();
-        ArrayList<ItemDetailsObject> obj = (ArrayList) bundle.getSerializable("details");
+        ArrayList<ItemDetailsObject> obj = (ArrayList) bundle.getSerializable("detail");
         Log.d("ImageDetail", "events: " + obj.get(0).getEvents());
     }
 }

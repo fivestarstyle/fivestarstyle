@@ -22,13 +22,13 @@ public class Activity_PopulateViewCloset extends AppCompatActivity {
         //get imageUrls from old intent
         Bundle bundle = getIntent().getExtras();
 //        ArrayList<String> imageUrls = (ArrayList) bundle.getSerializable("images");
-        String category = (String) bundle.getSerializable("category");
+//        String category = (String) bundle.getSerializable("category");
         ArrayList<ItemDetailsObject> imageUrls = (ArrayList) bundle.getSerializable("images");
         Log.d(TAG, "imageURLs: " + imageUrls);
 
         //dynamically load images through GridView
         GridView gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(new ImageAdapter(this, imageUrls, category));
+        gridView.setAdapter(new ImageAdapter(this, imageUrls));
     }
 
     @Override

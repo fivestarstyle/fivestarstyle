@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,13 +32,11 @@ public class ImageAdapter extends BaseAdapter {
     public final String TAG = "imageAdapter";
     private Context mContext;
     public ArrayList<ItemDetailsObject> mImageUrls;
-    public String mCategory;
 
     // Constructor
-    public ImageAdapter(Context c, ArrayList images, String category){
+    public ImageAdapter(Context c, ArrayList images){
         mContext = c;
         mImageUrls = images;
-        mCategory = category;
     }
 
     @Override
@@ -68,24 +69,37 @@ public class ImageAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Log.d(TAG, "onclickImage");
-                db.collection("userClosets/" + user.getUid() + "/" + mCategory).document(mImageUrls.get(index).getDocTitle())
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                Intent detailIntent = new Intent(mContext, Activity_ImageDetail.class);
-                                Bundle bundle = new Bundle();
-                                ItemDetailsObject obj = new ItemDetailsObject();
-                                obj.setImageUrl(documentSnapshot.get("image").toString());
-                                obj.setDocTitle(mImageUrls.get(index).getDocTitle());
-                                obj.setSeasons(Arrays.asList(documentSnapshot.get("seasons").toString()));
-                                obj.setCat(mCategory);
-                                obj.setColor(documentSnapshot.get("color").toString());
-                                obj.setEvents(Arrays.asList(documentSnapshot.get("events").toString()));
+                Log.d(TAG, "image ID: " + mImageUrls.get(index).getDocTitle() + " cat: " + mImageUrls.get(index).getCat());
 
-                                bundle.putSerializable("detail", obj);
-                                detailIntent.putExtras(bundle);
-                                mContext.startActivity(detailIntent);
+                db.collection("userClosets/" + user.getUid() + "/" + mImageUrls.get(index).getCat()).document(mImageUrls.get(index).getDocTitle())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                        Intent detailIntent = new Intent(mContext, Activity_ImageDetail.class);
+                                        Bundle bundle = new Bundle();
+                                        ItemDetailsObject obj = new ItemDetailsObject();
+                                        obj.setImageUrl(document.getData().get("image").toString());
+                                        obj.setDocTitle(mImageUrls.get(index).getDocTitle());
+                                        obj.setSeasons(Arrays.asList(document.getData().get("seasons").toString()));
+                                        obj.setCat(mImageUrls.get(index).getCat());
+                                        obj.setColor(document.getData().get("color").toString());
+                                        obj.setEvents(Arrays.asList(document.getData().get("events").toString()));
+                                        ArrayList<ItemDetailsObject> details = new ArrayList<>();
+                                        details.add(obj);
+                                        bundle.putSerializable("detail", details);
+                                        detailIntent.putExtras(bundle);
+                                        mContext.startActivity(detailIntent);
+                                    } else {
+                                        Log.d(TAG, "No such document");
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
                             }
                         });
             }
