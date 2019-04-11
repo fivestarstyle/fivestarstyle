@@ -90,12 +90,14 @@ public class Activity_Overview extends AppCompatActivity {
                     case 2:
                         // switch to third tab
                         fragment = new OverviewTabsColor();
-                        createColorPieGraph();
+                        getColorData();
+//                        createColorPieGraph();
                         break;
                     case 3:
                         // switch to fourth tab
                         fragment = new OverviewTabsEvent();
-                        createEventPieGraph();
+                        getEventData();
+//                        createEventPieGraph();
                         break;
                 }
                 // commit fragment change
@@ -168,35 +170,64 @@ public class Activity_Overview extends AppCompatActivity {
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createColorPieGraph() {
+    public void createColorPieGraph(ArrayList<Long> counts) {
         // reference pie chart view+
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
 
         // assign values to pie slices
-        pieData.add(new SliceValue(15, Color.parseColor("#1B4F72")).setLabel("Red"));
-        pieData.add(new SliceValue(29, Color.parseColor("#0d3653")).setLabel("Black"));
-        pieData.add(new SliceValue(18, Color.parseColor("#001E3B")).setLabel("White"));
-        pieData.add(new SliceValue(18, Color.parseColor("#99B5C3")).setLabel("Gray"));
-        pieData.add(new SliceValue(20, Color.parseColor("#567d9c")).setLabel("Blue"));
-
+        if (counts.size() != 0) {
+            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Black"));
+            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Blue"));
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#0d3653")).setLabel("Brown"));
+            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#1B4F72")).setLabel("Gray"));
+            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#567d9c")).setLabel("Green"));
+            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B")).setLabel("Orange"));
+            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#99B5C3")).setLabel("Pink"));
+            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#567d9c")).setLabel("Purple"));
+            pieData.add(new SliceValue(counts.get(8), Color.parseColor("#0d3653")).setLabel("Red"));
+            pieData.add(new SliceValue(counts.get(9), Color.parseColor("#1B4F72")).setLabel("White"));
+            pieData.add(new SliceValue(counts.get(10), Color.parseColor("#567d9c")).setLabel("Yellow"));
+        } else {
+            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Black"));
+            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Blue"));
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#0d3653")).setLabel("Brown"));
+            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#1B4F72")).setLabel("Gray"));
+            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#567d9c")).setLabel("Green"));
+            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B")).setLabel("Orange"));
+            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#99B5C3")).setLabel("Pink"));
+            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#567d9c")).setLabel("Purple"));
+            pieData.add(new SliceValue(counts.get(8), Color.parseColor("#0d3653")).setLabel("Red"));
+            pieData.add(new SliceValue(counts.get(9), Color.parseColor("#1B4F72")).setLabel("White"));
+            pieData.add(new SliceValue(counts.get(10), Color.parseColor("#567d9c")).setLabel("Yellow"));
+        }
         // call function to style pie chart
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createEventPieGraph() {
+    public void createEventPieGraph(ArrayList<Long> counts) {
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
 
         // assign values to pie slices
-        pieData.add(new SliceValue(21, Color.parseColor("#1B4F72")).setLabel("Gym"));
-        pieData.add(new SliceValue(30, Color.parseColor("#0d3653")).setLabel("Work"));
-        pieData.add(new SliceValue(27, Color.parseColor("#001E3B")).setLabel("Casual"));
-        pieData.add(new SliceValue(12, Color.parseColor("#99B5C3")).setLabel("Cocktail"));
-        pieData.add(new SliceValue(10, Color.parseColor("#567d9c")).setLabel("Formal"));
+        if (counts.size() != 0) {
+            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Bar"));
+            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Casual"));
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#0d3653")).setLabel("Cocktail"));
+            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#1B4F72")).setLabel("Formal"));
+            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#567d9c")).setLabel("Gym"));
+            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B")).setLabel("Work"));
+        } else {
+            pieData.add(new SliceValue(1, Color.parseColor("#99B5C3")).setLabel("Bar"));
+            pieData.add(new SliceValue(1, Color.parseColor("#567d9c")).setLabel("Casual"));
+            pieData.add(new SliceValue(1, Color.parseColor("#0d3653")).setLabel("Cocktail"));
+            pieData.add(new SliceValue(1, Color.parseColor("#1B4F72")).setLabel("Formal"));
+            pieData.add(new SliceValue(1, Color.parseColor("#567d9c")).setLabel("Gym"));
+            pieData.add(new SliceValue(1, Color.parseColor("#001E3B")).setLabel("Work"));
+        }
 
         // call function to style pie chart
         stylePieChart(pieData, pieChartView);
@@ -257,11 +288,10 @@ public class Activity_Overview extends AppCompatActivity {
                 for (DocumentSnapshot document : data) {
                     totals.add((long) document.get("total"));
                 }
-//                        totals.add(count);
                 if (totals.size() == 4) {
                     createSeasonPieGraph(totals);
                 }
-                Log.d(TAG, "totals =>" + totals);
+                Log.d(TAG, "season totals =>" + totals);
             }
 
             @Override
@@ -286,9 +316,9 @@ public class Activity_Overview extends AppCompatActivity {
                     totals.add((long) document.get("total"));
                 }
                 if (totals.size() == 6) {
-//                    createEventPieGraph(totals);
+                    createEventPieGraph(totals);
                 }
-                Log.d(TAG, "totals =>" + totals);
+                Log.d(TAG, "event totals =>" + totals);
             }
 
             @Override
@@ -300,7 +330,7 @@ public class Activity_Overview extends AppCompatActivity {
 
     public void getColorData(){
         final ArrayList<Long> totals = new ArrayList<>();
-        DataTransferService.getEventCount( new OnGetDataListener() {
+        DataTransferService.getColorCount( new OnGetDataListener() {
             @Override
             public void onStart() {
                 //on start method
@@ -313,9 +343,9 @@ public class Activity_Overview extends AppCompatActivity {
                     totals.add((long) document.get("total"));
                 }
                 if (totals.size() == 11) {
-//                    createColorPieGraph(totals);
+                    createColorPieGraph(totals);
                 }
-                Log.d(TAG, "totals =>" + totals);
+                Log.d(TAG, "color totals =>" + totals);
             }
 
             @Override
