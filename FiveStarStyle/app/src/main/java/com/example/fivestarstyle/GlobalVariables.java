@@ -28,6 +28,15 @@ public class GlobalVariables extends Application {
     public static List<String> categories = Arrays.asList(
             top, bottom, dress_or_suit, outerwear, shoes, accessories
             );
+    public static List<String> seasons = Arrays.asList(
+            "fall", "spring", "summer", "winter"
+    );
+    public static List<String> events = Arrays.asList(
+            "bar", "casual", "cocktail", "formal", "gym", "work"
+    );
+    public static List<String> colors = Arrays.asList(
+            "black", "blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "white", "yellow"
+    );
     private static Bitmap bitmap;
     public static Bitmap getBitmap() {
         return bitmap;

@@ -38,38 +38,6 @@ public class Activity_Overview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
         // set up the tab layout
-
-        //TEST CODE
-        Button test = (Button) findViewById(R.id.btnLeastFrequentlyWorn);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ArrayList<Integer> totals = new ArrayList<>();
-                DataTransferService.getItemsByColor("shoes", "blue", new OnGetDataListener() {
-                    @Override
-                    public void onStart() {
-                        //on start
-                    }
-
-                    @Override
-                    public void onSuccess(QuerySnapshot data) {
-                        Log.d(TAG, "TESTER on success");
-                        int count = 0;
-                        for (DocumentSnapshot document : data) {
-                            count++;
-                        }
-                        totals.add(count);
-                        Log.d(TAG, "TESTER count =>" + count + " totals =>" + totals);
-                    }
-
-                    @Override
-                    public void onFailed(Exception databaseError) {
-                        Log.w(TAG, databaseError);
-                    }
-                });
-            }
-        });
-        ///END TEST CODE
         createTabs();
     }
 
@@ -174,7 +142,7 @@ public class Activity_Overview extends AppCompatActivity {
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createSeasonPieGraph(ArrayList<Long> counts) {
+    public void createSeasonPieGraph(ArrayList<Integer> counts) {
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -196,7 +164,7 @@ public class Activity_Overview extends AppCompatActivity {
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createColorPieGraph(ArrayList<Long> counts) {
+    public void createColorPieGraph(ArrayList<Integer> counts) {
         // reference pie chart view+
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -232,7 +200,7 @@ public class Activity_Overview extends AppCompatActivity {
         stylePieChart(pieData, pieChartView);
     }
 
-    public void createEventPieGraph(ArrayList<Long> counts) {
+    public void createEventPieGraph(ArrayList<Integer> counts) {
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -301,84 +269,117 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void getSeasonData(){
-        final ArrayList<Long> totals = new ArrayList<>();
-        DataTransferService.getSeasonCount( new OnGetDataListener() {
-            @Override
-            public void onStart() {
-                //on start method
+        final ArrayList<Integer> totals = new ArrayList<>();
+        for (final String season : GlobalVariables.seasons) {
+            final ArrayList<Integer> tempTotal = new ArrayList<>();
+            for (final String cat : GlobalVariables.categories) {
+                DataTransferService.getItemsBySeason(cat, season, new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+                        //on start
+                    }
+                    @Override
+                    public void onSuccess(QuerySnapshot data) {
+                        int count = 0;
+                        for (DocumentSnapshot document : data) {
+                            count++;
+                        }
+                        tempTotal.add(count);
+                        if (tempTotal.size() == 6) {
+                            int sum = 0;
+                            for (int i : tempTotal) {
+                                sum += i;
+                            }
+                            totals.add(sum);
+                        }
+                        if (totals.size() == 4) {
+                            Log.d(TAG, "Seasons Totals: " + totals);
+                            createSeasonPieGraph(totals);
+                        }
+                    }
+                    @Override
+                    public void onFailed(Exception databaseError) {
+                        Log.w(TAG, databaseError);
+                    }
+                });
             }
-
-            @Override
-            public void onSuccess(QuerySnapshot data) {
-                Log.d(TAG, "on success");
-                for (DocumentSnapshot document : data) {
-                    totals.add((long) document.get("total"));
-                }
-                if (totals.size() == 4) {
-                    createSeasonPieGraph(totals);
-                }
-                Log.d(TAG, "season totals =>" + totals);
-            }
-
-            @Override
-            public void onFailed(Exception databaseError) {
-                Log.w(TAG, "Error getting totals", databaseError);
-            }
-        });
+        }
     }
 
     public void getEventData(){
-        final ArrayList<Long> totals = new ArrayList<>();
-        DataTransferService.getEventCount( new OnGetDataListener() {
-            @Override
-            public void onStart() {
-                //on start method
+        final ArrayList<Integer> totals = new ArrayList<>();
+        for (final String event : GlobalVariables.events) {
+            final ArrayList<Integer> tempTotal = new ArrayList<>();
+            for (final String cat : GlobalVariables.categories) {
+                DataTransferService.getItemsByEvent(cat, event, new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+                        //on start
+                    }
+                    @Override
+                    public void onSuccess(QuerySnapshot data) {
+                        int count = 0;
+                        for (DocumentSnapshot document : data) {
+                            count++;
+                        }
+                        tempTotal.add(count);
+                        if (tempTotal.size() == 6) {
+                            int sum = 0;
+                            for (int i : tempTotal) {
+                                sum += i;
+                            }
+                            totals.add(sum);
+                        }
+                        if (totals.size() == 6) {
+                            Log.d(TAG, "Events Totals: " + totals);
+                            createEventPieGraph(totals);
+                        }
+                    }
+                    @Override
+                    public void onFailed(Exception databaseError) {
+                        Log.w(TAG, databaseError);
+                    }
+                });
             }
-
-            @Override
-            public void onSuccess(QuerySnapshot data) {
-                Log.d(TAG, "on success");
-                for (DocumentSnapshot document : data) {
-                    totals.add((long) document.get("total"));
-                }
-                if (totals.size() == 6) {
-                    createEventPieGraph(totals);
-                }
-                Log.d(TAG, "event totals =>" + totals);
-            }
-
-            @Override
-            public void onFailed(Exception databaseError) {
-                Log.w(TAG, "Error getting totals", databaseError);
-            }
-        });
+        }
     }
 
     public void getColorData(){
-        final ArrayList<Long> totals = new ArrayList<>();
-        DataTransferService.getColorCount( new OnGetDataListener() {
-            @Override
-            public void onStart() {
-                //on start method
+        final ArrayList<Integer> totals = new ArrayList<>();
+        for (final String color : GlobalVariables.colors) {
+            final ArrayList<Integer> tempTotal = new ArrayList<>();
+            for (final String cat : GlobalVariables.categories) {
+                DataTransferService.getItemsByColor(cat, color, new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+                        //on start
+                    }
+                    @Override
+                    public void onSuccess(QuerySnapshot data) {
+                        int count = 0;
+                        for (DocumentSnapshot document : data) {
+                            count++;
+                        }
+                        tempTotal.add(count);
+                        if (tempTotal.size() == 6) {
+                            int sum = 0;
+                            for (int i : tempTotal) {
+                                sum += i;
+                            }
+                            totals.add(sum);
+                        }
+                        if (totals.size() == 11) {
+                            Log.d(TAG, "Color Totals: " + totals);
+                            createColorPieGraph(totals);
+                        }
+                    }
+                    @Override
+                    public void onFailed(Exception databaseError) {
+                        Log.w(TAG, databaseError);
+                    }
+                });
             }
-
-            @Override
-            public void onSuccess(QuerySnapshot data) {
-                Log.d(TAG, "on success");
-                for (DocumentSnapshot document : data) {
-                    totals.add((long) document.get("total"));
-                }
-                if (totals.size() == 11) {
-                    createColorPieGraph(totals);
-                }
-                Log.d(TAG, "color totals =>" + totals);
-            }
-
-            @Override
-            public void onFailed(Exception databaseError) {
-                Log.w(TAG, "Error getting totals", databaseError);
-            }
-        });
+        }
     }
 
 
