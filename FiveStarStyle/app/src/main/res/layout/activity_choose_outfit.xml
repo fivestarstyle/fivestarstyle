@@ -124,15 +124,6 @@
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
-    <!--<TextView-->
-    <!--android:id="@+id/txtView"-->
-    <!--android:layout_width="350dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Choose By Occasion:"-->
-    <!--android:layout_gravity="left"-->
-    <!--android:textColor="@color/colorPrimary"-->
-    <!--android:textSize="20dp"-->
-    <!--android:layout_marginLeft="25dp"/>-->
 
     <TextView
         android:id="@+id/txtGreeting"
@@ -162,6 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp">
         <Button
+            android:id="@+id/btn_casual"
             android:text="@string/checkboxCasual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,26 +161,19 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="5dp"/>
         <Button
+            android:id="@+id/btn_cocktail"
             android:text="@string/checkboxCocktail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             android:layout_marginRight="5dp"/>
         <Button
+            android:id="@+id/btn_formal"
             android:text="@string/checkboxFormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"/>
     </LinearLayout>
-    <!--<TextView-->
-        <!--android:id="@+id/txtView2"-->
-        <!--android:layout_width="350dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Choose By Location:"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:textSize="20dp"-->
-        <!--android:layout_marginLeft="25dp"/>-->
     <LinearLayout
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
@@ -196,6 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp">
         <Button
+            android:id="@+id/btn_work"
             android:text="@string/checkboxWork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -203,50 +189,41 @@
             android:layout_marginLeft="63dp"
             android:layout_marginRight="5dp"/>
         <Button
+            android:id="@+id/btn_gym"
             android:text="@string/checkboxGym"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             android:layout_marginRight="5dp"/>
         <Button
+            android:id="@+id/btn_bar"
             android:text="@string/checkboxBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"/>
     </LinearLayout>
-    <!--<TextView-->
-        <!--android:id="@+id/txtView3"-->
-        <!--android:layout_width="350dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Choose By Style:"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:textSize="20dp"-->
-        <!--android:layout_marginLeft="25dp"/>-->
     <LinearLayout
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
+
         <Button
-            android:text="@string/styleTabCheckOne"
+            android:id="@+id/btn_dress_or_suit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/styleTabCheckOne"
+            android:theme="@style/ButtonTheme" />
         <Button
+            android:id="@+id/btn_top_and_bottom"
             android:text="@string/styleTabCheckTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             android:layout_marginRight="5dp"/>
-        <Button
-            android:text="@string/styleTabCheckThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"/>
     </LinearLayout>
 
 </LinearLayout>

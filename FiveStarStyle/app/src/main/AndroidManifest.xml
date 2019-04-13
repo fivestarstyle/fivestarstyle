@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_ImageDetail"></activity>
+        <activity android:name=".Activity_ChooseOutfitResults"></activity>
+        <activity android:name=".Activity_ImageDetail" />
         <activity android:name=".Activity_PopulateViewCloset" />
         <activity android:name=".Activity_ConfirmLabelsNoColor" />
         <activity android:name=".Activity_ConfirmLabelsNoCat" />
