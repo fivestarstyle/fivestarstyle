@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class Activity_ImageDetail extends AppCompatActivity {
@@ -32,7 +34,8 @@ public class Activity_ImageDetail extends AppCompatActivity {
         Log.d("ImageDetail", "events: " + obj.get(0).getEvents());
 
 
-
+        String url = obj.get(0).getImageUrl();
+        Picasso.get().load(url).into(clothingImage);
 
         //set category text
         String category = obj.get(0).getCat();
@@ -52,31 +55,29 @@ public class Activity_ImageDetail extends AppCompatActivity {
 
 
         //set seasons text
-        int i;
+
         StringBuilder seasons = new StringBuilder();
         String season;
-        for(i = 0; i < obj.get(0).getSeasons().size(); i++) {
-            season = obj.get(0).getSeasons().get(i).substring(0,1).toUpperCase() + obj.get(0).getSeasons().get(i).substring(1);
+
+            season = obj.get(0).getSeasons().get(0).substring(1,2).toUpperCase() + obj.get(0).getSeasons().get(0).substring(2);
             seasons.append(season);
-            if(i < obj.get(0).getSeasons().size() - 1) {
-                seasons.append(", ");
-            }
-        }
+
+
+        seasons.setLength(seasons.length()-1);
         seasonText.setText(String.valueOf(seasons));
 
 
 
         //set events text
-        //eventText.setText(obj.get(0).getEvents().get(0));
+        eventText.setText(obj.get(0).getEvents().get(0));
         StringBuilder events = new StringBuilder();
         String event;
-        for(i = 0; i < obj.get(0).getEvents().size(); i++) {
-            event = obj.get(0).getEvents().get(i).substring(0,1).toUpperCase() + obj.get(0).getEvents().get(i).substring(1);
+
+            event = obj.get(0).getEvents().get(0).substring(1,2).toUpperCase() + obj.get(0).getEvents().get(0).substring(2);
             events.append(event);
-            if(i < obj.get(0).getEvents().size() - 1) {
-                events.append(", ");
-            }
-        }
+
+
+        events.setLength(events.length()-1);
         eventText.setText(String.valueOf(events));
     }
 }
