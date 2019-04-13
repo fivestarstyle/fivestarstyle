@@ -113,7 +113,10 @@
         android:layout_toRightOf="@id/seasonText"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
-        android:textSize="20dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         />
@@ -126,7 +129,10 @@
         android:layout_below="@id/seasonPulledText"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
-        android:textSize="20dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         />
