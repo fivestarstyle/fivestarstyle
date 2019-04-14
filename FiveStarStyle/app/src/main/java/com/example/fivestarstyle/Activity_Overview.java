@@ -235,7 +235,7 @@ public class Activity_Overview extends AppCompatActivity {
         }
         pieChartData.setValueLabelBackgroundEnabled(false);
 //        pieChartData.setHasCenterCircle(true).setCenterText1("").setCenterText1FontSize(18).setCenterText1Color(Color.parseColor("#0097A7"));
-//        pieChartData.setHasCenterCircle(true).setCenterCircleScale((float) .35);
+        pieChartData.setHasCenterCircle(true).setCenterCircleScale((float) .35);
         pView.setPieChartData(pieChartData);
         pieChartData.setSlicesSpacing(3);
     }
