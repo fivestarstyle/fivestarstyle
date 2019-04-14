@@ -8,6 +8,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
     JSONObject data = null;
     private final static String TAG = "WEATHER-API CALL";
     TextView currentTemp, humidity, humidityText, temperatureText, txtGreeting, weatherIcon;
+    Button btn_casual, btn_cocktail, btn_formal, btn_work, btn_gym, btn_bar, btn_tops_and_bottoms, btn_dresses_or_suits;
     Calendar cal;
 
     @Override
@@ -94,6 +97,37 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
         humidityText = (TextView) findViewById(R.id.humidity_text);
         txtGreeting = (TextView) findViewById(R.id.txtGreeting);
         cal = Calendar.getInstance();
+
+        // assign buttons
+        btn_casual = (Button) findViewById(R.id.btn_casual);
+        btn_cocktail = (Button) findViewById(R.id.btn_cocktail);
+        btn_formal = (Button) findViewById(R.id.btn_formal);
+        btn_work = (Button) findViewById(R.id.btn_work);
+        btn_gym = (Button) findViewById(R.id.btn_gym);
+        btn_bar = (Button) findViewById(R.id.btn_bar);
+        btn_tops_and_bottoms = (Button) findViewById(R.id.btn_tops_and_bottoms);
+        btn_dresses_or_suits = (Button) findViewById(R.id.btn_dresses_or_suits);
+
+        // add click listeners to buttons
+        clickListen(btn_casual, "casual");
+        clickListen(btn_cocktail, "cocktail");
+        clickListen(btn_formal, "formal");
+        clickListen(btn_work, "work");
+        clickListen(btn_gym, "gym");
+        clickListen(btn_bar, "bar");
+        clickListen(btn_tops_and_bottoms, "tops and bottoms");
+        clickListen(btn_dresses_or_suits, "dresses or suits");
+    }
+
+    public void clickListen(Button btn, final String str) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
+                results.putExtra("btnClicked", str);
+                startActivity(results);
+            }
+        });
     }
 
     // use zip code and api key to get current weather data from open weather api
