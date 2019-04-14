@@ -80,6 +80,7 @@
     <string name="permission_request">This app needs to access files on your device</string>
     <string name="preview_image">preview_image</string>
     <string name="title_activity_pull_images">PullImages</string>
+    <string name="delete_this_item">DELETE THIS ITEM</string>
 
     <string name="try_again">Try Again</string>
 
