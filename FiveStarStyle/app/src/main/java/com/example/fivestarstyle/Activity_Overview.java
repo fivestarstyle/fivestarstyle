@@ -139,7 +139,7 @@ public class Activity_Overview extends AppCompatActivity {
             pieData.add(new SliceValue(1, Color.parseColor("#001E3B")).setLabel("Accessories"));
         }
         // call function to style pie chart data
-        stylePieChart(pieData, pieChartView);
+        stylePieChart(pieData, pieChartView, true);
     }
 
     public void createSeasonPieGraph(ArrayList<Integer> counts) {
@@ -161,7 +161,7 @@ public class Activity_Overview extends AppCompatActivity {
         }
 
         // call function to style pie chart
-        stylePieChart(pieData, pieChartView);
+        stylePieChart(pieData, pieChartView, true);
     }
 
     public void createColorPieGraph(ArrayList<Integer> counts) {
@@ -172,17 +172,17 @@ public class Activity_Overview extends AppCompatActivity {
 
         // assign values to pie slices
         if (counts.size() != 0) {
-            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Black"));
-            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Blue"));
-            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#0d3653")).setLabel("Brown"));
-            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#1B4F72")).setLabel("Gray"));
-            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#567d9c")).setLabel("Green"));
-            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B")).setLabel("Orange"));
-            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#99B5C3")).setLabel("Pink"));
-            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#567d9c")).setLabel("Purple"));
-            pieData.add(new SliceValue(counts.get(8), Color.parseColor("#0d3653")).setLabel("Red"));
-            pieData.add(new SliceValue(counts.get(9), Color.parseColor("#1B4F72")).setLabel("White"));
-            pieData.add(new SliceValue(counts.get(10), Color.parseColor("#567d9c")).setLabel("Yellow"));
+            pieData.add(new SliceValue(counts.get(0), Color.BLACK));
+            pieData.add(new SliceValue(counts.get(1), Color.BLUE));
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#D2691E"))); // brown
+            pieData.add(new SliceValue(counts.get(3), Color.GRAY));
+            pieData.add(new SliceValue(counts.get(4), Color.GREEN));
+            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#FFA500"))); //orange
+            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#FFC0CB"))); //pink
+            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#800080"))); //purple
+            pieData.add(new SliceValue(counts.get(8), Color.RED));
+            pieData.add(new SliceValue(counts.get(9), Color.WHITE));
+            pieData.add(new SliceValue(counts.get(10), Color.YELLOW));
         } else {
             pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Black"));
             pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Blue"));
@@ -197,7 +197,7 @@ public class Activity_Overview extends AppCompatActivity {
             pieData.add(new SliceValue(counts.get(10), Color.parseColor("#567d9c")).setLabel("Yellow"));
         }
         // call function to style pie chart
-        stylePieChart(pieData, pieChartView);
+        stylePieChart(pieData, pieChartView, false);
     }
 
     public void createEventPieGraph(ArrayList<Integer> counts) {
@@ -224,14 +224,18 @@ public class Activity_Overview extends AppCompatActivity {
         }
 
         // call function to style pie chart
-        stylePieChart(pieData, pieChartView);
+        stylePieChart(pieData, pieChartView, true);
     }
 
     // styles the pie charts
-    public void stylePieChart(List<SliceValue> pieData, PieChartView pView) {
+    public void stylePieChart(List<SliceValue> pieData, PieChartView pView, boolean displayLabels) {
         PieChartData pieChartData = new PieChartData(pieData);
-        pieChartData.setHasLabels(true).setValueLabelTextSize(18);
+        if(displayLabels) {
+            pieChartData.setHasLabels(true).setValueLabelTextSize(18);
+        }
         pieChartData.setValueLabelBackgroundEnabled(false);
+//        pieChartData.setHasCenterCircle(true).setCenterText1("").setCenterText1FontSize(18).setCenterText1Color(Color.parseColor("#0097A7"));
+//        pieChartData.setHasCenterCircle(true).setCenterCircleScale((float) .35);
         pView.setPieChartData(pieChartData);
         pieChartData.setSlicesSpacing(3);
     }
