@@ -51,6 +51,10 @@
     <string name="choose_all_that_apply">CHOOSE ALL THAT APPLY</string>
     <string name="confirm_colors">CONFIRM COLORS</string>
     <string name="confirm_labels">CONFIRM LABELS</string>
+    <string name="category">CATEGORY:</string>
+    <string name="color">COLORS:</string>
+    <string name="season">SEASONS:</string>
+    <string name="event">EVENTS:</string>
 
     <string name="season_Spring">Spring</string>
     <string name="season_Summer">Summer</string>
