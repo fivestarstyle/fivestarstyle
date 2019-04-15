@@ -11,6 +11,7 @@ import java.util.List;
 public class GlobalVariables extends Application {
     public static String longitude = "";
     public static String latitude = "";
+    public static Double temperature = 0.0;
     public static String city = "";
     public static String state = "";
     public static String zipCode = "";

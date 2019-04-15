@@ -193,6 +193,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
 
                         // set temp values/weather icon based on data in json object
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
+                        GlobalVariables.temperature = main.getDouble("temp");
                         temperatureText.setText("Temperature");
                         humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
                         humidityText.setText("Humidity");

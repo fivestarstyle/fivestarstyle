@@ -1,10 +1,12 @@
 package com.example.fivestarstyle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,16 +14,32 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
 
     TextView labelTxt;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__choose_my_outfit_results);
+        mContext = this;
 
         Intent i = getIntent();
         String label = i.getExtras().getString("btnClicked");
         labelTxt = (TextView) findViewById(R.id.txtLabel);
-        labelTxt.setText(label);
+        if(label.equals("tops and bottoms")) {
+            labelTxt.setText("Choosing a top and a bottom:");
+            ImageView top = new ImageView(mContext);
+            ImageView bottom = new ImageView(mContext);
+        } else if(label.equals("dresses or suits")) {
+            labelTxt.setText("Choosing a dress or a suit:");
+            ImageView dressOrSuit = new ImageView(mContext);
+        } else {
+            labelTxt.setText("Choosing a " + label + " outfit:");
+            ImageView category = new ImageView(mContext);
+        }
+        ImageView shoe = new ImageView(mContext);
+        if(GlobalVariables.temperature < 60) {
+            ImageView outerwear = new ImageView(mContext);
+        }
     }
 
     // inflate the menu
