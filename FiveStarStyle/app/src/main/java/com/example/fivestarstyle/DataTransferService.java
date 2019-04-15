@@ -71,6 +71,26 @@ public class DataTransferService {
         return false;
     }
 
+    public static void deleteItem(String cat, String docTitle) {
+        db.collection("userClosets/" + user.getUid() + "/" + cat).document(docTitle)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+
+    }
+
+
+
     //method to upload item to database by category
     private static void uploadItem(String image, LabelsObject item){
         //de
