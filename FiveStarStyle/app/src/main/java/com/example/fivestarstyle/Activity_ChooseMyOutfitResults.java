@@ -4,12 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
 
@@ -22,21 +28,21 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         setContentView(R.layout.activity__choose_my_outfit_results);
         mContext = this;
 
+        //get imageUrls from old intent
         Intent i = getIntent();
+        Bundle bundle = i.getExtras();
+        ArrayList<ItemDetailsObject> imagesTops = (ArrayList) bundle.getSerializable("imagesTops");
+        ArrayList<ItemDetailsObject> imagesBottoms = (ArrayList) bundle.getSerializable("imagesBottoms");
+        ArrayList<ItemDetailsObject> imagesDressesOrSuits = (ArrayList) bundle.getSerializable("imagesDressesOrSuits");
+        ArrayList<ItemDetailsObject> imagesOuterwear = (ArrayList) bundle.getSerializable("imagesOuterwear");
+        ArrayList<ItemDetailsObject> imagesShoes = (ArrayList) bundle.getSerializable("imagesShoes");
+        Log.d("RESULTS PAGE", "imageURLs: " + imagesTops);
+
         String label = i.getExtras().getString("btnClicked");
         labelTxt = (TextView) findViewById(R.id.txtLabel);
-        if(label.equals("tops and bottoms")) {
-            labelTxt.setText("Choosing a top and a bottom:");
-            ImageView top = new ImageView(mContext);
-            ImageView bottom = new ImageView(mContext);
-        } else if(label.equals("dresses or suits")) {
-            labelTxt.setText("Choosing a dress or a suit:");
-            ImageView dressOrSuit = new ImageView(mContext);
-        } else {
-            labelTxt.setText("Choosing a " + label + " outfit:");
-            ImageView category = new ImageView(mContext);
-        }
-        ImageView shoe = new ImageView(mContext);
+        labelTxt.setText("Choosing a " + label + " outfit:");
+//        int rand = (int) (Math.random() * (count));
+        // Log.d("COUNT", String.valueOf(count));
         if(GlobalVariables.temperature < 60) {
             ImageView outerwear = new ImageView(mContext);
         }

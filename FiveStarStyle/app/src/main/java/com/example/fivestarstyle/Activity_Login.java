@@ -103,7 +103,7 @@ public class Activity_Login extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "HELLO", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "HELLO", Toast.LENGTH_SHORT).show();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Activity_Login.this, new OnCompleteListener<AuthResult>() {
