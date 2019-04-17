@@ -22,12 +22,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 // description: this class sets up the "Choose My Outfit" Activity
 
@@ -177,22 +179,31 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                             if (cat.equals("outerwear")) {
                                 Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("imagesTops", imagesTops);
-                                bundle.putSerializable("imagesBottoms", imagesBottoms);
-                                bundle.putSerializable("imagesDressesOrSuits", imagesDressesOrSuits);
-                                bundle.putSerializable("imagesShoes", imagesShoes);
-                                bundle.putSerializable("imagesOuterwear", imagesOuterwear);
+                                if(imagesTops.size() > 0) bundle.putSerializable("imagesTops", imagesTops);
+                                if(imagesBottoms.size() > 0) bundle.putSerializable("imagesBottoms", imagesBottoms);
+                                if(imagesDressesOrSuits.size() > 0) bundle.putSerializable("imagesDressesOrSuits", imagesDressesOrSuits);
+                                if(imagesShoes.size() > 0) bundle.putSerializable("imagesShoes", imagesShoes);
+                                if(imagesOuterwear.size() > 0) bundle.putSerializable("imagesOuterwear", imagesOuterwear);
                                 results.putExtras(bundle);
                                 results.putExtra("btnClicked", str);
-                                if(imagesTops.size() == 0 && imagesDressesOrSuits.size() == 0) {
-                                    Log.d("HELP", "1");
-                                    Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
-                                    return;
+                                try {
+                                    Thread.sleep(1500);
+                                } catch(InterruptedException e) {
+                                    Log.d("ERROR", "Got interrupted!");
                                 }
-                                if(imagesBottoms.size() == 0 && imagesDressesOrSuits.size() == 0) {
-                                    Log.d("HELP", "2");
-                                    Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
-                                    return;
+                                if(imagesTops.size() == 0) {
+                                    if(imagesDressesOrSuits.size() == 0) {
+                                        Log.d("ERROR", "top/dress");
+                                        Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                if(imagesBottoms.size() == 0) {
+                                    if(imagesDressesOrSuits.size() == 0) {
+                                        Log.d("ERROR", "bottom/dress");
+                                        Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
                                 }
                                 startActivity(results);
                             }

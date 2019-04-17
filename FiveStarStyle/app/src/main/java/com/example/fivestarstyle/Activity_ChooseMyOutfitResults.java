@@ -17,10 +17,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import lecho.lib.hellocharts.view.PieChartView;
+
 public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
 
     TextView labelTxt;
     private Context mContext;
+    ArrayList<ItemDetailsObject> imagesTops = null;
+    ArrayList<ItemDetailsObject> imagesBottoms = null;
+    ArrayList<ItemDetailsObject> imagesDressesOrSuits = null;
+    ArrayList<ItemDetailsObject> imagesOuterwear = null;
+    ArrayList<ItemDetailsObject> imagesShoes = null;
+    Integer rand;
+    Integer size;
+    Integer chosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +41,88 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         //get imageUrls from old intent
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
-        ArrayList<ItemDetailsObject> imagesTops = (ArrayList) bundle.getSerializable("imagesTops");
-        ArrayList<ItemDetailsObject> imagesBottoms = (ArrayList) bundle.getSerializable("imagesBottoms");
-        ArrayList<ItemDetailsObject> imagesDressesOrSuits = (ArrayList) bundle.getSerializable("imagesDressesOrSuits");
-        ArrayList<ItemDetailsObject> imagesOuterwear = (ArrayList) bundle.getSerializable("imagesOuterwear");
-        ArrayList<ItemDetailsObject> imagesShoes = (ArrayList) bundle.getSerializable("imagesShoes");
-        Log.d("RESULTS PAGE", "imageURLs: " + imagesTops);
+        if(bundle.getSerializable("imagesTops") != null) {
+            imagesTops = (ArrayList) bundle.getSerializable("imagesTops");
+        }
+        if(bundle.getSerializable("imagesBottoms") != null) {
+            imagesBottoms = (ArrayList) bundle.getSerializable("imagesBottoms");
+        }
+        if(bundle.getSerializable("imagesDressesOrSuits") != null) {
+            imagesDressesOrSuits = (ArrayList) bundle.getSerializable("imagesDressesOrSuits");
+        }
+        if(bundle.getSerializable("imagesOuterwear") != null) {
+            imagesOuterwear = (ArrayList) bundle.getSerializable("imagesOuterwear");
+        }
+        if(bundle.getSerializable("imagesShoes") != null) {
+            imagesShoes = (ArrayList) bundle.getSerializable("imagesShoes");
+        }
 
+        // get event clicked from old intent
         String label = i.getExtras().getString("btnClicked");
         labelTxt = (TextView) findViewById(R.id.txtLabel);
         labelTxt.setText("Choosing a " + label + " outfit:");
-//        int rand = (int) (Math.random() * (count));
-        // Log.d("COUNT", String.valueOf(count));
-        if(GlobalVariables.temperature < 60) {
-            ImageView outerwear = new ImageView(mContext);
+
+        // determine type of outfit to choose
+        if(imagesTops == null || imagesBottoms == null) {
+            // no top and bottom outfit, use dress or suit
+            rand = 1;
+        } else if(imagesDressesOrSuits == null) {
+            // no dress or suit, use top and bottom
+            rand = 0;
+        } else {
+            // both top and bottom and dress or suit exist, randomly pick
+            rand = (int) (Math.random() * 2);
         }
+
+        // create list to pass to image adapter
+        ArrayList<ItemDetailsObject> images = new ArrayList<>();
+
+        // find random top and bottom OR dress or suit and add to list
+        if(rand == 0) {
+            // top and bottom outfit
+            // get random top from list
+            size = imagesTops.size();
+            chosen = (int) (Math.random() * size);
+            // add random top to new list
+            images.add(imagesTops.get(chosen));
+            // get random bottom from list
+            size = imagesBottoms.size();
+            chosen = (int) (Math.random() * size);
+            // add random bottom to new list
+            images.add(imagesBottoms.get(chosen));
+        } else if(rand == 1) {
+            // dress or suit outfit
+            // get random dress or suit from list
+            size = imagesDressesOrSuits.size();
+            chosen = (int) (Math.random() * size);
+            // add random dress or suit to new list
+            images.add(imagesDressesOrSuits.get(chosen));
+        }
+
+        // if outerwear exists and ...
+        if(imagesOuterwear != null) {
+            // current temp is less than 60 deg F ...
+            if(GlobalVariables.temperature < 60) {
+                // get random outerwear from list
+                size = imagesOuterwear.size();
+                chosen = (int) (Math.random() * size);
+                // add random outwear to new list
+                images.add(imagesOuterwear.get(chosen));
+            }
+        }
+
+        // if shoes exist ...
+        if(imagesShoes != null) {
+            // get random shoes from list
+            size = imagesShoes.size();
+            chosen = (int) (Math.random() * size);
+            // add random shoes to new list
+            images.add(imagesShoes.get(chosen));
+        }
+
+        //dynamically load images through GridView
+        GridView gridView = (GridView) findViewById(R.id.gridViewResults);
+        gridView.setAdapter(new ImageAdapterForRandomOutfit(this, images));
     }
 
     // inflate the menu
