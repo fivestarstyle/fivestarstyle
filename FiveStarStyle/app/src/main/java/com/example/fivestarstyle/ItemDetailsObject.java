@@ -9,6 +9,7 @@ public class ItemDetailsObject implements Serializable {
     private String cat = "";
     private String color = "";
     private String docTitle = "";
+
     private List<String> events = new ArrayList<>();
     private List<String> seasons = new ArrayList<>();
 
@@ -39,6 +40,8 @@ public class ItemDetailsObject implements Serializable {
     public void setDocTitle(String docTitle) {
         this.docTitle = docTitle;
     }
+
+
 
     public String getDocTitle(){
         return this.docTitle;

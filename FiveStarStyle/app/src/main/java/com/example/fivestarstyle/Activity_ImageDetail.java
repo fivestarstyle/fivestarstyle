@@ -1,18 +1,28 @@
 package com.example.fivestarstyle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.example.fivestarstyle.DataTransferService.deleteItem;
 
 public class Activity_ImageDetail extends AppCompatActivity {
 
@@ -23,24 +33,45 @@ public class Activity_ImageDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__image_detail);
 
-
+        //buttons and image/textviews
         ImageView clothingImage = (ImageView) findViewById(R.id.imageFromDB);
-
         TextView categoryText = (TextView) findViewById(R.id.categoryPulledText);
         TextView colorText = (TextView) findViewById(R.id.colorPulledText);
         TextView seasonText = (TextView) findViewById(R.id.seasonPulledText);
         TextView eventText = (TextView) findViewById(R.id.eventPulledText);
+        Button deleteBtn = (Button) findViewById(R.id.delete_button);
 
 
 
-
+        //retrieve all details about image from firebase
         Bundle bundle = getIntent().getExtras();
         ArrayList<ItemDetailsObject> obj = (ArrayList) bundle.getSerializable("detail");
         Log.d("ImageDetail", "events: " + obj.get(0).getEvents());
 
 
-        String url = obj.get(0).getImageUrl();
+        //get image URL
+        final String url = obj.get(0).getImageUrl();
         Picasso.get().load(url).into(clothingImage);
+
+        /*delete the image */
+        //get instance of storage
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        final StorageReference storageRef = storage.getReference();
+
+        final String title = obj.get(0).getDocTitle();
+        final String cat = obj.get(0).getCat();
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteItem(cat,title);
+                Intent viewClosetIntent = new Intent(Activity_ImageDetail.this, Activity_ViewMyCloset.class);
+//                myIntent.putExtra("key", value); //Optional parameters
+                Activity_ImageDetail.this.startActivity(viewClosetIntent);
+            }
+        });
+
 
         //set category text
         String category = obj.get(0).getCat();
@@ -53,14 +84,11 @@ public class Activity_ImageDetail extends AppCompatActivity {
         categoryText.setText(category);
 
 
-
         //set color text
         colorText.setText(obj.get(0).getColor().substring(0,1).toUpperCase() + obj.get(0).getColor().substring(1));
 
 
-
         //set seasons text
-
         StringBuilder seasons = new StringBuilder();
         String season;
 
