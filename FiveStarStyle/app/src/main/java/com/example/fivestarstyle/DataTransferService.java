@@ -176,63 +176,6 @@ public class DataTransferService {
                 });
     }
 
-    public static void getSeasonCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/seasons")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-    public static void getEventCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/events")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-    public static void getColorCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/color")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-
-    //Update Totals
-    public static void updateEventTotal(String event){
-        db.collection("userTotals/" + user.getUid() + "/events").document(event)
-                .update("total",  1);
-    }
 
 
     //Queries for Choose My Outfit Page

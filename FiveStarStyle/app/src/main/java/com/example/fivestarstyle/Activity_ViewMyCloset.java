@@ -89,19 +89,7 @@ public class Activity_ViewMyCloset extends AppCompatActivity {
             }
             @Override
             public void onSuccess(QuerySnapshot data) {
-//                ArrayList<String> imageUrls = new ArrayList<>();
-//                for (QueryDocumentSnapshot document : data) {
-//                    Log.d(TAG, document.getId() + " ImageURL:" + document.get("image").toString() + " => " + document.getData());
-//                    imageUrls.add(document.get("image").toString());
-//                }
-//                Log.d(TAG, "imageUrls received");
-//                Intent viewIntent = new Intent(Activity_ViewMyCloset.this, Activity_PopulateViewCloset.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("images", imageUrls);
-//                viewIntent.putExtras(bundle);
-//                startActivity(viewIntent);
                 ArrayList<ItemDetailsObject> images = new ArrayList<>();
-
                 for (QueryDocumentSnapshot document : data) {
                     ItemDetailsObject obj = new ItemDetailsObject();
                     obj.setImageUrl(document.get("image").toString());
