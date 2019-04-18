@@ -94,7 +94,11 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
         setContentView(R.layout.activity_choose_my_outfit);
 
         // call function to get current weather data from open weather api based on given location
-        getJSON(GlobalVariables.customZipCode, "bba8e629ce93f0a063c0a46c47dc5960");
+        if(GlobalVariables.customZipCode.equals("")) {
+            getJSON(GlobalVariables.zipCode, "bba8e629ce93f0a063c0a46c47dc5960");
+        } else {
+            getJSON(GlobalVariables.customZipCode, "bba8e629ce93f0a063c0a46c47dc5960");
+        }
 
         // assign global variables
         currentTemp = (TextView) findViewById(R.id.currentTemp);
