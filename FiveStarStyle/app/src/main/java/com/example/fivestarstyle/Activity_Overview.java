@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,6 +33,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 
 public class Activity_Overview extends AppCompatActivity {
     private final static String TAG = "ClosetOverview";
+    private ArrayList<Integer> colors = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class Activity_Overview extends AppCompatActivity {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
         getCategoryData();
+        
 
         // perform setOnTabSelectedListener event on TabLayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -169,32 +172,34 @@ public class Activity_Overview extends AppCompatActivity {
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
-
+        if (colors.size() == 0) {
+            colors = counts;
+        }
         // assign values to pie slices
         if (counts.size() != 0) {
-            pieData.add(new SliceValue(counts.get(0), Color.BLACK));
-            pieData.add(new SliceValue(counts.get(1), Color.BLUE));
-            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#D2691E"))); // brown
-            pieData.add(new SliceValue(counts.get(3), Color.GRAY));
-            pieData.add(new SliceValue(counts.get(4), Color.GREEN));
-            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#FFA500"))); //orange
-            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#FFC0CB"))); //pink
-            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#800080"))); //purple
-            pieData.add(new SliceValue(counts.get(8), Color.RED));
-            pieData.add(new SliceValue(counts.get(9), Color.WHITE));
-            pieData.add(new SliceValue(counts.get(10), Color.YELLOW));
+            pieData.add(new SliceValue(colors.get(0), Color.BLACK));
+            pieData.add(new SliceValue(colors.get(1), Color.parseColor("#1B4F72"))); //blue
+            pieData.add(new SliceValue(colors.get(2), Color.parseColor("#824709"))); //brown
+            pieData.add(new SliceValue(colors.get(3), Color.GRAY));
+            pieData.add(new SliceValue(colors.get(4), Color.parseColor("#178409"))); //green
+            pieData.add(new SliceValue(colors.get(5), Color.parseColor("#ef912d"))); //orange
+            pieData.add(new SliceValue(colors.get(6), Color.parseColor("#ef53c0"))); //pink
+            pieData.add(new SliceValue(colors.get(7), Color.parseColor("#a160af"))); //purple
+            pieData.add(new SliceValue(colors.get(8), Color.parseColor("#d8130d"))); //red
+            pieData.add(new SliceValue(colors.get(9), Color.parseColor("#fffcdd"))); //white
+            pieData.add(new SliceValue(colors.get(10), Color.parseColor("#f4e618"))); //yellow
         } else {
-            pieData.add(new SliceValue(counts.get(0), Color.parseColor("#99B5C3")).setLabel("Black"));
-            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#567d9c")).setLabel("Blue"));
-            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#0d3653")).setLabel("Brown"));
-            pieData.add(new SliceValue(counts.get(3), Color.parseColor("#1B4F72")).setLabel("Gray"));
-            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#567d9c")).setLabel("Green"));
-            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B")).setLabel("Orange"));
-            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#99B5C3")).setLabel("Pink"));
-            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#567d9c")).setLabel("Purple"));
-            pieData.add(new SliceValue(counts.get(8), Color.parseColor("#0d3653")).setLabel("Red"));
-            pieData.add(new SliceValue(counts.get(9), Color.parseColor("#1B4F72")).setLabel("White"));
-            pieData.add(new SliceValue(counts.get(10), Color.parseColor("#567d9c")).setLabel("Yellow"));
+            pieData.add(new SliceValue(counts.get(0), Color.BLACK)); //black
+            pieData.add(new SliceValue(counts.get(1), Color.parseColor("#1B4F72"))); //blue
+            pieData.add(new SliceValue(counts.get(2), Color.parseColor("#824709"))); //brown
+            pieData.add(new SliceValue(counts.get(3), Color.GRAY)); //gray
+            pieData.add(new SliceValue(counts.get(4), Color.parseColor("#178409"))); //green
+            pieData.add(new SliceValue(counts.get(5), Color.parseColor("#001E3B"))); //orange
+            pieData.add(new SliceValue(counts.get(6), Color.parseColor("#ef53c0"))); //pink
+            pieData.add(new SliceValue(counts.get(7), Color.parseColor("#a160af"))); //purple
+            pieData.add(new SliceValue(counts.get(8), Color.parseColor("#d8130d"))); //red
+            pieData.add(new SliceValue(counts.get(9), Color.parseColor("#fffcdd"))); //white
+            pieData.add(new SliceValue(counts.get(10), Color.parseColor("#f4e618"))); //yellow
         }
         // call function to style pie chart
         stylePieChart(pieData, pieChartView, false);
@@ -234,7 +239,6 @@ public class Activity_Overview extends AppCompatActivity {
             pieChartData.setHasLabels(true).setValueLabelTextSize(18);
         }
         pieChartData.setValueLabelBackgroundEnabled(false);
-//        pieChartData.setHasCenterCircle(true).setCenterText1("").setCenterText1FontSize(18).setCenterText1Color(Color.parseColor("#0097A7"));
         pieChartData.setHasCenterCircle(true).setCenterCircleScale((float) .35);
         pView.setPieChartData(pieChartData);
         pieChartData.setSlicesSpacing(3);
@@ -247,7 +251,7 @@ public class Activity_Overview extends AppCompatActivity {
             DataTransferService.getCategoryCount(cat, new OnGetDataListener() {
                 @Override
                 public void onStart() {
-                    //on start method
+                    Toast.makeText(Activity_Overview.this, "Gathering info...", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -280,7 +284,7 @@ public class Activity_Overview extends AppCompatActivity {
                 DataTransferService.getItemsBySeason(cat, season, new OnGetDataListener() {
                     @Override
                     public void onStart() {
-                        //on start
+                        Toast.makeText(Activity_Overview.this, "Gathering info...", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onSuccess(QuerySnapshot data) {
@@ -318,7 +322,7 @@ public class Activity_Overview extends AppCompatActivity {
                 DataTransferService.getItemsByEvent(cat, event, new OnGetDataListener() {
                     @Override
                     public void onStart() {
-                        //on start
+                        Toast.makeText(Activity_Overview.this, "Gathering info...", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onSuccess(QuerySnapshot data) {
@@ -356,7 +360,7 @@ public class Activity_Overview extends AppCompatActivity {
                 DataTransferService.getItemsByColor(cat, color, new OnGetDataListener() {
                     @Override
                     public void onStart() {
-                        //on start
+                        Toast.makeText(Activity_Overview.this, "Gathering info...", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onSuccess(QuerySnapshot data) {
@@ -366,12 +370,19 @@ public class Activity_Overview extends AppCompatActivity {
                         }
                         tempTotal.add(count);
                         if (tempTotal.size() == 6) {
+                            try {
+                                Thread.sleep(100);
+                            } catch(InterruptedException e) {
+                                Log.d("ERROR", "Got interrupted!");
+                            }
                             int sum = 0;
                             for (int i : tempTotal) {
                                 sum += i;
                             }
                             totals.add(sum);
+                            Log.d(TAG, color + " ==> " + sum);
                         }
+
                         if (totals.size() == 11) {
                             Log.d(TAG, "Color Totals: " + totals);
                             createColorPieGraph(totals);

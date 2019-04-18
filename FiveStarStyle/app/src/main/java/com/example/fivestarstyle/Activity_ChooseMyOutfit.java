@@ -182,7 +182,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                             Log.d(TAG, "imageUrls received");
                             if (cat.equals("outerwear")) {
                                 try {
-                                    Thread.sleep(2000);
+                                    Thread.sleep(3000);
                                 } catch(InterruptedException e) {
                                     Log.d("ERROR", "Got interrupted!");
                                 }

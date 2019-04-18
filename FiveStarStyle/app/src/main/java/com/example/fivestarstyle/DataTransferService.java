@@ -36,18 +36,12 @@ public class DataTransferService {
     public static Boolean addItem(final LabelsObject item) {
         if (user != null) {
             //upload picture to storage
-            Log.d("DATA-CATEGORY", item.labelGetCategory());
-            Log.d("DATA-COLOR", item.labelGetColor());
-            Log.d("DATA_SEASONS", item.labelGetSeasons().toString());
-            Log.d("DATA_EVENTS", item.labelGetEvents().toString());
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Bitmap bitmap = GlobalVariables.getBitmap();
-//            Log.d(TAG, String.valueOf(bitmap));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
-//            Log.d(TAG, String.valueOf(data));
             UploadTask uploadTask = userStorage.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -176,63 +170,6 @@ public class DataTransferService {
                 });
     }
 
-    public static void getSeasonCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/seasons")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-    public static void getEventCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/events")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-    public static void getColorCount(final OnGetDataListener listener){
-        listener.onStart();
-        db.collection("userTotals/" + user.getUid() + "/color")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            listener.onSuccess(task.getResult());
-                        } else {
-                            listener.onFailed(task.getException());
-                        }
-                    }
-                });
-
-    }
-
-
-    //Update Totals
-    public static void updateEventTotal(String event){
-        db.collection("userTotals/" + user.getUid() + "/events").document(event)
-                .update("total",  1);
-    }
 
 
     //Queries for Choose My Outfit Page

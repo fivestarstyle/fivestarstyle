@@ -43,7 +43,7 @@ public class Activity_ImageDetail extends AppCompatActivity {
 
 
 
-        //retrieve all details about image from firebase
+        //retrieve all details about image from object
         Bundle bundle = getIntent().getExtras();
         ArrayList<ItemDetailsObject> obj = (ArrayList) bundle.getSerializable("detail");
         Log.d("ImageDetail", "events: " + obj.get(0).getEvents());
@@ -53,11 +53,6 @@ public class Activity_ImageDetail extends AppCompatActivity {
         final String url = obj.get(0).getImageUrl();
         Picasso.get().load(url).into(clothingImage);
 
-        /*delete the image */
-        //get instance of storage
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
-        // Create a storage reference from our app
-        final StorageReference storageRef = storage.getReference();
 
         final String title = obj.get(0).getDocTitle();
         final String cat = obj.get(0).getCat();
@@ -65,7 +60,7 @@ public class Activity_ImageDetail extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteItem(cat,title);
+                DataTransferService.deleteItem(cat,title);
                 Intent viewClosetIntent = new Intent(Activity_ImageDetail.this, Activity_ViewMyCloset.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 Activity_ImageDetail.this.startActivity(viewClosetIntent);
