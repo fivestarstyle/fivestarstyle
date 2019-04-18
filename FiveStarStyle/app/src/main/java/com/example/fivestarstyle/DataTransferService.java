@@ -36,18 +36,12 @@ public class DataTransferService {
     public static Boolean addItem(final LabelsObject item) {
         if (user != null) {
             //upload picture to storage
-            Log.d("DATA-CATEGORY", item.labelGetCategory());
-            Log.d("DATA-COLOR", item.labelGetColor());
-            Log.d("DATA_SEASONS", item.labelGetSeasons().toString());
-            Log.d("DATA_EVENTS", item.labelGetEvents().toString());
             final String id = UUID.randomUUID().toString();
             final StorageReference userStorage = storageRef.child(user.getUid() + "/" + id);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Bitmap bitmap = GlobalVariables.getBitmap();
-//            Log.d(TAG, String.valueOf(bitmap));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
-//            Log.d(TAG, String.valueOf(data));
             UploadTask uploadTask = userStorage.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
