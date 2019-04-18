@@ -34,11 +34,16 @@ import lecho.lib.hellocharts.view.PieChartView;
 public class Activity_Overview extends AppCompatActivity {
     private final static String TAG = "ClosetOverview";
     private ArrayList<Integer> colors = new ArrayList<>();
+    private Button right;
+    private Button left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+        left = (Button) findViewById(R.id.left_btn2);
+        left.setVisibility(View.GONE);
+        right = (Button) findViewById(R.id.right_btn2);
         // set up the tab layout
         createTabs();
     }
@@ -120,6 +125,18 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void createCategoryPieGraph(ArrayList<Integer> catCounts) {
+        //set up buttons
+        left.setVisibility(View.GONE);
+        right.setVisibility(View.VISIBLE);
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the next tab
+                fragment = new OverviewTabsSeason();
+                selectTab(1);
+            }
+        });
         // reference pie chart view
         Log.d(TAG, "createPieGraph");
         PieChartView pieChartView = findViewById(R.id.chart);
@@ -146,6 +163,27 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void createSeasonPieGraph(ArrayList<Integer> counts) {
+        //set up buttons
+        left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the previous tab
+                fragment = new OverviewTabsCategory();
+                selectTab(0);
+            }
+        });
+        right.setVisibility(View.VISIBLE);
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the next tab
+                fragment = new OverviewTabsColor();
+                selectTab(2);
+            }
+        });
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -168,6 +206,27 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void createColorPieGraph(ArrayList<Integer> counts) {
+        //set up buttons
+        left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the previous tab
+                fragment = new OverviewTabsSeason();
+                selectTab(1);
+            }
+        });
+        right.setVisibility(View.VISIBLE);
+        right.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the next tab
+                fragment = new OverviewTabsEvent();
+                selectTab(3);
+            }
+        });
         // reference pie chart view+
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -206,6 +265,18 @@ public class Activity_Overview extends AppCompatActivity {
     }
 
     public void createEventPieGraph(ArrayList<Integer> counts) {
+        //set up buttons
+        left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment = null;
+            @Override
+            public void onClick(View v) {
+                // go to the previous tab
+                fragment = new OverviewTabsColor();
+                selectTab(2);
+            }
+        });
+        right.setVisibility(View.GONE);
         // reference pie chart view
         PieChartView pieChartView = findViewById(R.id.chart);
         // initialize data for the pie chart
@@ -442,6 +513,13 @@ public class Activity_Overview extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    // selects the tab with the index that is passed to the function
+    public void selectTab(Integer index) {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(index);
+        tab.select();
     }
 
 }

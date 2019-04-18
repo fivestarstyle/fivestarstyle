@@ -39,7 +39,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
     JSONObject data = null;
     private final static String TAG = "WEATHER-API CALL";
     TextView currentTemp, humidity, humidityText, temperatureText, txtGreeting, weatherIcon;
-    Button btn_casual, btn_cocktail, btn_formal, btn_work, btn_gym, btn_bar, btn_tops_and_bottoms, btn_dresses_or_suits;
+    Button btn_casual, btn_cocktail, btn_formal, btn_work, btn_gym, btn_bar;
     Calendar cal;
 
     @Override

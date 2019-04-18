@@ -7,33 +7,13 @@ android:layout_height="match_parent"
 tools:context=".Activity_Overview">
 
 <!--Android Pie Chart View-->
-    <Button
-        android:id="@+id/signup3"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="41dp"
-        android:background="@color/colorPrimary"
-        android:drawableEnd="@drawable/right_arrow"
-        android:drawablePadding="30dp"
-        android:minWidth="0dp"
-        android:scaleType="center"
-        android:text="@string/btnText"
-        android:textAlignment="center"
-        android:textColor="#ECF0F1"
-        android:theme="@style/ButtonTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chart" />
 
-<lecho.lib.hellocharts.view.PieChartView
+    <lecho.lib.hellocharts.view.PieChartView
     android:id="@+id/chart"
     android:layout_width="350dp"
     android:layout_height="350dp"
     android:layout_marginStart="55dp"
-    android:layout_marginTop="260dp"
+    android:layout_marginTop="350dp"
     android:layout_marginEnd="56dp"
     android:layout_marginBottom="170dp"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -42,24 +22,6 @@ tools:context=".Activity_Overview">
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="1.0" />
 
-
-    <Button
-        android:id="@+id/btnLeastFrequentlyWorn"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:background="@color/colorPrimary"
-        android:drawableEnd="@drawable/right_arrow"
-        android:drawablePadding="30dp"
-        android:minWidth="0dp"
-        android:scaleType="center"
-        android:text="@string/btnText2"
-        android:textColor="#ECF0F1"
-        android:theme="@style/ButtonTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup3" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/simpleTabLayout"
@@ -78,7 +40,28 @@ tools:context=".Activity_Overview">
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp" >
+
+        <Button
+            android:id="@+id/right_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="285dp"
+            android:layout_marginBottom="50dp"
+            android:text="Next"
+            android:theme="@style/ButtonTheme" />
+
+        <Button
+            android:id="@+id/left_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="50dp"
+            android:text="Back"
+            android:theme="@style/ButtonTheme" />
+    </FrameLayout>
 
 
 </android.support.constraint.ConstraintLayout>
