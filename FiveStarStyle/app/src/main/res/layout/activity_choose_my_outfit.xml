@@ -208,20 +208,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
-        <Button
-            android:id="@+id/btn_tops_and_bottoms"
-            android:text="@string/styleTabCheckTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="5dp"/>
-        <Button
-            android:id="@+id/btn_dresses_or_suits"
-            android:text="@string/styleTabCheckThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"/>
+        <!--<Button-->
+            <!--android:id="@+id/btn_tops_and_bottoms"-->
+            <!--android:text="@string/styleTabCheckTwo"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:theme="@style/ButtonTheme"-->
+            <!--android:layout_marginLeft="50dp"-->
+            <!--android:layout_marginRight="5dp"/>-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_dresses_or_suits"-->
+            <!--android:text="@string/styleTabCheckThree"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:theme="@style/ButtonTheme"/>-->
     </LinearLayout>
 
 </LinearLayout>

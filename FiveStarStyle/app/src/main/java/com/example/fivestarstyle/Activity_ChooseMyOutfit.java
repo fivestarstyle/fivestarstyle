@@ -11,18 +11,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 // description: this class sets up the "Choose My Outfit" Activity
 
@@ -105,8 +112,8 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
         btn_work = (Button) findViewById(R.id.btn_work);
         btn_gym = (Button) findViewById(R.id.btn_gym);
         btn_bar = (Button) findViewById(R.id.btn_bar);
-        btn_tops_and_bottoms = (Button) findViewById(R.id.btn_tops_and_bottoms);
-        btn_dresses_or_suits = (Button) findViewById(R.id.btn_dresses_or_suits);
+//        btn_tops_and_bottoms = (Button) findViewById(R.id.btn_tops_and_bottoms);
+//        btn_dresses_or_suits = (Button) findViewById(R.id.btn_dresses_or_suits);
 
         // add click listeners to buttons
         clickListen(btn_casual, "casual");
@@ -115,17 +122,99 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
         clickListen(btn_work, "work");
         clickListen(btn_gym, "gym");
         clickListen(btn_bar, "bar");
-        clickListen(btn_tops_and_bottoms, "tops and bottoms");
-        clickListen(btn_dresses_or_suits, "dresses or suits");
+//        clickListen(btn_tops_and_bottoms, "tops and bottoms");
+//        clickListen(btn_dresses_or_suits, "dresses or suits");
     }
 
     public void clickListen(Button btn, final String str) {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
-                results.putExtra("btnClicked", str);
-                startActivity(results);
+                ArrayList<String> categories = new ArrayList<>();
+                categories.add("top");
+                categories.add("bottom");
+                categories.add("dress_or_suit");
+                categories.add("shoes");
+                categories.add("outerwear");
+                final ArrayList<ItemDetailsObject> imagesTops = new ArrayList<>();
+                final ArrayList<ItemDetailsObject> imagesBottoms = new ArrayList<>();
+                final ArrayList<ItemDetailsObject> imagesDressesOrSuits = new ArrayList<>();
+                final ArrayList<ItemDetailsObject> imagesShoes = new ArrayList<>();
+                final ArrayList<ItemDetailsObject> imagesOuterwear = new ArrayList<>();
+                for(final String cat : categories) {
+                    DataTransferService.getItemsByEvent(cat, str, new OnGetDataListener() {
+                        @Override
+                        public void onStart() {
+                            Toast.makeText(Activity_ChooseMyOutfit.this, "Choosing your outfit...", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSuccess(QuerySnapshot data) {
+                            // get all tops for that event
+                            for (DocumentSnapshot document : data) {
+                                ItemDetailsObject obj = new ItemDetailsObject();
+                                obj.setImageUrl(document.get("image").toString());
+                                obj.setCat(cat);
+                                obj.setDocTitle(document.getId());
+                                Log.d(TAG, document.getData() + "=> " + obj.getDocTitle());
+                                switch(cat) {
+                                    case "top":
+                                        imagesTops.add(obj);
+                                        break;
+                                    case "bottom":
+                                        imagesBottoms.add(obj);
+                                        break;
+                                    case "dress_or_suit":
+                                        imagesDressesOrSuits.add(obj);
+                                        break;
+                                    case "shoes":
+                                        imagesShoes.add(obj);
+                                        break;
+                                    case "outerwear":
+                                        imagesOuterwear.add(obj);
+                                        break;
+                                }
+                            }
+                            Log.d(TAG, "imageUrls received");
+                            if (cat.equals("outerwear")) {
+                                Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
+                                Bundle bundle = new Bundle();
+                                if(imagesTops.size() > 0) bundle.putSerializable("imagesTops", imagesTops);
+                                if(imagesBottoms.size() > 0) bundle.putSerializable("imagesBottoms", imagesBottoms);
+                                if(imagesDressesOrSuits.size() > 0) bundle.putSerializable("imagesDressesOrSuits", imagesDressesOrSuits);
+                                if(imagesShoes.size() > 0) bundle.putSerializable("imagesShoes", imagesShoes);
+                                if(imagesOuterwear.size() > 0) bundle.putSerializable("imagesOuterwear", imagesOuterwear);
+                                results.putExtras(bundle);
+                                results.putExtra("btnClicked", str);
+                                try {
+                                    Thread.sleep(1500);
+                                } catch(InterruptedException e) {
+                                    Log.d("ERROR", "Got interrupted!");
+                                }
+                                if(imagesTops.size() == 0) {
+                                    if(imagesDressesOrSuits.size() == 0) {
+                                        Log.d("ERROR", "top/dress");
+                                        Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                if(imagesBottoms.size() == 0) {
+                                    if(imagesDressesOrSuits.size() == 0) {
+                                        Log.d("ERROR", "bottom/dress");
+                                        Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                startActivity(results);
+                            }
+                        }
+                        @Override
+                        public void onFailed(Exception databaseError) {
+                            Toast.makeText(Activity_ChooseMyOutfit.this, "Whoops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
     }
@@ -193,6 +282,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
 
                         // set temp values/weather icon based on data in json object
                         currentTemp.setText(String.format("%.0f",main.getDouble("temp")) + "°F");
+                        GlobalVariables.temperature = main.getDouble("temp");
                         temperatureText.setText("Temperature");
                         humidity.setText(String.format("%.0f",main.getDouble("humidity")) + "%");
                         humidityText.setText("Humidity");
