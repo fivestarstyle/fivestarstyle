@@ -184,8 +184,10 @@ public class Activity_Settings extends AppCompatActivity {
         }
         //checkZip(zip);
         TextView locationTextView = (TextView) findViewById(R.id.locationFilled);
+        TextView locationText = (TextView) findViewById(R.id.locationText);
         if (zip.length() != 0) {
             GlobalVariables.customZipCode = zip;
+            locationText.setText("Custom Zip");
             locationTextView.setText(GlobalVariables.customZipCode);
             //Toast.makeText(Activity_Settings.this, "Zip Code Set",
                     //Toast.LENGTH_SHORT).show();
