@@ -177,6 +177,11 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                             }
                             Log.d(TAG, "imageUrls received");
                             if (cat.equals("outerwear")) {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch(InterruptedException e) {
+                                    Log.d("ERROR", "Got interrupted!");
+                                }
                                 Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
                                 Bundle bundle = new Bundle();
                                 if(imagesTops.size() > 0) bundle.putSerializable("imagesTops", imagesTops);
@@ -186,11 +191,11 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                                 if(imagesOuterwear.size() > 0) bundle.putSerializable("imagesOuterwear", imagesOuterwear);
                                 results.putExtras(bundle);
                                 results.putExtra("btnClicked", str);
-                                try {
-                                    Thread.sleep(1500);
-                                } catch(InterruptedException e) {
-                                    Log.d("ERROR", "Got interrupted!");
-                                }
+//                                try {
+//                                    Thread.sleep(1000);
+//                                } catch(InterruptedException e) {
+//                                    Log.d("ERROR", "Got interrupted!");
+//                                }
                                 if(imagesTops.size() == 0) {
                                     if(imagesDressesOrSuits.size() == 0) {
                                         Log.d("ERROR", "top/dress");
