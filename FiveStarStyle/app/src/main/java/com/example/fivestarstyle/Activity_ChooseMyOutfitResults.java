@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,16 +33,20 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
     Integer rand;
     Integer size;
     Integer chosen;
+    Button btnChooseNewOutfit;
+    Button btnChangeTheEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__choose_my_outfit_results);
         mContext = this;
+        btnChooseNewOutfit = (Button) findViewById(R.id.btn_choose_new_outfit);
+        btnChangeTheEvent = (Button) findViewById(R.id.btn_change_the_event);
 
         //get imageUrls from old intent
         Intent i = getIntent();
-        Bundle bundle = i.getExtras();
+        final Bundle bundle = i.getExtras();
         if(bundle.getSerializable("imagesTops") != null) {
             imagesTops = (ArrayList) bundle.getSerializable("imagesTops");
         }
@@ -58,9 +64,27 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         }
 
         // get event clicked from old intent
-        String label = i.getExtras().getString("btnClicked");
+        final String label = i.getExtras().getString("btnClicked");
         labelTxt = (TextView) findViewById(R.id.txtLabel);
         labelTxt.setText("Choosing a " + label + " outfit:");
+
+        btnChooseNewOutfit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent restart = new Intent(Activity_ChooseMyOutfitResults.this, Activity_ChooseMyOutfitResults.class);
+                restart.putExtras(bundle);
+                restart.putExtra("btnClicked", label);
+                startActivity(restart);
+            }
+        });
+
+        btnChangeTheEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent back = new Intent(Activity_ChooseMyOutfitResults.this, Activity_ChooseMyOutfit.class);
+                startActivity(back);
+            }
+        });
 
         // determine type of outfit to choose
         if(imagesTops == null || imagesBottoms == null) {

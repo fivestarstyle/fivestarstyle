@@ -24,15 +24,43 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
-        android:layout_marginTop="100dp"
+        android:id="@+id/gridViewResults"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gridViewResults"
-        android:numColumns="2"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="100dp"
         android:columnWidth="525dp"
-        android:rowHeight="525dp"
         android:gravity="center"
+        android:numColumns="2"
+        android:rowHeight="525dp"
         android:stretchMode="columnWidth"
-        >
-    </GridView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></GridView>
+
+    <Button
+        android:id="@+id/btn_choose_new_outfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="60dp"
+        android:text="Choose New Outfit"
+        android:theme="@style/ButtonTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridViewResults" />
+
+    <Button
+        android:id="@+id/btn_change_the_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="15dp"
+        android:text="Change The Event"
+        android:theme="@style/ButtonTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
