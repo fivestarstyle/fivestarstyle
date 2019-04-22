@@ -58,7 +58,7 @@ img.img-fluid.img-caley {
     font-size: 1.15rem;
     font-family: "Nunito";
     font-weight: 100;
-    text-transform: uppercase; 
+    text-transform: uppercase;
 }
 
 .vertical-menu a {
@@ -125,4 +125,32 @@ a.pl-3.selected {
         font-size: 3rem;
         text-transform: uppercase;
     }
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  min-width: 175px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  background-color: #1B4F72;
+  display: block;
+  padding: 5px 12px;
+  text-decoration: none;
+  color: #ECF0F1;
+  border-bottom: #ECF0F1 2px solid;
+}
+
+.dropdown-content a:hover {
+    color: #1B4F72;
+    background-color: #979A9A;
+    font-weight: bold;
+}
+
+#mainNavbar .nav-item:hover .dropdown-content{
+    display: block;
 }
