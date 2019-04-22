@@ -24,29 +24,39 @@
 </head>
 
 <body>
-   
-    <nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top" style="background-color: #ECF0F1">
-        <a href="index.html" class="navbar-brand">FIVE.STAR.STYLE.</a>
-        <button class="navbar-toggler custom-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle Navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navLinks" class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">HOME.</a>
-                </li>
-                <li class="nav-item">
-                    <a href="aboutme.html" class="nav-link">TEAM.</a>
-                </li>
-                <li class="nav-item">
-                    <a href="project.html" class="nav-link"><strong>PROJECT.</strong></a>
-                </li>
-            </ul>
-        </div>
-        <div class="stars d-none d-md-inline">&#9733 &#9733 &#9733 &#9733 &#9733</div>
-    </nav>
-  
-    <section class="container-fluid px-0 mt-5">
+
+  <nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top" style="background-color: #ECF0F1">
+      <a href="index.html" class="navbar-brand">FIVE.STAR.STYLE.</a>
+      <button class="navbar-toggler custom-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle Navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navLinks" class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a href="index.html" class="nav-link">HOME.</a>
+              </li>
+              <li class="nav-item">
+                  <a href="aboutme.html" class="nav-link">TEAM.</a>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown">
+                    <a href="project.html" class="nav-link">PROJECT.
+                      <i class="fa fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content">
+                      <a href="project.html" class="pl-3 selected"><strong>★ ★ ★ ★ ★</strong></a>
+                      <a href="sprint_one.html" class="pl-3">Sprint One.</a>
+                      <a href="sprint_two.html" class="pl-3">Sprint Two.</a>
+                      <a href="sprint_three.html" class="pl-3">Sprint Three.</a>
+                    </div>
+                </div>
+            </li>
+          </ul>
+      </div>
+      <div class="stars d-none d-md-inline">&#9733 &#9733 &#9733 &#9733 &#9733</div>
+  </nav>
+
+    <!-- <section class="container-fluid px-0 mt-5">
             <div class="row pl-1 ml-1">
                 <div class="vertical-menu pl-2 pt-4">
                     <a href="project.html" class="pl-3 selected"><strong>★ ★ ★ ★ ★</strong></a>
@@ -55,8 +65,8 @@
                     <a href="sprint_three.html" class="pl-3">Sprint Three.</a>
                 </div>
             </div>
-    </section>
-    
+    </section> -->
+
     <section class="container-fluid px-0 mt-5">
         <div class="row align-items-center">
             <div class="col-lg-6">
@@ -82,7 +92,7 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-    
+
     <script>
         $(function () {
             $(document).scroll(function () {
