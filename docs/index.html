@@ -25,26 +25,36 @@
 
 <body>
 
-    <nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top">
-        <a href="index.html" class="navbar-brand">FIVE.STAR.STYLE.</a>
-        <button class="navbar-toggler custom-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle Navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navLinks" class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link"><strong>HOME.</strong></a>
-                </li>
-                <li class="nav-item">
-                    <a href="aboutme.html" class="nav-link">TEAM.</a>
-                </li>
-                <li class="nav-item">
-                    <a href="project.html" class="nav-link">PROJECT.</a>
-                </li>
-            </ul>
-        </div>
-        <div class="stars d-none d-md-inline">&#9733 &#9733 &#9733 &#9733 &#9733</div>
-    </nav>
+  <nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top" style="background-color: #ECF0F1">
+      <a href="index.html" class="navbar-brand">FIVE.STAR.STYLE.</a>
+      <button class="navbar-toggler custom-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle Navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navLinks" class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a href="index.html" class="nav-link">HOME.</a>
+              </li>
+              <li class="nav-item">
+                  <a href="aboutme.html" class="nav-link">TEAM.</a>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown">
+                    <a href="project.html" class="nav-link">PROJECT.
+                      <i class="fa fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content">
+                      <a href="project.html" class="pl-3 selected"><strong>★ ★ ★ ★ ★</strong></a>
+                      <a href="sprint_one.html" class="pl-3">Sprint One.</a>
+                      <a href="sprint_two.html" class="pl-3">Sprint Two.</a>
+                      <a href="sprint_three.html" class="pl-3">Sprint Three.</a>
+                    </div>
+                </div>
+            </li>
+          </ul>
+      </div>
+      <div class="stars d-none d-md-inline">&#9733 &#9733 &#9733 &#9733 &#9733</div>
+  </nav>
 
     <section class="container-fluid px-0 mt-5">
         <div class="row align-items-center">
@@ -73,7 +83,7 @@
                     <div class="col-10 blurb mb-5 mb-md-0">
                         <h2>Virtual Closet</h2>
                         <div class="stars">&#9733 &#9733 &#9733 &#9733 &#9733</div>
-                        <p class="lead">With Five Star Style, you can view the contents of your wardrobe anywhere at any time. Shopping, 
+                        <p class="lead">With Five Star Style, you can view the contents of your wardrobe anywhere at any time. Shopping,
                         and planning ahead special occasions has never been this easy. </p>
                     </div>
                 </div>
@@ -85,8 +95,8 @@
                     <div class="col-10 blurb mb-5 mb-md-0">
                         <h2>outfit finder</h2>
                         <div class="stars">&#9733 &#9733 &#9733 &#9733 &#9733</div>
-                        <p class="lead">Our Outfit Finder can help even the most indecisive of individuals create an outfit instantly. 
-                            Once your clothing options have been uploaded to Five Star Style, the Outfit Finder will check the 
+                        <p class="lead">Our Outfit Finder can help even the most indecisive of individuals create an outfit instantly.
+                            Once your clothing options have been uploaded to Five Star Style, the Outfit Finder will check the
                         current weather forecast and suggest an outfit based on those conditions. </p>
                     </div>
                 </div>
@@ -104,9 +114,9 @@
                     <div class="col-10 blurb mb-5 mb-md-0">
                         <h2>clothes organizer</h2>
                         <div class="stars">&#9733 &#9733 &#9733 &#9733 &#9733</div>
-                        <p class="lead">By keeping statistics on the amount of clothing items you have and the 
-                            frequency in which they are worn, Five Star Style can help you organize your clothes 
-                            by guiding both your future purchases and clothing donations based on which clothing items 
+                        <p class="lead">By keeping statistics on the amount of clothing items you have and the
+                            frequency in which they are worn, Five Star Style can help you organize your clothes
+                            by guiding both your future purchases and clothing donations based on which clothing items
                             you are lacking and which you have not worn in a long time.</p>
                     </div>
                 </div>
@@ -122,7 +132,7 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-    
+
     <script>
         $(function () {
             $(document).scroll(function () {
