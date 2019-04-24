@@ -143,7 +143,7 @@ public class Activity_Overview extends AppCompatActivity {
         // initialize data for the pie chart
         List<SliceValue> pieData = new ArrayList<>();
         // assign values to pie slices
-        if (catCounts.size() != 0) {
+        if (notEmpty(catCounts)) {
             pieData.add(new SliceValue(catCounts.get(0), Color.parseColor("#99B5C3")).setLabel("Tops"));
             pieData.add(new SliceValue(catCounts.get(1), Color.parseColor("#567d9c")).setLabel("Bottoms"));
             pieData.add(new SliceValue(catCounts.get(2), Color.parseColor("#1B4F72")).setLabel("Dresses/Suits"));
@@ -160,6 +160,13 @@ public class Activity_Overview extends AppCompatActivity {
         }
         // call function to style pie chart data
         stylePieChart(pieData, pieChartView, true);
+    }
+
+    public boolean notEmpty(ArrayList<Integer> list) {
+        if(list.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public void createSeasonPieGraph(ArrayList<Integer> counts) {

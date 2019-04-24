@@ -87,10 +87,10 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         });
 
         // determine type of outfit to choose
-        if(imagesTops == null || imagesBottoms == null) {
+        if(isNull(imagesTops) || isNull(imagesBottoms)) {
             // no top and bottom outfit, use dress or suit
             rand = 1;
-        } else if(imagesDressesOrSuits == null) {
+        } else if(isNull(imagesDressesOrSuits)) {
             // no dress or suit, use top and bottom
             rand = 0;
         } else {
@@ -124,7 +124,7 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         }
 
         // if outerwear exists and ...
-        if(imagesOuterwear != null) {
+        if(notNull(imagesOuterwear)) {
             // current temp is less than 60 deg F ...
             if(GlobalVariables.temperature < 60) {
                 // get random outerwear from list
@@ -136,7 +136,7 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         }
 
         // if shoes exist ...
-        if(imagesShoes != null) {
+        if(notNull(imagesShoes)) {
             // get random shoes from list
             size = imagesShoes.size();
             chosen = (int) (Math.random() * size);
@@ -147,6 +147,20 @@ public class Activity_ChooseMyOutfitResults extends AppCompatActivity {
         //dynamically load images through GridView
         GridView gridView = (GridView) findViewById(R.id.gridViewResults);
         gridView.setAdapter(new ImageAdapterForRandomOutfit(this, images));
+    }
+
+    public boolean notNull(ArrayList<ItemDetailsObject> list) {
+        if(list != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isNull(ArrayList<ItemDetailsObject> list) {
+        if(list == null) {
+            return true;
+        }
+        return false;
     }
 
     // inflate the menu

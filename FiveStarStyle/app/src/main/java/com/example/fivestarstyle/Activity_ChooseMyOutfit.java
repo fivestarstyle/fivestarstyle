@@ -180,7 +180,7 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                                 }
                             }
                             Log.d(TAG, "imageUrls received");
-                            if (cat.equals("outerwear")) {
+                            if (isOuterwear(cat)) {
                                 try {
                                     Thread.sleep(3000);
                                 } catch(InterruptedException e) {
@@ -188,11 +188,11 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
                                 }
                                 Intent results = new Intent(Activity_ChooseMyOutfit.this, Activity_ChooseMyOutfitResults.class);
                                 Bundle bundle = new Bundle();
-                                if(imagesTops.size() > 0) bundle.putSerializable("imagesTops", imagesTops);
-                                if(imagesBottoms.size() > 0) bundle.putSerializable("imagesBottoms", imagesBottoms);
-                                if(imagesDressesOrSuits.size() > 0) bundle.putSerializable("imagesDressesOrSuits", imagesDressesOrSuits);
-                                if(imagesShoes.size() > 0) bundle.putSerializable("imagesShoes", imagesShoes);
-                                if(imagesOuterwear.size() > 0) bundle.putSerializable("imagesOuterwear", imagesOuterwear);
+                                if(notEmpty(imagesTops)) bundle.putSerializable("imagesTops", imagesTops);
+                                if(notEmpty(imagesBottoms)) bundle.putSerializable("imagesBottoms", imagesBottoms);
+                                if(notEmpty(imagesDressesOrSuits)) bundle.putSerializable("imagesDressesOrSuits", imagesDressesOrSuits);
+                                if(notEmpty(imagesShoes)) bundle.putSerializable("imagesShoes", imagesShoes);
+                                if(notEmpty(imagesOuterwear)) bundle.putSerializable("imagesOuterwear", imagesOuterwear);
                                 results.putExtras(bundle);
                                 results.putExtra("btnClicked", str);
 //                                try {
@@ -200,15 +200,15 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
 //                                } catch(InterruptedException e) {
 //                                    Log.d("ERROR", "Got interrupted!");
 //                                }
-                                if(imagesTops.size() == 0) {
-                                    if(imagesDressesOrSuits.size() == 0) {
+                                if(isEmpty(imagesTops)) {
+                                    if(isEmpty(imagesDressesOrSuits)) {
                                         Log.d("ERROR", "top/dress");
                                         Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 }
-                                if(imagesBottoms.size() == 0) {
-                                    if(imagesDressesOrSuits.size() == 0) {
+                                if(isEmpty(imagesBottoms)) {
+                                    if(isEmpty(imagesDressesOrSuits)) {
                                         Log.d("ERROR", "bottom/dress");
                                         Toast.makeText(Activity_ChooseMyOutfit.this, "You do not have a full outfit for this event! Please choose another event.", Toast.LENGTH_SHORT).show();
                                         return;
@@ -226,6 +226,27 @@ public class Activity_ChooseMyOutfit extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean isOuterwear(String str) {
+        if(str.equals("outerwear")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean notEmpty(ArrayList<com.example.fivestarstyle.ItemDetailsObject> list) {
+        if(list.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEmpty(ArrayList<com.example.fivestarstyle.ItemDetailsObject> list) {
+        if(list.size() == 0) {
+            return true;
+        }
+        return false;
     }
 
     // use zip code and api key to get current weather data from open weather api
